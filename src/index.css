@@ -29,8 +29,7 @@ code {
   border: 1px solid #0000003B;
   border-radius: 6px;
   position: relative;
-  line-height: 6ex;
-  padding: 0 10px;
+  padding: 8px 10px;
 }
 
 .border-label {

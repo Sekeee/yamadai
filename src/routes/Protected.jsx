@@ -1,7 +1,5 @@
-import { Routes, Route, useLocation, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import routes from './protectedRoutes';
-import { useState } from "react";
-
 
 const getRoutes = () => {
     const array = [];
