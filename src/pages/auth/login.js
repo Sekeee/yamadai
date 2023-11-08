@@ -11,7 +11,6 @@ export default function Login () {
                     description="Input description"
                     placeholder="Input placeholder"
                 />
-
             </div>
         </div>
     );
