@@ -22,7 +22,7 @@ const protectedRoutes = createBrowserRouter(
 );
 
 export default function App() {
-	const token = 'Token';
+	const token = '';
 
 	return (
 		<MantineProvider>
