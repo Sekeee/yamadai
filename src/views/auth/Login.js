@@ -19,7 +19,6 @@ export default function Login() {
 	const navigate = useNavigate();
 
 	return (
-
 		<div className='w-full h-screen'>
 			<Header title='健康増進アプリ'/>
 			<div className='w-full flex-col justify-center content-center pt-1 bg-white'>
