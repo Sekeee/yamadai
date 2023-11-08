@@ -18,7 +18,6 @@ const authRoutes = [
     { path: '/health-info' , element : HealthInfo},
     { path: '/result' , element: Result},
     { path: '/health-info-result' , element: HealthInfoResult}
-
 ];
 
 export default authRoutes;

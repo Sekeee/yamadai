@@ -2,6 +2,10 @@ import Header from "../../components/layouts/Header"
 import { Steps } from 'antd';
 import { useState } from "react";
 import { BiChevronRight, BiChevronLeft } from 'react-icons/bi'
+import CustomButton from "../../components/common/Button";
+import {useNavigate} from "react-router-dom";
+import { Radio } from 'antd';
+import {RadioChangeEvent} from "antd";
 
 const CustomInput = ({ label = '', ph = '', unit = '', isLong = false }) => {
     return (
@@ -14,6 +18,24 @@ const CustomInput = ({ label = '', ph = '', unit = '', isLong = false }) => {
         </div>
     );
 };
+
+const CustomTest = ({question = '' , answer1 = '' , answer2 = ''}) => {
+    const [value, setValue] = useState(0);
+
+    const onChange = (e: RadioChangeEvent) => {
+        console.log('radio checked', e.target.value);
+        setValue(e.target.value);
+    };
+
+    return <div className='flex flex-col justify-center content-center mt-4 text-base'>
+        <div className='mb-2'>{question}</div>
+        <Radio.Group onChange={onChange} value={value}>
+            <Radio value={1}>{answer1}</Radio>
+            <Radio value={2}>{answer2}</Radio>
+        </Radio.Group>
+
+    </div>
+}
 
 
 const HealthInfo = () => {
@@ -100,13 +122,33 @@ const FirstStep = () => {
 
 const SecondStep = () => {
     return (
-        <div>fuck</div>
+        <div className="flex flex-col gap-6">
+            <CustomTest question='血圧を下げる薬' answer1='はい' answer2='いいえ'/>
+            <CustomTest question='インスリン注射又は血糖を下げる薬' answer1='はい' answer2='いいえ'/>
+            <CustomTest question='コレステロール・中性脂肪を下げる薬' answer1='はい' answer2='いいえ'/>
+            <CustomTest question='血圧を下げる薬' answer1='はい' answer2='いいえ'/>
+            <CustomTest question='インスリン注射又は血糖を下げる薬' answer1='はい' answer2='いいえ'/>
+            <CustomTest question='コレステロール・中性脂肪を下げる薬' answer1='はい' answer2='いいえ'/>
+
+
+        </div>
     )
 }
 
 const ThirdStep = () => {
+    const navigate = useNavigate();
+
     return (
-        <div>kjsjnfd</div>
+        <div className="flex flex-col gap-6">
+            <CustomTest question='20 歳の時の体重から10kg 以上増加している' answer1='はい' answer2='いいえ'/>
+            <CustomTest question='1 回30 分以上の軽く汗をかく運動を週2 日以上、1 年以上実施している。' answer1='はい' answer2='いいえ'/>
+            <CustomTest question='日常生活において歩行又は同等の身体活動を1 日1 時間以上実施している。' answer1='はい' answer2='いいえ'/>
+            <CustomTest question='ほぼ同じ年齢の同性と比較して歩く速度が速い' answer1='はい' answer2='いいえ'/>
+            <CustomTest question='この1 年間で体重の増減が±3 ㎏以上あった。' answer1='はい' answer2='いいえ'/>
+
+
+
+        </div>
     )
 }
 
