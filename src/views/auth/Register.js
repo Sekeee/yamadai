@@ -28,7 +28,7 @@ const CustomModal = ({ isModalOpen, children, setIsModalOpen }) => {
     )
 }
 
-export default function Register () {
+const Register = () => {
 
     const navigate = useNavigate();
 
@@ -108,3 +108,5 @@ export default function Register () {
 
     </div>
 }
+
+export default Register;

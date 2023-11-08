@@ -6,7 +6,7 @@ import {useNavigate} from "react-router-dom";
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { Button, Input, Space } from 'antd';
 
-export default function Login() {
+const Login = () => {
 	const [ email , setEmail ] = useState();
 	const [ password , setPassword ] = useState();
 	const [ isDisabled , setIsDisabled] = useState(true);
@@ -39,7 +39,7 @@ export default function Login() {
 					<div className='h-8'></div>
 					<CustomButton  onClick={() => navigate('verification')} text='ログイン'/>
 					<div className='h-8'></div>
-					<div className='text-primary underline cursor-pointer mb-4'>パスワードを忘れましたか？</div>
+					<div onClick={() => navigate('forgot-password')} className='text-primary underline cursor-pointer mb-4'>パスワードを忘れましたか？</div>
 					<div onClick={() => navigate('register')} className='text-primary underline cursor-pointer'>アカウントを作成</div>
 					<div className='h-12'></div>
 				</div>
@@ -47,3 +47,5 @@ export default function Login() {
 		</div>
 	);
 }
+
+export default Login;
