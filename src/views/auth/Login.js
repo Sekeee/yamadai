@@ -27,9 +27,11 @@ export default function Login() {
 				<div className='flex=col justify-around content-center mx-10'>
 					<div className='h-8'></div>
 					 {/*<div className='text-warning'>※メールアドレスまたはパスワードが正しくありません</div> */}
+
 					<Input
 						placeholder="メールを入力してください"/>
-					<div className='h-8'></div>
+					<div className='h-4'></div>
+					<div>パスワード</div>
 					<Input.Password
 						onChange={(value) => setPassword(value)}
 						placeholder="パスワードを入力してください"
@@ -39,7 +41,7 @@ export default function Login() {
 					<CustomButton  onClick={() => navigate('verification')} text='ログイン'/>
 					<div className='h-8'></div>
 					<div className='text-primary underline cursor-pointer mb-4'>パスワードを忘れましたか？</div>
-					<div className='text-primary underline cursor-pointer'>アカウントを作成</div>
+					<div onClick={() => navigate('register')} className='text-primary underline cursor-pointer'>アカウントを作成</div>
 					<div className='h-12'></div>
 				</div>
 			</div>
