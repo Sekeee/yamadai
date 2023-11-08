@@ -19,7 +19,7 @@ const PredictResult = () => {
                     <div className="flex gap-4 text-[#000000DE] items-center">
                         <p className="w-[48%]">がん発症率</p>
                         <p className="w-[10%] ">10%</p>
-                        <div className="w-[30%]">
+                        <div className="w-[32%] flex items-center">
                             <div className="bg-success rounded-[50px] text-white p-3 py-[5px]">とても低い</div>
                         </div>
                     </div>
@@ -27,7 +27,7 @@ const PredictResult = () => {
                     <div className="flex gap-4 text-[#000000DE] items-center">
                         <p className="w-[48%]">脳卒中発症率</p>
                         <p className="w-[10%] ">30%</p>
-                        <div className="w-[30%] flex items-center">
+                        <div className="w-[32%] flex items-center">
                             <div className="bg-primary rounded-[50px] text-white p-3 py-[5px]">低い</div>
                         </div>
                     </div>
@@ -35,7 +35,7 @@ const PredictResult = () => {
                     <div className="flex gap-4 text-[#000000DE] ">
                         <p className="w-[48%]">狭心症・心筋梗塞 発症率</p>
                         <p className="w-[10%] ">50%</p>
-                        <div className="w-[30%] flex items-center">
+                        <div className="w-[32%] flex items-center">
                             <div className="bg-grey rounded-[50px] text-black p-3 py-[5px]">ふつう</div>
                         </div>
                     </div>
@@ -43,7 +43,7 @@ const PredictResult = () => {
                     <div className="flex gap-4 text-[#000000DE] items-center">
                         <p className="w-[48%]">生存率</p>
                         <p className="w-[10%] ">30%</p>
-                        <div className="w-[30%] flex items-center">
+                        <div className="w-[32%] flex items-center">
                             <div className="bg-warning rounded-[50px] text-white p-3 py-[5px]">高い</div>
                         </div>
                     </div>
@@ -51,7 +51,7 @@ const PredictResult = () => {
                     <div className="flex gap-4 text-[#000000DE] items-center">
                         <p className="w-[48%]">要介護率</p>
                         <p className="w-[10%] ">70%</p>
-                        <div className="w-[30%] flex items-center">
+                        <div className="w-[32%] flex items-center">
                             <div className="bg-error rounded-[50px] text-white p-3 py-[5px]">とても高い</div>
                         </div>
                     </div>
