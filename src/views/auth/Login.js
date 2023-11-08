@@ -17,11 +17,6 @@ export default function Login() {
 
 	const navigate = useNavigate();
 
-
-
-
-
-
 	return (
 		<div className='w-full h-screen'>
 			<Header title='健康増進アプリ'/>
@@ -29,24 +24,7 @@ export default function Login() {
 				<p className='text-black text-xl'>ログイン</p>
 				<div className='flex=col justify-around content-center'>
 					 {/*<div className='text-warning'>※メールアドレスまたはパスワードが正しくありません</div> */}
-					<TextInput
-						label="Mail address"
-						placeholder='Enter your email'
 
-					/>
-					<div className='h-12'></div>
-
-					<PasswordInput
-						varient='default'
-						withAsterisk
-						icon={isVisible ? <AiFillEye /> : <AiFillEyeInvisible/> }
-						label="Password"
-						value={ password }
-						onVisibilityChange={toggleVisibility}
-						placeholder='Enter a password'
-						// visibilityToggleIcon={isVisible ? <AiFillEye/> : <AiFillEyeInvisible/>}
-						// visibilityToggleIcon={<AiFillEyeInvisible/>}
-					/>
 					<CustomButton  onClick={() => navigate('verification')} text='ログイン'/>
 					<div className='h-8'></div>
 					<div className='text-primary underline cursor-pointer mb-4'>パスワードを忘れましたか？</div>

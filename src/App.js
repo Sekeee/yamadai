@@ -25,13 +25,9 @@ export default function App() {
 	const token = 'Token';
 
 	return (
-		<MantineProvider
-			withGlobalStyles
-			withNormalizeCSS
-		>
+
 			<div className='w-full xs:w-[400px]'>
 				<RouterProvider router={token ? protectedRoutes : authRoutes} />
 			</div>
-		</MantineProvider>
 	);
 }
