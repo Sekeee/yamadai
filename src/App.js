@@ -22,10 +22,10 @@ const protectedRoutes = createBrowserRouter(
 );
 
 export default function App() {
-	const token = 'Token';
+	const token = '';
 
 	return (
-		<ConfigProvider direction="rtl">
+		<ConfigProvider direction="ltr">
 			<div className='w-full xs:w-[400px]'>
 				<RouterProvider router={token ? protectedRoutes : authRoutes} />
 			</div>
