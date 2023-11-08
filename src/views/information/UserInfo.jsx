@@ -139,15 +139,15 @@ const UserInfo = () => {
             </CustomModal>
 
             <CustomModal isModalOpen={isDeleteOpen} setIsModalOpen={setIsDeleteOpen} >
-                <p className='text-[18px]'>アカウント削除</p>
-                <p className='font-[14px]'>アカウントを削除します。よろしいですか？</p>
-                <p className='font-[14px] text-error'>※パスワードが違います</p>
-                <div className='mt-4'>
+                <p className='text-[20px]'>アカウント削除</p>
+                <p className='font-[16px] mt-3'>アカウントを削除します。よろしいですか？</p>
+                <p className='font-[16px] mt-6 text-error'>※パスワードが違います</p>
+                <div className='mt-8'>
                     <BorderLabelInput label='パスワード' />
                 </div>
                 <div className='flex gap-2 mt-6 items-end justify-end'>
-                    <Button onClick={() => setIsPasswordOpen(false)} variant='outline' text='戻る' />
-                    <Button onClick={() => setIsPasswordOpen(false)} text='変更する' />
+                    <Button onClick={() => setIsDeleteOpen(false)} variant='outline' text='戻る' />
+                    <Button color='#D32F2F' onClick={() => setIsDeleteOpen(false)} text='削除する' />
                 </div>
             </CustomModal>
         </>
