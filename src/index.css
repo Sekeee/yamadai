@@ -23,3 +23,23 @@ code {
   justify-content: center;
   overflow: auto;
 }
+
+
+.border-label-input {
+  border: 1px solid #0000003B;
+  border-radius: 6px;
+  position: relative;
+  line-height: 6ex;
+  padding: 0 10px;
+}
+
+.border-label {
+  position: absolute;
+  top: -1.4ex;
+  z-index: 1;
+  left: 2em;
+  background-color: white;
+  color: #00000099;
+  font-size: 12px;
+  padding: 0 4px;
+}
