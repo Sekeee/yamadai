@@ -26,7 +26,7 @@ export default function App() {
 
 	return (
 		<ConfigProvider direction='ltr'>
-			<div className='w-full xs:w-[400px]'>
+			<div className='w-full bg-white xs:w-[400px]'>
 				<RouterProvider router={token ? protectedRoutes : authRoutes} />
 			</div>
 		</ConfigProvider>
