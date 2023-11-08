@@ -94,7 +94,7 @@ const FirstStep = () => {
             </div>
             <div className="flex gap-6">
                 <CustomInput label="腹囲" unit="cm" />
-                <div className="w-1/2"></div>
+                <div className="w-1/2"> </div>
             </div>
             <CustomInput label="既往歴" />
 
@@ -114,6 +114,26 @@ const FirstStep = () => {
             </div>
             <div className="flex gap-6">
                 <CustomInput label="γ-GT(γ-GTP)" unit="U/I" />
+                <div className="w-1/2"></div>
+            </div>
+
+
+            <div className="flex gap-6">
+                <CustomInput label="血糖" unit="mg/dl" />
+                <CustomInput label="HbA1c" unit="%" />
+            </div>
+            <div className="flex gap-6">
+                <CustomInput label="尿蛋白" unit="TODO" />
+                <div className="w-1/2"></div>
+            </div>
+
+
+            <div className="flex gap-6">
+                <CustomInput label="ヘマトクリット値" unit="%" />
+                <CustomInput label="血色素量" unit="%" />
+            </div>
+            <div className="flex gap-6">
+                <CustomInput label="赤血球数" unit="万/mm3" />
                 <div className="w-1/2"></div>
             </div>
         </div>
