@@ -22,7 +22,7 @@ const protectedRoutes = createBrowserRouter(
 );
 
 export default function App() {
-	const token = 'hoorhon seke';
+	const token = '';
 
 	return (
 		<ConfigProvider direction='ltr'>

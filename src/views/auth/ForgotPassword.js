@@ -1,6 +1,4 @@
 import Header from "../../components/layouts/Header";
-import {Input} from "antd";
-import {EyeInvisibleOutlined, EyeTwoTone} from "@ant-design/icons";
 import CustomButton from "../../components/common/Button";
 import {useNavigate} from "react-router-dom";
 import BorderLabelInput from "../../components/common/BorderLabelInput";

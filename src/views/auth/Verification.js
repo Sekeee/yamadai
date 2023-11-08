@@ -1,6 +1,4 @@
 import Header from "../../components/layouts/Header";
-import {Input} from "antd";
-import {EyeInvisibleOutlined, EyeTwoTone} from "@ant-design/icons";
 import CustomButton from "../../components/common/Button";
 import BorderLabelInput from "../../components/common/BorderLabelInput";
 import {useNavigate} from "react-router-dom";
@@ -18,7 +16,7 @@ export default function Verification () {
                 <div className='text-sm mb-4'>送信されたメールに記載されたワンタイムパスワードを入力してください</div>
                 <BorderLabelInput label='ワンタイムパスワード' />
                 <div className='h-8'></div>
-                <CustomButton  text='ログイン'/>
+                <CustomButton  onClick={() => navigate('/home')} text='ログイン'/>
                 <div className='h-8'></div>
                 <div className='text-primary underline cursor-pointer mb-4'>メールを再送信する</div>
                 <div onClick={() => navigate('/')} className='text-primary underline cursor-pointer'>最初からやり直す</div>
