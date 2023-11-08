@@ -145,9 +145,6 @@ const ThirdStep = () => {
             <CustomTest question='日常生活において歩行又は同等の身体活動を1 日1 時間以上実施している。' answer1='はい' answer2='いいえ'/>
             <CustomTest question='ほぼ同じ年齢の同性と比較して歩く速度が速い' answer1='はい' answer2='いいえ'/>
             <CustomTest question='この1 年間で体重の増減が±3 ㎏以上あった。' answer1='はい' answer2='いいえ'/>
-
-
-
         </div>
     )
 }
