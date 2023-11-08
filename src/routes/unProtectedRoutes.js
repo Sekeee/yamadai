@@ -7,6 +7,7 @@ import UserInfo from "../views/information/UserInfo";
 import HealthInfo from "../views/information/HealthInfo";
 import Result from "../views/result/Result";
 import HealthInfoResult from "../views/result/HealthInfoResult";
+import PredictResult from "../views/result/PredictResult";
 
 const authRoutes = [
     { path: '/', element: Login } ,
@@ -17,7 +18,8 @@ const authRoutes = [
     { path: '/user-info' , element : UserInfo},
     { path: '/health-info' , element : HealthInfo},
     { path: '/result' , element: Result},
-    { path: '/health-info-result' , element: HealthInfoResult}
+    { path: '/health-info-result' , element: HealthInfoResult},
+    { path: '/predict-result' , element: PredictResult}
 ];
 
 export default authRoutes;
