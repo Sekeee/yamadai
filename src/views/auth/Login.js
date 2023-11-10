@@ -5,6 +5,7 @@ import {useNavigate} from "react-router-dom";
 
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { Button, Input, Space } from 'antd';
+import BorderLabelInput from "../../components/common/BorderLabelInput";
 
 const Login = () => {
 	const [ email , setEmail ] = useState();
@@ -27,8 +28,7 @@ const Login = () => {
 					<div className='h-8'></div>
 					 {/*<div className='text-warning'>※メールアドレスまたはパスワードが正しくありません</div> */}
 
-					<Input
-						placeholder="メールを入力してください"/>
+					<BorderLabelInput label='メールアドレス'/>
 					<div className='h-4'></div>
 					<div>パスワード</div>
 					<Input.Password
