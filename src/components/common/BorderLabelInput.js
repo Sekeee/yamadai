@@ -1,4 +1,4 @@
-const BorderLabelInput = ({ label = '', underLabel = false, ph = '' }) => {
+const BorderLabelInput = ({ label = '', type = 'texts', onChange, value, underLabel = false, ph = '' }) => {
 	return (
 		<div className='relative'>
 			<label
@@ -8,8 +8,10 @@ const BorderLabelInput = ({ label = '', underLabel = false, ph = '' }) => {
 				{label}
 			</label>
 			<input
+				value={value}
+				onChange={onChange}
 				className='border-label-input outline-none w-full'
-				type='text'
+				type={type}
 				placeholder={ph}
 			/>
 			{underLabel && <label className='text-[#00000099] font-[12px]'>{underLabel}</label>}

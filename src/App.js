@@ -2,6 +2,9 @@ import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } 
 import AuthRouter from './routes/AuthRouter';
 import ProtectedRoutes from './routes/Protected';
 import { ConfigProvider } from 'antd';
+import Loading from './components/common/Loading';
+import useStore from './store';
+import './config/interceptor';
 
 const authRoutes = createBrowserRouter(
 	createRoutesFromElements(
@@ -22,10 +25,18 @@ const protectedRoutes = createBrowserRouter(
 );
 
 export default function App() {
-	const token = '';
+	const token = useStore(state => state.auth.token);
+	const loading = useStore(state => state.loading);
 
 	return (
-		<ConfigProvider direction='ltr'>
+		<ConfigProvider
+			theme={{
+				token: {
+					colorPrimary: '#2196F3',
+				},
+			}}
+		>
+			{loading && <Loading />}
 			<div className='w-full bg-white xs:w-[400px]'>
 				<RouterProvider router={token ? protectedRoutes : authRoutes} />
 			</div>
