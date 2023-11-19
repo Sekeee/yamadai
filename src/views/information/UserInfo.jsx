@@ -4,11 +4,11 @@ import Header from '../../components/layouts/Header';
 import { Modal } from 'antd';
 import BorderLabelInput from '../../components/common/BorderLabelInput';
 
-const CustomInput = ({ label = '', ph = 'input' }) => {
+const CustomInput = ({ label = '', placeholder = 'input' }) => {
     return (
         <div className='flex flex-col gap-2'>
             <p className='text-[#00000061] text-[12px]' >{label}</p>
-            <input className='border-b border-[#0000006B] w-full outline-none' placeholder={ph} />
+            <input className='border-b border-[#0000006B] w-full outline-none' placeholder={placeholder} />
         </div>
     );
 };
@@ -50,16 +50,16 @@ const UserInfo = () => {
                     <p className='text-primary'>基本情報を更新しました</p>
                     <CustomInput
                         label='メールアドレス'
-                        ph='kenkou_app@sample.com'
+                        placeholder='kenkou_app@sample.com'
                     />
 
                     <CustomInput
                         label='お名前（ハンドルネーム）'
-                        ph='大田須太郎'
+                        placeholder='大田須太郎'
                     />
                     <CustomInput
                         label='生年月日'
-                        ph='1993/08/17'
+                        placeholder='1993/08/17'
                     />
                     <div>
                         <div className='text-[#00000099]'>性別</div>
