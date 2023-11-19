@@ -23,6 +23,12 @@ const Login = () => {
 		setLoginInfo(data.access, data.user);
 	};
 
+	const handleKeyDown = (e) => {
+		if (e.key === 'Enter') {
+		  onFinishLogin();
+		}
+	  };
+
 	return (
 		<div className='w-full h-screen'>
 			<Header title='健康増進アプリ' />
@@ -32,7 +38,7 @@ const Login = () => {
 					<div className='h-8'></div>
 					{/* <div className='text-warning'>※メールアドレスまたはパスワードが正しくありません</div> */}
 
-					<BorderLabelInput
+					{/* <BorderLabelInput
 						value={form.email}
 						onChange={e => setForm({ ...form, email: e.target.value })}
 						label='メールアドレス'
@@ -44,7 +50,23 @@ const Login = () => {
 						value={form.password}
 						placeholder='パスワードを入力してください'
 						iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+					/> */}
+
+					<BorderLabelInput
+						value={form.email}
+						onChange={(e) => setForm({ ...form, email: e.target.value })}
+						label='メールアドレス'
+						placeholder="メールアドレス"
 					/>
+					<div className='h-4'></div>
+					<BorderLabelInput
+						value={form.password}
+						onChange={(e) => setForm({ ...form, password: e.target.value })}
+						label='パスワード'
+						type='password'
+						placeholder='パスワードを入力してください'
+						onKeyDown={handleKeyDown}
+						/>
 					<div className='h-8'></div>
 					<CustomButton
 						onClick={() => onFinishLogin()}
