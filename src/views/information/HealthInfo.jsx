@@ -5,6 +5,7 @@ import { BiChevronRight, BiChevronLeft } from 'react-icons/bi'
 import CustomButton from "../../components/common/Button";
 import { useNavigate } from "react-router-dom";
 import { Radio } from 'antd';
+import axios from "axios";
 
 const CustomInput = ({ label = '', value = '', onChange = () => { }, ph = '', unit = '', isLong = false }) => {
     return (
@@ -21,12 +22,13 @@ const CustomInput = ({ label = '', value = '', onChange = () => { }, ph = '', un
     );
 };
 
-const CustomTest = ({ question = '', answer1 = '', answer2 = '' }) => {
+const CustomTest = ({ question = '', answer1 = '', answer2 = ''  , onChanged = () => {}}) => {
     const [value, setValue] = useState(0);
 
     const onChange = (e) => {
         console.log('radio checked', e.target.value);
-        setValue(e.target.value); 
+        setValue(e.target.value);
+        onChanged(e);
     };
 
     return <div className='flex flex-col justify-center content-center mt-4 text-base'>
@@ -53,9 +55,12 @@ const HealthInfo = () => {
     return (
         <>
             <Header title='健康増進アプリ' />
-            <div onClick={() => {
-                console.log(data, 'matarjingoo')
-            }
+            <div onClick={ async () => {
+                console.log(data, 'check data')
+                const { response } = await axios.post('/api/healthcheckinfo/create/' , data);
+                console.log('setgel :' , response);
+
+             }
             }>hi</div>
             <div className="flex flex-col gap-8 p-4 ">
                 <p>健診情報入力</p>
@@ -104,25 +109,47 @@ const FirstStep = ({ data, setData }) => {
     return (
         <div className="flex flex-col gap-6">
             <CustomInput
-                onChange={(e) => changeData(e.target.value, '健診日')}
-                value={data?.健診日 || ''}
+                onChange={(e) => changeData(e.target.value, 'checked_date')}
+                value={data?.checked_date || ''}
                 label="健診日"
-                ph={"2023/08/17"}
+                ph={"2023-08-17"}
             />
             <div className="flex gap-6">
-                <CustomInput label="身長" unit="cm" />
-                <CustomInput label="体重" unit="kg" />
+                <CustomInput
+                    onChange={(e) => changeData(e.target.value, 'height')}
+                    value={data?.身長 || ''}
+                    label="height"
+                    unit="cm" />
+                <CustomInput
+                    onChange={(e) => changeData(e.target.value, '体重')}
+                    value={data?.体重 || ''}
+                    label="体重"
+                    unit="kg" />
             </div>
+            <CustomTest question='喫煙' answer1='はい' answer2='いいえ'/>
+            <CustomTest question='飲酒' answer1='はい' answer2='いいえ'/>
             <div className="flex gap-6">
-                <CustomInput label="腹囲" unit="cm" />
+                <CustomInput
+                    onChange={(e) => changeData(e.target.value, '腹囲')}
+                    value={data?.腹囲 || ''}
+                    label="腹囲"
+                    unit="cm" />
                 <div className="w-1/2"></div>
             </div>
-            <CustomInput label="既往歴" />
+            <CustomInput
+                onChange={(e) => changeData(e.target.value, '既往歴')}
+                value={data?.既往歴 || ''}
+                label="既往歴" />
 
             {/* TODO */}
 
             <div className="flex gap-6">
-                <CustomInput label="採血時間（食後）" isLong unit="時間後" />
+                <CustomInput
+                    onChange={(e) => changeData(e.target.value, '採血時間')}
+                    value={data?.採血時間 || ''}
+                    label="採血時間（食後）"
+                    isLong unit="時間後"
+                />
                 <CustomInput label="中性脂肪(トリグリセリド)" unit="mg/dl" />
             </div>
             <div className="flex gap-6">

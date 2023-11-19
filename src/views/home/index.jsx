@@ -26,7 +26,7 @@ const Home = () => {
 
           {/* Logout Button */}
           <div onClick={handleLogout} className='flex items-center justify-center bg-error rounded-lg px-4 py-2 text-white'>
-            <div>Log Out PSDA</div>
+            <div>ログアウト</div>
           </div>
         </div>
       </div>

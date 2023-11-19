@@ -6,9 +6,9 @@ import { APP_BASE_URL } from './index';
 const TOASTER_DURATION = 10;
 
 const logout = () => {
-	useStore.setState({ auth: { token: null } });
-	localStorage.clear();
-	window.location.href = '/';
+	// useStore.setState({ auth: { token: null } });
+	// localStorage.clear();
+	// window.location.href = '/';
 };
 
 axios.interceptors.request.use(config => {
@@ -33,7 +33,7 @@ axios.interceptors.request.use(config => {
 axios.interceptors.response.use(
 	res => {
 		if (res?.data?.statusCode === 400 || res?.data?.statusCode === 500) {
-			let errMessage = 'Алдаа гарлаа';
+			let errMessage = 'エラー発生しました';
 			if (res?.data?.message_mn) {
 				errMessage = res.data.message_mn;
 			} else if (res?.data?.message_en) {
@@ -42,7 +42,7 @@ axios.interceptors.response.use(
 			message(errMessage, false, { duration: TOASTER_DURATION });
 		}
 		if (res?.data?.statusCode === 404) {
-			message('Алдаа гарлаа', false, { duration: TOASTER_DURATION });
+			message('エラー発生しました', false, { duration: TOASTER_DURATION });
 		}
 		useStore.setState({ loading: false });
 		return res;
@@ -55,7 +55,7 @@ axios.interceptors.response.use(
 		} else if (error?.response?.data?.message_en) {
 			message(error?.response?.data?.message_en, false, { duration: TOASTER_DURATION });
 		} else {
-			message('Алдаа гарлаа', false, { duration: TOASTER_DURATION });
+			message('エラー発生しました', false, { duration: TOASTER_DURATION });
 		}
 		useStore.setState({ loading: false });
 		return error;
