@@ -49,7 +49,7 @@ axios.interceptors.response.use(
 	},
 	error => {
 		if (error?.response?.status === 401) {
-			// logout();
+			logout();
 		} else if (error?.response?.data?.message_mn) {
 			message(error?.response?.data?.message_mn, false, { duration: TOASTER_DURATION });
 		} else if (error?.response?.data?.message_en) {
@@ -58,6 +58,6 @@ axios.interceptors.response.use(
 			message('Алдаа гарлаа', false, { duration: TOASTER_DURATION });
 		}
 		useStore.setState({ loading: false });
-		return Promise.reject(error);
+		return error;
 	}
 );

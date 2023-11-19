@@ -43,3 +43,24 @@ code {
   font-size: 12px;
   padding: 0 4px;
 }
+
+
+.custom-toaster-container-error {
+  cursor: pointer;
+  border-radius: 6px;
+  background-color: white;
+  border: 1px solid #ff4949;
+  offset: 0px 4px rgba(0, 0, 0, 0.04);
+
+}
+
+.custom-toaster-container-success {
+  cursor: pointer;
+  border-radius: 6px;
+  background-color: white;
+  border: 1px solid #3c9871;
+  color: #3c9871;
+  offset: 10px 4px rgba(60, 152, 113, 0.24);
+  font-size: 18px !important;
+
+}

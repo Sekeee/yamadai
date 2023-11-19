@@ -1,7 +1,9 @@
+import { CheckCircleOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import { notification } from 'antd';
 
 const message = (messageText, success = false, config = {}) => {
 	const messagesWrapper = document.querySelector('.ant-notification');
+
 	let id;
 	if (messagesWrapper) {
 		const messages = messagesWrapper.children?.[0]?.children ?? [];
@@ -27,18 +29,20 @@ const message = (messageText, success = false, config = {}) => {
 	} else {
 		id = 1;
 	}
+
 	const key = `custom_message_${id}`;
 
-	const className = `custom-toaster-container ${key} ${success ? 'success' : 'error'}`;
+	const className = `custom-toaster-container ${key} ${success ? 'custom-toaster-container-success' : 'custom-toaster-container-error'}`;
 
 	notification.open({
 		className,
-		closeIcon: <div />,
-		duration: success ? 10 : 0,
-		message: messageText,
 		key,
+		duration: success ? 6 : 0,
+		message: messageText,
+		description: <div>{success ? 'Successful' : 'Unsuccessful'}</div>,
+		icon: success ? <CheckCircleOutlined style={{ color: '#3C9871' }} /> : <ExclamationCircleOutlined style={{ color: '#FF4949' }} />,
 		onClick() {
-			notification.close(key);
+			notification.destroy(key);
 		},
 		...config,
 	});
