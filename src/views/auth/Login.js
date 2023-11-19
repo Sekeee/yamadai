@@ -19,9 +19,8 @@ const Login = () => {
 
 	const onFinishLogin = async () => {
 		if (!Object.values(form).every(val => val)) return;
-		const a = await axios.post(`/dj-rest-auth/login`, form);
-		console.log(a, 'To be continued...');
-		setLoginInfo('accessToken', 'refreshToken');
+		const { data } = await axios.post(`/dj-rest-auth/login/`, form);
+		setLoginInfo(data.access, data.user);
 	};
 
 	return (
