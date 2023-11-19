@@ -24,7 +24,7 @@ const CustomTest = ({question = '' , answer1 = '' , answer2 = ''}) => {
 
     const onChange = (e: RadioChangeEvent) => {
         console.log('radio checked', e.target.value);
-        setValue(e.target.value);
+        setValue(e.target.value); 
     };
 
     return <div className='flex flex-col justify-center content-center mt-4 text-base'>
