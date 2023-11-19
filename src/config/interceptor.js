@@ -20,7 +20,7 @@ axios.interceptors.request.use(config => {
 
 	if (!config.noAuthorization && !config.headers.Authorization) {
 		const state = useStore.getState();
-		config.headers.Authorization = state?.auth?.token || undefined;
+		config.headers.Authorization = `Bearer ${state?.auth?.token}` || undefined;
 	}
 
 	if (!config.url.startsWith('http')) {
@@ -49,7 +49,7 @@ axios.interceptors.response.use(
 	},
 	error => {
 		if (error?.response?.status === 401) {
-			logout();
+			// logout();
 		} else if (error?.response?.data?.message_mn) {
 			message(error?.response?.data?.message_mn, false, { duration: TOASTER_DURATION });
 		} else if (error?.response?.data?.message_en) {
