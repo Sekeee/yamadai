@@ -3,9 +3,7 @@ import Header from '../../components/layouts/Header';
 import CustomButton from '../../components/common/Button';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import BorderLabelInput from '../../components/common/BorderLabelInput';
-import { Input } from 'antd';
 import useStore from '../../store';
 
 const Login = () => {
@@ -23,11 +21,11 @@ const Login = () => {
 		setLoginInfo(data.access, data.user);
 	};
 
-	const handleKeyDown = (e) => {
+	const handleKeyDown = e => {
 		if (e.key === 'Enter') {
-		  onFinishLogin();
+			onFinishLogin();
 		}
-	  };
+	};
 
 	return (
 		<div className='w-full h-screen'>
@@ -54,19 +52,19 @@ const Login = () => {
 
 					<BorderLabelInput
 						value={form.email}
-						onChange={(e) => setForm({ ...form, email: e.target.value })}
+						onChange={e => setForm({ ...form, email: e.target.value })}
 						label='メールアドレス'
-						placeholder="メールアドレス"
+						placeholder='メールアドレス'
 					/>
 					<div className='h-4'></div>
 					<BorderLabelInput
 						value={form.password}
-						onChange={(e) => setForm({ ...form, password: e.target.value })}
+						onChange={e => setForm({ ...form, password: e.target.value })}
 						label='パスワード'
 						type='password'
 						placeholder='パスワードを入力してください'
 						onKeyDown={handleKeyDown}
-						/>
+					/>
 					<div className='h-8'></div>
 					<CustomButton
 						onClick={() => onFinishLogin()}

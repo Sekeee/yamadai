@@ -1,14 +1,15 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from '../../components/common/Button';
 import Header from '../../components/layouts/Header';
 import { Modal } from 'antd';
 import BorderLabelInput from '../../components/common/BorderLabelInput';
+import axios from 'axios';
 
-const CustomInput = ({ label = '', placeholder = 'input' }) => {
+const CustomInput = ({ label = '', value = '', onChange = () => { }, placeholder = 'input' }) => {
     return (
         <div className='flex flex-col gap-2'>
             <p className='text-[#00000061] text-[12px]' >{label}</p>
-            <input className='border-b border-[#0000006B] w-full outline-none' placeholder={placeholder} />
+            <input value={value} onChange={onchange} className='border-b border-[#0000006B] w-full outline-none' placeholder={placeholder} />
         </div>
     );
 };
@@ -39,6 +40,25 @@ const UserInfo = () => {
     const [isPasswordOpen, setIsPasswordOpen] = useState(false);
     const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
+    const [userInfo, setUserInfo] = useState({})
+
+    useEffect(() => {
+        fetchData()
+    }, [])
+
+    const fetchData = async () => {
+        const { data } = await axios.get(`/api/user/`);
+        console.log(data, 'matarjingoo');
+    }
+
+    const changeUserInfo = (value, key) => {
+        setUserInfo((prev) => {
+            return {
+                ...prev,
+                [key]: value
+            }
+        })
+    }
 
 
     return (
@@ -49,29 +69,34 @@ const UserInfo = () => {
                 <div className='p-3 flex flex-col gap-5'>
                     <p className='text-primary'>基本情報を更新しました</p>
                     <CustomInput
+                        value={userInfo.email}
+                        onChange={(e) => changeUserInfo(e.target.value, 'email')}
                         label='メールアドレス'
                         placeholder='kenkou_app@sample.com'
                     />
-
                     <CustomInput
+                        value={userInfo.handle_name}
+                        onChange={(e) => changeUserInfo(e.target.value, 'handle_name')}
                         label='お名前（ハンドルネーム）'
                         placeholder='大田須太郎'
                     />
                     <CustomInput
+                        value={userInfo.birth_date}
+                        onChange={(e) => changeUserInfo(e.target.value, 'birth_date')}
                         label='生年月日'
                         placeholder='1993/08/17'
                     />
+
                     <div>
                         <div className='text-[#00000099]'>性別</div>
-
                         <div className='flex px-4 py-2 gap-8'>
                             <div className='flex items-center gap-2 '>
-                                <input type={'radio'} />
+                                <input onChange={() => { changeUserInfo('女', 'gender') }} checked={userInfo.gender === '女'} type={'radio'} />
                                 <div>女</div>
                             </div>
 
                             <div className='flex items-center gap-2 '>
-                                <input type={'radio'} />
+                                <input onChange={() => { changeUserInfo('男', 'gender') }} checked={userInfo.gender === '男'} type={'radio'} />
                                 <div>男</div>
                             </div>
                         </div>
