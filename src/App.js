@@ -37,7 +37,7 @@ export default function App() {
 			}}
 		>
 			{loading && <Loading />}
-			<div className='w-full bg-white xs:w-[400px]'>
+			<div className='w-full bg-white overflow-auto pb-4 xs:w-[400px]'>
 				<RouterProvider router={token ? protectedRoutes : authRoutes} />
 			</div>
 		</ConfigProvider>
