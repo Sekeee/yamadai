@@ -109,16 +109,16 @@ const FirstStep = ({ data, setData }) => {
     return (
         <div className="flex flex-col gap-6">
             <CustomInput
-                onChange={(e) => changeData(e.target.value, '健診日')}
-                value={data?.健診日 || ''}
+                onChange={(e) => changeData(e.target.value, 'checked_date')}
+                value={data?.checked_date || ''}
                 label="健診日"
-                ph={"2023/08/17"}
+                ph={"2023-08-17"}
             />
             <div className="flex gap-6">
                 <CustomInput
-                    onChange={(e) => changeData(e.target.value, '身長')}
+                    onChange={(e) => changeData(e.target.value, 'height')}
                     value={data?.身長 || ''}
-                    label="身長"
+                    label="height"
                     unit="cm" />
                 <CustomInput
                     onChange={(e) => changeData(e.target.value, '体重')}
@@ -126,8 +126,8 @@ const FirstStep = ({ data, setData }) => {
                     label="体重"
                     unit="kg" />
             </div>
-            <CustomTest question='喫煙' answer1='はい'answer2='いいえ'/>
-            <CustomTest question='飲酒' answer1='はい'answer2='いいえ'/>
+            <CustomTest question='喫煙' answer1='はい' answer2='いいえ'/>
+            <CustomTest question='飲酒' answer1='はい' answer2='いいえ'/>
             <div className="flex gap-6">
                 <CustomInput
                     onChange={(e) => changeData(e.target.value, '腹囲')}

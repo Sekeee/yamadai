@@ -58,6 +58,6 @@ axios.interceptors.response.use(
 			message('エラー発生しました', false, { duration: TOASTER_DURATION });
 		}
 		useStore.setState({ loading: false });
-		return Promise.reject(error);
+		return error;
 	}
 );

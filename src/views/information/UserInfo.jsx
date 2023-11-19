@@ -48,7 +48,7 @@ const UserInfo = () => {
 
     const fetchData = async () => {
         const { data } = await axios.get(`/api/user/`);
-        console.log(data, 'matarjingoo');
+        console.log(data, 'asd');
     }
 
     const changeUserInfo = (value, key) => {
