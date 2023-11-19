@@ -50,7 +50,10 @@ const Register = () => {
 
 	const onFinishRegistration = async () => {
 		if (!checkIsDisAbled()) return;
-		const a = await axios.post(`/dj-rest-auth/registration`, form);
+		// const test = {
+		// 	user,
+		// };
+		const a = await axios.post(`/dj-rest-auth/registration/`, form);
 		console.log(a, 'To be continued...');
 	};
 
