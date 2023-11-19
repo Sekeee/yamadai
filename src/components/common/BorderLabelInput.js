@@ -17,7 +17,7 @@ const BorderLabelInput = ({ label = '', type = 'text', onChange, onKeyDown, valu
             onChange={onChange}
             onKeyDown={onKeyDown} // Handle onKeyDown event
             type={showPassword ? 'text' : 'password'}
-            className='border-label-input outline-none w-full bg-none hover:bg-none pr-10'
+            className='border-label-input outline-none w-full bg-none hover:bg-none pr-10 focus:border-primary'
             placeholder={ph}
           />
           <div
