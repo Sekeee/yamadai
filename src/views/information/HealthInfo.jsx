@@ -121,13 +121,75 @@ const FirstStep = ({ data, setData }) => {
                     label="height"
                     unit="cm" />
                 <CustomInput
-                    onChange={(e) => changeData(e.target.value, '体重')}
+                    onChange={(e) => changeData(e.target.value, 'weight')}
                     value={data?.体重 || ''}
                     label="体重"
                     unit="kg" />
             </div>
+            {/*TODO : return answer here */}
+            {/*smoking*/}
             <CustomTest question='喫煙' answer1='はい' answer2='いいえ'/>
+            {/*drinking*/}
             <CustomTest question='飲酒' answer1='はい' answer2='いいえ'/>
+
+            <div className="flex gap-6">
+                <CustomInput
+                    onChange={(e) => changeData(e.target.value , 'systolic_blood_pressure')}
+                    value={data.収縮期血圧 || ''}
+                    label="収縮期血圧"
+                    unit="mmHg" />
+                <CustomInput
+                    onChange={(e) => changeData(e.target.value , 'diastolic_blood_pressure')}
+                    value={data.拡張期血圧 || ''}
+                    label="拡張期血圧"
+                    unit="mmHg" />
+            </div>
+
+            <div className="flex gap-6">
+                <CustomInput
+                    onChange={(e) => changeData(e.target.value , 'hdl_cholesterol')}
+                    value={data.HDLコレステロール || ''}
+                    label="HDLコレステロール"
+                    unit="mg/dl" />
+                <CustomInput
+                    onChange={(e) => changeData(e.target.value , 'ldl_cholesterol')}
+                    value={data.LDLコレステロール || ''}
+                    label="LDLコレステロール"
+                    unit="mg/dl" />
+            </div>
+
+            <div className="flex gap-6">
+                <CustomInput
+                    onChange={(e) => changeData(e.target.value , 'blood_glucose')}
+                    value={data.血糖 || ''}
+                    label="血糖"
+                    unit="mg/dl" />
+                <CustomInput
+                    onChange={(e) => changeData(e.target.value , 'hba1c')}
+                    value={data.HbA1c || ''}
+                    label="HbA1c"
+                    unit="%" />
+            </div>
+
+            <div className="flex gap-6">
+                <CustomInput
+                    onChange={(e) => changeData(e.target.value , 'medication_blood_pressure')}
+                    value={data.服薬1 || ''}
+                    label="服薬1"
+                    unit="血圧" />
+                <CustomInput
+                    onChange={(e) => changeData(e.target.value , 'medication_blood_sugar')}
+                    value={data.服薬2 || ''}
+                    label="服薬2"
+                    unit="血糖" />
+            </div>
+
+            <CustomInput
+                onChange={(e) => changeData(e.target.value , 'walking_time')}
+                value={data.日の歩く時間 || ''}
+                label="日の歩く時間"
+                unit="hr" />
+
             <div className="flex gap-6">
                 <CustomInput
                     onChange={(e) => changeData(e.target.value, '腹囲')}
@@ -141,8 +203,6 @@ const FirstStep = ({ data, setData }) => {
                 value={data?.既往歴 || ''}
                 label="既往歴" />
 
-            {/* TODO */}
-
             <div className="flex gap-6">
                 <CustomInput
                     onChange={(e) => changeData(e.target.value, '採血時間')}
@@ -151,10 +211,6 @@ const FirstStep = ({ data, setData }) => {
                     isLong unit="時間後"
                 />
                 <CustomInput label="中性脂肪(トリグリセリド)" unit="mg/dl" />
-            </div>
-            <div className="flex gap-6">
-                <CustomInput label="HDLコレステロール" unit="mg/dl" />
-                <CustomInput label="LDLコレステロール" unit="mg/dl" />
             </div>
             <div className="flex gap-6">
                 <CustomInput label="GOT（AST）" unit="U/I" />
@@ -166,10 +222,6 @@ const FirstStep = ({ data, setData }) => {
             </div>
 
 
-            <div className="flex gap-6">
-                <CustomInput label="血糖" unit="mg/dl" />
-                <CustomInput label="HbA1c" unit="%" />
-            </div>
             <div className="flex gap-6">
                 <CustomInput label="尿蛋白" unit="TODO" />
                 <div className="w-1/2"></div>
