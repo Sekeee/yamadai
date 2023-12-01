@@ -4,12 +4,13 @@ import Header from '../../components/layouts/Header';
 import { Modal } from 'antd';
 import BorderLabelInput from '../../components/common/BorderLabelInput';
 import axios from 'axios';
+import message from '../../components/common/Message';
 
 const CustomInput = ({ label = '', value = '', onChange = () => { }, placeholder = 'input' }) => {
     return (
         <div className='flex flex-col gap-2'>
             <p className='text-[#00000061] text-[12px]' >{label}</p>
-            <input value={value} onChange={onchange} className='border-b border-[#0000006B] w-full outline-none' placeholder={placeholder} />
+            <input value={value || ''} onChange={onChange} className='border-b border-[#0000006B] w-full outline-none' placeholder={placeholder} />
         </div>
     );
 };
@@ -41,6 +42,11 @@ const UserInfo = () => {
     const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
     const [userInfo, setUserInfo] = useState({})
+    const [password, setPassword] = useState({
+        new_password1: '',
+        new_password2: '',
+        old_password: ''
+    });
 
     useEffect(() => {
         fetchData()
@@ -48,7 +54,13 @@ const UserInfo = () => {
 
     const fetchData = async () => {
         const { data } = await axios.get(`/api/user/`);
-        console.log(data, 'asd');
+        setUserInfo(data)
+    }
+
+    const saveData = async () => {
+        const { data } = await axios.patch(`/api/user/`, userInfo);
+        setUserInfo(data)
+        fetchData()
     }
 
     const changeUserInfo = (value, key) => {
@@ -60,6 +72,33 @@ const UserInfo = () => {
         })
     }
 
+    const changePassword = async () => {
+        if (passwordValidation()) return;
+        const { data } = await axios.post(`/dj-rest-auth/password/change/`, password);
+        message(data.detail, true)
+        setIsPasswordOpen(false)
+        setPassword({
+            new_password1: '',
+            new_password2: '',
+            old_password: ''
+        })
+    }
+
+    const onChangePassword = (value, key) => {
+        setPassword((prev) => {
+            return {
+                ...prev,
+                [key]: value
+            }
+        })
+    }
+
+    const passwordValidation = () => {
+        const check = Object.values(password).every(val => val)
+        const checkNewPass = password.new_password1 === password.new_password2
+
+        return !(check && checkNewPass)
+    }
 
     return (
         <>
@@ -74,12 +113,14 @@ const UserInfo = () => {
                         label='メールアドレス'
                         placeholder='kenkou_app@sample.com'
                     />
+
                     <CustomInput
                         value={userInfo.handle_name}
                         onChange={(e) => changeUserInfo(e.target.value, 'handle_name')}
                         label='お名前（ハンドルネーム）'
                         placeholder='大田須太郎'
                     />
+
                     <CustomInput
                         value={userInfo.birth_date}
                         onChange={(e) => changeUserInfo(e.target.value, 'birth_date')}
@@ -91,18 +132,18 @@ const UserInfo = () => {
                         <div className='text-[#00000099]'>性別</div>
                         <div className='flex px-4 py-2 gap-8'>
                             <div className='flex items-center gap-2 '>
-                                <input onChange={() => { changeUserInfo('女', 'gender') }} checked={userInfo.gender === '女'} type={'radio'} />
+                                <input onChange={() => { changeUserInfo('female', 'gender') }} checked={userInfo.gender === 'female'} type={'radio'} />
                                 <div>女</div>
                             </div>
 
                             <div className='flex items-center gap-2 '>
-                                <input onChange={() => { changeUserInfo('男', 'gender') }} checked={userInfo.gender === '男'} type={'radio'} />
+                                <input onChange={() => { changeUserInfo('male', 'gender') }} checked={userInfo.gender === 'male'} type={'radio'} />
                                 <div>男</div>
                             </div>
                         </div>
                     </div>
 
-                    <Button text='保存' />
+                    <Button onClick={saveData} text='保存' />
 
                     <p
                         onClick={() => setIsEmailOpen(true)}
@@ -146,20 +187,32 @@ const UserInfo = () => {
             <CustomModal isModalOpen={isPasswordOpen} setIsModalOpen={setIsPasswordOpen} >
                 <p>パスワード変更</p>
                 <div className='p-3 flex flex-col gap-4'>
-                    <p className='font-[14px] text-error'>※現在のパスワードが違います</p>
+                    {/* <p className='font-[14px] text-error'>※現在のパスワードが違います</p> */}
                     <div className='mt-4'>
-                        <BorderLabelInput label='現在のパスワード' />
+                        <BorderLabelInput
+                            type='password'
+                            onChange={(e) => { onChangePassword(e.target.value, 'old_password') }}
+                            value={password.old_password}
+                            label='現在のパスワード' />
                     </div>
                     <div className='mt-4'>
-                        <BorderLabelInput label='新しいパスワード' />
+                        <BorderLabelInput
+                            type='password'
+                            onChange={(e) => { onChangePassword(e.target.value, 'new_password1') }}
+                            value={password.new_password1}
+                            label='新しいパスワード' />
                     </div>
                     <div className='mt-4'>
-                        <BorderLabelInput label='新しいパスワード' underLabel="もう一度入力してください" />
+                        <BorderLabelInput
+                            type='password'
+                            onChange={(e) => { onChangePassword(e.target.value, 'new_password2') }}
+                            value={password.new_password2}
+                            label='新しいパスワード' underLabel="もう一度入力してください" />
                     </div>
                 </div>
                 <div className='flex gap-2 mt-6 items-end justify-end'>
                     <Button onClick={() => setIsPasswordOpen(false)} variant='outline' text='戻る' />
-                    <Button onClick={() => setIsPasswordOpen(false)} text='変更する' />
+                    <Button disabled={passwordValidation()} onClick={changePassword} text='変更する' />
                 </div>
             </CustomModal>
 
