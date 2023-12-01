@@ -1,6 +1,18 @@
+import axios from "axios";
+import { useEffect } from "react";
 import Header from "../../components/layouts/Header"
 
 const PredictResult = () => {
+    useEffect(() => {
+        fetchData()
+    }, [])
+
+
+    const fetchData = async () => {
+        const { data } = await axios.get(`/api/result/10/`,);
+    }
+
+
     return (
         <>
             <Header title='健康増進アプリ' />
