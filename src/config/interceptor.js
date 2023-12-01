@@ -18,9 +18,11 @@ axios.interceptors.request.use(config => {
 		...config.headers,
 	};
 
-	if (!config.noAuthorization && !config.headers.Authorization) {
+	if (!config.noAuthorization && !config.headers.Authorization ) {
 		const state = useStore.getState();
-		config.headers.Authorization = `Bearer ${state?.auth?.token}` || undefined;
+		if(state?.auth?.token) config.headers.Authorization = `Bearer ${state?.auth?.token}` || undefined;
+
+
 	}
 
 	if (!config.url.startsWith('http')) {
