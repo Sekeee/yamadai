@@ -20,7 +20,11 @@ axios.interceptors.request.use(config => {
 
 	if (!config.noAuthorization && !config.headers.Authorization) {
 		const state = useStore.getState();
-		config.headers.Authorization = `Bearer ${state?.auth?.token}` || undefined;
+
+		console.log(state?.auth?.token, 'matarjikg');
+		if (state?.auth?.token) {
+			config.headers.Authorization = `Bearer ${state?.auth?.token}` || undefined;
+		}
 	}
 
 	if (!config.url.startsWith('http')) {

@@ -18,7 +18,7 @@ const Login = () => {
 	const onFinishLogin = async () => {
 		if (!Object.values(form).every(val => val)) return;
 		const { data } = await axios.post(`/dj-rest-auth/login/`, form);
-		setLoginInfo(data.access, data.user);
+		setLoginInfo(data?.access, data.user);
 	};
 
 	const handleKeyDown = e => {
