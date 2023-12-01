@@ -21,7 +21,6 @@ axios.interceptors.request.use(config => {
 	if (!config.noAuthorization && !config.headers.Authorization) {
 		const state = useStore.getState();
 
-		console.log(state?.auth?.token, 'matarjikg');
 		if (state?.auth?.token) {
 			config.headers.Authorization = `Bearer ${state?.auth?.token}` || undefined;
 		}
@@ -53,7 +52,7 @@ axios.interceptors.response.use(
 	},
 	error => {
 		if (error?.response?.status === 401) {
-			logout();
+			// logout();
 		} else if (error?.response?.data?.message_mn) {
 			message(error?.response?.data?.message_mn, false, { duration: TOASTER_DURATION });
 		} else if (error?.response?.data?.message_en) {
