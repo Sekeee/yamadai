@@ -1,17 +1,28 @@
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import Header from "../../components/layouts/Header"
 
 const PredictResult = () => {
+    const [commentList, setCommentList] = useState([]);
+    const [searchParams] = useSearchParams();
+    const [result, setResult] = useState({});
+    const resultId = searchParams.get('resultId');
+    const date = searchParams.get('date');
+
     useEffect(() => {
-        fetchData()
+        if (resultId) {
+            fetchData()
+        }
     }, [])
 
-
     const fetchData = async () => {
-        const { data } = await axios.get(`/api/result/10/`,);
-    }
+        const { data } = await axios.get(`/api/result/${resultId}/`,);
+        const { predict_result, comments } = data
 
+        setResult(predict_result)
+        setCommentList(comments)
+    }
 
     return (
         <>
@@ -19,7 +30,7 @@ const PredictResult = () => {
             <div className="p-4 px-6">
                 <div className="flex gap-4 items-center">
                     <p className="text-[20px]">予測結果</p>
-                    <div className="border-primary text-[16px] border text-primary rounded-[40px] py-1 px-3">2023/08/17</div>
+                    <div className="border-primary text-[16px] border text-primary rounded-[40px] py-1 px-3">{date}</div>
                 </div>
 
                 <div className="flex gap-4 mt-[30px] mb-[50px] flex-col">
@@ -30,51 +41,58 @@ const PredictResult = () => {
 
                     <div className="flex gap-4 text-[#000000DE] items-center">
                         <p className="w-[48%]">がん発症率</p>
-                        <p className="w-[10%] ">10%</p>
+                        <p className="w-[10%] ">{result?.cancer_rate}</p>
                         <div className="w-[32%] flex items-center">
-                            <div className="bg-success rounded-[50px] text-white p-3 py-[5px]">とても低い</div>
+                            <ResultData number={Number(result?.cancer_rate || 0)} />
                         </div>
                     </div>
 
                     <div className="flex gap-4 text-[#000000DE] items-center">
                         <p className="w-[48%]">脳卒中発症率</p>
-                        <p className="w-[10%] ">30%</p>
+                        <p className="w-[10%] ">{result?.stroke_myocardial_infarction_rate}</p>
                         <div className="w-[32%] flex items-center">
-                            <div className="bg-primary rounded-[50px] text-white p-3 py-[5px]">低い</div>
+                            <ResultData number={Number(result?.cancer_rate || 0)} />
                         </div>
                     </div>
 
                     <div className="flex gap-4 text-[#000000DE] ">
                         <p className="w-[48%]">狭心症・心筋梗塞 発症率</p>
-                        <p className="w-[10%] ">50%</p>
+                        <p className="w-[10%] ">{result?.care_need_rate}</p>
                         <div className="w-[32%] flex items-center">
-                            <div className="bg-grey rounded-[50px] text-black p-3 py-[5px]">ふつう</div>
+                            <ResultData number={Number(result?.care_need_rate || 0)} />
                         </div>
                     </div>
 
                     <div className="flex gap-4 text-[#000000DE] items-center">
                         <p className="w-[48%]">生存率</p>
-                        <p className="w-[10%] ">30%</p>
+                        <p className="w-[10%] ">{result?.death_rate}</p>
                         <div className="w-[32%] flex items-center">
-                            <div className="bg-warning rounded-[50px] text-white p-3 py-[5px]">高い</div>
+                            <ResultData number={Number(result?.death_rate || 0)} />
                         </div>
                     </div>
 
                     <div className="flex gap-4 text-[#000000DE] items-center">
                         <p className="w-[48%]">要介護率</p>
-                        <p className="w-[10%] ">70%</p>
+                        <p className="w-[10%] ">{result?.care_need_rate}</p>
                         <div className="w-[32%] flex items-center">
-                            <div className="bg-error rounded-[50px] text-white p-3 py-[5px]">とても高い</div>
+                            <ResultData number={Number(result?.care_need_rate || 0)} />
                         </div>
                     </div>
                 </div>
 
 
                 <div className="mb-6">アドバイス</div>
-                <div className="mb-3">アドバイス小見出し</div>
-                <p>ここにアドバイスの詳細を書きます。例）1日15分以上の運動をしましょう。</p>
-                <div className="mt-4 mb-3">アドバイス小見出し</div>
-                <p>ここにアドバイスの詳細を書きます。例）1日15分以上の運動をしましょう。</p>
+
+                {
+                    commentList?.map(({ title, content }, index) => {
+                        return (
+                            <div key={index} className='mt-[14px]'>
+                                <div className="mb-3">{title}</div>
+                                <p>{content}</p>
+                            </div>
+                        )
+                    })
+                }
 
                 <p className='cursor-pointer underline mt-[40px] decoration-primary underline-offset-4 text-primary' >
                     健診情報を確認する
@@ -85,3 +103,20 @@ const PredictResult = () => {
 }
 
 export default PredictResult
+
+
+const ResultData = ({ number }) => {
+    if (number >= 0 && number <= 20) {
+        return <div className="bg-success rounded-[50px] text-white p-3 py-[5px]">とても低い</div>;
+    } else if (number > 20 && number <= 40) {
+        return <div className="bg-primary rounded-[50px] text-white p-3 py-[5px]">低い</div>;
+    } else if (number > 40 && number <= 60) {
+        return <div className="bg-grey rounded-[50px] text-black p-3 py-[5px]">ふつう</div>;
+    } else if (number > 60 && number <= 80) {
+        return <div className="bg-warning rounded-[50px] text-white p-3 py-[5px]">高い</div>;
+    } else if (number > 90 && number <= 100) {
+        return <div className="bg-error rounded-[50px] text-white p-3 py-[5px]">とても高い</div>;
+    } else {
+        return ''
+    }
+}
