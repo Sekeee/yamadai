@@ -114,7 +114,7 @@ const ResultData = ({ number }) => {
         return <div className="bg-grey rounded-[50px] text-black p-3 py-[5px]">ふつう</div>;
     } else if (number > 60 && number <= 80) {
         return <div className="bg-warning rounded-[50px] text-white p-3 py-[5px]">高い</div>;
-    } else if (number > 90 && number <= 100) {
+    } else if (number > 80 && number <= 100) {
         return <div className="bg-error rounded-[50px] text-white p-3 py-[5px]">とても高い</div>;
     } else {
         return ''

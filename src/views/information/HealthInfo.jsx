@@ -22,7 +22,7 @@ const CustomInput = ({ label = '', value = '', onChange = () => { }, ph = '', un
     );
 };
 
-const CustomTest = ({ question = '', answer1 = '', answer2 = ''  , onChanged = () => {}}) => {
+const CustomTest = ({ question = '', answer1 = '', answer2 = '', onChanged = () => { } }) => {
     const [value, setValue] = useState(0);
 
     const onChange = (e) => {
@@ -45,23 +45,25 @@ const CustomTest = ({ question = '', answer1 = '', answer2 = ''  , onChanged = (
 const HealthInfo = () => {
     const [current, setCurrent] = useState(0);
     const [data, setData] = useState({})
+    const navigate = useNavigate();
+
+
+    const createHealthInfo = async () => {
+        const { data: resultData } = await axios.post('/api/healthcheckinfo/create/', data);
+        if (resultData?.id) {
+            navigate('/result')
+        }
+    }
 
     const items = [
         { title: '健診情報', element: <FirstStep data={data} setData={setData} /> },
         { title: '質問票①', element: <SecondStep /> },
-        { title: '質問票②', element: <ThirdStep /> },
+        { title: '質問票②', element: <ThirdStep createInfo={createHealthInfo} /> },
     ];
 
     return (
         <>
             <Header title='健康増進アプリ' />
-            <div onClick={ async () => {
-                console.log(data, 'check data')
-                const { response } = await axios.post('/api/healthcheckinfo/create/' , data);
-                console.log('setgel :' , response);
-
-             }
-            }>hi</div>
             <div className="flex flex-col gap-8 p-4 ">
                 <p>健診情報入力</p>
                 <Steps current={current} onChange={(e) => setCurrent(e)} labelPlacement="vertical" items={items} />
@@ -126,66 +128,58 @@ const FirstStep = ({ data, setData }) => {
                     label="体重"
                     unit="kg" />
             </div>
-            {/*TODO : return answer here */}
-            {/*smoking*/}
-            <CustomTest question='喫煙' answer1='はい' answer2='いいえ'/>
-            {/*drinking*/}
-            <CustomTest question='飲酒' answer1='はい' answer2='いいえ'/>
-
+            <CustomTest question='喫煙' answer1='はい' answer2='いいえ' />
+            <CustomTest question='飲酒' answer1='はい' answer2='いいえ' />
             <div className="flex gap-6">
                 <CustomInput
-                    onChange={(e) => changeData(e.target.value , 'systolic_blood_pressure')}
+                    onChange={(e) => changeData(e.target.value, 'systolic_blood_pressure')}
                     value={data.収縮期血圧 || ''}
                     label="収縮期血圧"
                     unit="mmHg" />
                 <CustomInput
-                    onChange={(e) => changeData(e.target.value , 'diastolic_blood_pressure')}
+                    onChange={(e) => changeData(e.target.value, 'diastolic_blood_pressure')}
                     value={data.拡張期血圧 || ''}
                     label="拡張期血圧"
                     unit="mmHg" />
             </div>
-
             <div className="flex gap-6">
                 <CustomInput
-                    onChange={(e) => changeData(e.target.value , 'hdl_cholesterol')}
+                    onChange={(e) => changeData(e.target.value, 'hdl_cholesterol')}
                     value={data.HDLコレステロール || ''}
                     label="HDLコレステロール"
                     unit="mg/dl" />
                 <CustomInput
-                    onChange={(e) => changeData(e.target.value , 'ldl_cholesterol')}
+                    onChange={(e) => changeData(e.target.value, 'ldl_cholesterol')}
                     value={data.LDLコレステロール || ''}
                     label="LDLコレステロール"
                     unit="mg/dl" />
             </div>
-
             <div className="flex gap-6">
                 <CustomInput
-                    onChange={(e) => changeData(e.target.value , 'blood_glucose')}
+                    onChange={(e) => changeData(e.target.value, 'blood_glucose')}
                     value={data.血糖 || ''}
                     label="血糖"
                     unit="mg/dl" />
                 <CustomInput
-                    onChange={(e) => changeData(e.target.value , 'hba1c')}
+                    onChange={(e) => changeData(e.target.value, 'hba1c')}
                     value={data.HbA1c || ''}
                     label="HbA1c"
                     unit="%" />
             </div>
-
             <div className="flex gap-6">
                 <CustomInput
-                    onChange={(e) => changeData(e.target.value , 'medication_blood_pressure')}
+                    onChange={(e) => changeData(e.target.value, 'medication_blood_pressure')}
                     value={data.服薬1 || ''}
                     label="服薬1"
                     unit="血圧" />
                 <CustomInput
-                    onChange={(e) => changeData(e.target.value , 'medication_blood_sugar')}
+                    onChange={(e) => changeData(e.target.value, 'medication_blood_sugar')}
                     value={data.服薬2 || ''}
                     label="服薬2"
                     unit="血糖" />
             </div>
-
             <CustomInput
-                onChange={(e) => changeData(e.target.value , 'walking_time')}
+                onChange={(e) => changeData(e.target.value, 'walking_time')}
                 value={data.日の歩く時間 || ''}
                 label="日の歩く時間"
                 unit="hr" />
@@ -220,14 +214,10 @@ const FirstStep = ({ data, setData }) => {
                 <CustomInput label="γ-GT(γ-GTP)" unit="U/I" />
                 <div className="w-1/2"></div>
             </div>
-
-
             <div className="flex gap-6">
                 <CustomInput label="尿蛋白" unit="TODO" />
                 <div className="w-1/2"></div>
             </div>
-
-
             <div className="flex gap-6">
                 <CustomInput label="ヘマトクリット値" unit="%" />
                 <CustomInput label="血色素量" unit="%" />
@@ -249,15 +239,11 @@ const SecondStep = () => {
             <CustomTest question='血圧を下げる薬' answer1='はい' answer2='いいえ' />
             <CustomTest question='インスリン注射又は血糖を下げる薬' answer1='はい' answer2='いいえ' />
             <CustomTest question='コレステロール・中性脂肪を下げる薬' answer1='はい' answer2='いいえ' />
-
-
         </div>
     )
 }
 
-const ThirdStep = () => {
-    const navigate = useNavigate();
-
+const ThirdStep = ({ createInfo }) => {
     return (
         <div className="flex flex-col gap-6">
             <CustomTest question='20 歳の時の体重から10kg 以上増加している' answer1='はい' answer2='いいえ' />
@@ -265,7 +251,7 @@ const ThirdStep = () => {
             <CustomTest question='日常生活において歩行又は同等の身体活動を1 日1 時間以上実施している。' answer1='はい' answer2='いいえ' />
             <CustomTest question='ほぼ同じ年齢の同性と比較して歩く速度が速い' answer1='はい' answer2='いいえ' />
             <CustomTest question='この1 年間で体重の増減が±3 ㎏以上あった。' answer1='はい' answer2='いいえ' />
-            <CustomButton onClick={() => navigate('/result')} text='予測を行う' />
+            <CustomButton onClick={createInfo} text='予測を行う' />
         </div>
     )
 }
