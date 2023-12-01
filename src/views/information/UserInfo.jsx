@@ -125,19 +125,19 @@ const UserInfo = () => {
                         value={userInfo.birth_date}
                         onChange={(e) => changeUserInfo(e.target.value, 'birth_date')}
                         label='生年月日'
-                        placeholder='1993/08/17'
+                        placeholder='1993-08-17'
                     />
 
                     <div>
                         <div className='text-[#00000099]'>性別</div>
                         <div className='flex px-4 py-2 gap-8'>
                             <div className='flex items-center gap-2 '>
-                                <input onChange={() => { changeUserInfo('female', 'gender') }} checked={userInfo.gender === 'female'} type={'radio'} />
+                                <input onChange={() => { changeUserInfo(2, 'gender') }} checked={userInfo.gender === 2} type={'radio'} />
                                 <div>女</div>
                             </div>
 
                             <div className='flex items-center gap-2 '>
-                                <input onChange={() => { changeUserInfo('male', 'gender') }} checked={userInfo.gender === 'male'} type={'radio'} />
+                                <input onChange={() => { changeUserInfo(1 ,  'gender') }} checked={userInfo.gender === 1} type={'radio'} />
                                 <div>男</div>
                             </div>
                         </div>
