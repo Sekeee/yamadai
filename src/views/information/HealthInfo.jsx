@@ -8,6 +8,7 @@ import { DatePicker, Radio, Select, Steps } from 'antd';
 import { useState } from "react";
 import axios from "axios";
 import dayjs from 'dayjs'
+import CustomDrawer from '../../components/common/Drawer';
 
 const CustomInput = ({ label = '', type = 'text', value = '', onChange = () => { }, ph = '', unit = '', isLong = false }) => {
     return (
@@ -16,7 +17,10 @@ const CustomInput = ({ label = '', type = 'text', value = '', onChange = () => {
             <div className="border-b border-[#0000006B] flex pb-1">
                 <input
                     type={type}
-                    onChange={onChange}
+                    onChange={(e) => {
+                        if (type === "number" && e.target.value?.length > 4) { return }
+                        onChange(e)
+                    }}
                     value={value}
                     className='w-full outline-none' placeholder={ph} />
                 <p className={`text-[#757575] text-[14px] ${isLong && 'w-[60px]'}`}>{unit}</p>
@@ -62,6 +66,7 @@ const CustomSelect = ({ options = [], label = '', value = '', onChange = () => {
 }
 
 const HealthInfo = () => {
+    const [isDrawerOpen, setIsDrawerOpen] = useState(false)
     const [current, setCurrent] = useState(0);
     const [data, setData] = useState({})
     const navigate = useNavigate();
@@ -81,7 +86,7 @@ const HealthInfo = () => {
 
     return (
         <>
-            <Header title='健康増進アプリ' />
+            <Header title='健康増進アプリ' setIsDrawerOpen={setIsDrawerOpen} />
             <div className="flex flex-col gap-8 p-4 ">
                 <p>健診情報入力</p>
                 <Steps current={current} onChange={(e) => setCurrent(e)} labelPlacement="vertical" items={items} />
@@ -111,6 +116,7 @@ const HealthInfo = () => {
                 </div>
             </div>
 
+            <CustomDrawer setIsDrawerOpen={setIsDrawerOpen} isDrawerOpen={isDrawerOpen} />
         </>
     )
 }

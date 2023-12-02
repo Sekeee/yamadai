@@ -1,3 +1,4 @@
+import CustomDrawer from "../../components/common/Drawer";
 import Header from "../../components/layouts/Header";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -6,10 +7,9 @@ import axios from "axios";
 const Result = () => {
     const navigate = useNavigate();
     const [resultList, setResultList] = useState([])
+    const [isDrawerOpen, setIsDrawerOpen] = useState(false)
 
-    useEffect(() => {
-        fetchData()
-    }, [])
+    useEffect(() => { fetchData() }, [])
 
     const fetchData = async () => {
         const { data } = await axios.get(`/api/healthcheckinfo/`,);
@@ -18,7 +18,7 @@ const Result = () => {
 
 
     return <div className='w-full h-screen'>
-        <Header title='健康増進アプリ' />
+        <Header title='健康増進アプリ' setIsDrawerOpen={setIsDrawerOpen} />
         <div className='w-full flex-col justify-center content-center pt-1 bg-white'>
             <p className='text-black text-xl mt-4 mx-6'>予測結果一覧</p>
             <div className='flex=col justify-around content-center mx-10'>
@@ -33,6 +33,7 @@ const Result = () => {
                 }
             </div>
         </div>
+        <CustomDrawer setIsDrawerOpen={setIsDrawerOpen} isDrawerOpen={isDrawerOpen} />
     </div>
 }
 
