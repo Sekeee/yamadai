@@ -6,6 +6,7 @@ import BorderLabelInput from '../../components/common/BorderLabelInput';
 import { useState } from 'react';
 import Button from '../../components/common/Button';
 import axios from 'axios';
+import useStore from '../../store';
 
 const CustomModal = ({ isModalOpen, children, setIsModalOpen }) => {
 	return (
@@ -29,7 +30,9 @@ const CustomModal = ({ isModalOpen, children, setIsModalOpen }) => {
 
 const Register = () => {
 	const navigate = useNavigate();
+	const setLoginInfo = useStore(store => store.auth.setLoginInfo);
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [checkboxError, setCheckboxError] = useState(false);
 
 	const [agreement, setAgreement] = useState({
 		agree: false,
@@ -42,8 +45,6 @@ const Register = () => {
 		password2: '',
 	});
 
-	const [checkboxError, setCheckboxError] = useState(false);
-
 	const checkIsDisabled = () => {
 		const checkForm = Object.values(form).every(val => val);
 		const checkAgreement = Object.values(agreement).every(val => val);
@@ -54,8 +55,9 @@ const Register = () => {
 		if (!checkIsDisabled()) {
 			setCheckboxError(false);
 
-			const a = await axios.post(`/dj-rest-auth/registration/`, form);
-			console.log(a, 'To be continued...');
+			const { data } = await axios.post(`/dj-rest-auth/registration/`, form);
+			setLoginInfo(data?.access, data.user);
+			navigate('/user-info');
 		} else {
 			setCheckboxError(true);
 		}

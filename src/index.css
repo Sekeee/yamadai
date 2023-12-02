@@ -16,6 +16,30 @@ code {
     monospace;
 }
 
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+
+*::-webkit-scrollbar {
+  display: none;
+}
+
+* {
+  scrollbar-width: none;
+}
+
+* {
+  -ms-overflow-style: none;
+}
+
 #root {
   width: 100vw;
   height: 100vh;
@@ -62,5 +86,13 @@ code {
   color: #3c9871;
   offset: 10px 4px rgba(60, 152, 113, 0.24);
   font-size: 18px !important;
+}
 
+
+.ant-picker-borderless {
+  padding: 0px !important;
+}
+
+:where(.css-dev-only-do-not-override-gevqub).ant-picker-dropdown .ant-picker-today-btn {
+  color: #11a9a4;
 }

@@ -1,8 +1,8 @@
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
-import AuthRouter from './routes/AuthRouter';
-import ProtectedRoutes from './routes/Protected';
-import { ConfigProvider } from 'antd';
 import Loading from './components/common/Loading';
+import ProtectedRoutes from './routes/Protected';
+import AuthRouter from './routes/AuthRouter';
+import { ConfigProvider } from 'antd';
 import useStore from './store';
 import './config/interceptor';
 
@@ -29,13 +29,7 @@ export default function App() {
 	const loading = useStore(state => state.loading);
 
 	return (
-		<ConfigProvider
-			theme={{
-				token: {
-					colorPrimary: '#2196F3',
-				},
-			}}
-		>
+		<ConfigProvider theme={{ token: { colorPrimary: '#11a9a4' } }}>
 			{loading && <Loading />}
 			<div className='w-full bg-white overflow-auto pb-4 xs:w-[400px]'>
 				<RouterProvider router={token ? protectedRoutes : authRoutes} />

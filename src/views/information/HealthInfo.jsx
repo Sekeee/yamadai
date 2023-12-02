@@ -1,18 +1,21 @@
-import Header from "../../components/layouts/Header"
-import { Steps } from 'antd';
-import { useState } from "react";
 import { BiChevronRight, BiChevronLeft } from 'react-icons/bi'
 import CustomButton from "../../components/common/Button";
+import Header from "../../components/layouts/Header"
+import message from '../../components/common/Message';
 import { useNavigate } from "react-router-dom";
-import { Radio } from 'antd';
+import { FaCaretDown } from "react-icons/fa";
+import { DatePicker, Radio, Select, Steps } from 'antd';
+import { useState } from "react";
 import axios from "axios";
+import dayjs from 'dayjs'
 
-const CustomInput = ({ label = '', value = '', onChange = () => { }, ph = '', unit = '', isLong = false }) => {
+const CustomInput = ({ label = '', type = 'text', value = '', onChange = () => { }, ph = '', unit = '', isLong = false }) => {
     return (
         <div className='flex flex-col gap-2'>
             <p className='text-[#757575] text-[12px]' >{label}</p>
             <div className="border-b border-[#0000006B] flex pb-1">
                 <input
+                    type={type}
                     onChange={onChange}
                     value={value}
                     className='w-full outline-none' placeholder={ph} />
@@ -22,25 +25,40 @@ const CustomInput = ({ label = '', value = '', onChange = () => { }, ph = '', un
     );
 };
 
-const CustomTest = ({ question = '', answer1 = '', answer2 = '', onChanged = () => { } }) => {
-    const [value, setValue] = useState(0);
-
+const CustomRadio = ({ question = '', value = '', ansver1Value = '1', ansver2Value = '2', answer1 = '', answer2 = '', onChanged = () => { } }) => {
     const onChange = (e) => {
-        console.log('radio checked', e.target.value);
-        setValue(e.target.value);
-        onChanged(e);
+        onChanged(e.target.value);
     };
 
-    return <div className='flex flex-col justify-center content-center mt-4 text-base'>
-        <div className='mb-2'>{question}</div>
+    return <div className='flex flex-col justify-center content-center  text-base'>
+        <p className='text-[#757575] text-[12px] mb-2' >{question}</p>
         <Radio.Group onChange={onChange} value={value}>
-            <Radio value={1}>{answer1}</Radio>
-            <Radio value={2}>{answer2}</Radio>
+            <Radio value={ansver1Value}>{answer1}</Radio>
+            <Radio value={ansver2Value}>{answer2}</Radio>
         </Radio.Group>
-
     </div>
 }
 
+const CustomSelect = ({ options = [], label = '', value = '', onChange = () => { } }) => {
+    return (
+        <div>
+            <p className='text-[#757575] text-[12px] mb-2' >{label}</p>
+            <Select
+                style={{ width: '100%', borderBottom: '1px solid #0000006B', padding: '0 !important' }}
+                showSearch
+                placeholder=''
+                bordered={false}
+                onChange={onChange}
+                optionFilterProp="children"
+                suffixIcon={<FaCaretDown />}
+                filterOption={(input, option) => (option?.label ?? '').includes(input)}
+                filterSort={(optionA, optionB) => (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())}
+                options={options}
+                value={value}
+            />
+        </div>
+    )
+}
 
 const HealthInfo = () => {
     const [current, setCurrent] = useState(0);
@@ -49,15 +67,14 @@ const HealthInfo = () => {
 
 
     const createHealthInfo = async () => {
+        if (!data?.checked_date) { message('健診日 field should be filled', false) }
         const { data: resultData } = await axios.post('/api/healthcheckinfo/create/', data);
-        if (resultData?.id) {
-            navigate('/result')
-        }
+        if (resultData?.id) { navigate('/result') }
     }
 
     const items = [
         { title: '健診情報', element: <FirstStep data={data} setData={setData} /> },
-        { title: '質問票①', element: <SecondStep /> },
+        { title: '質問票①', element: <SecondStep data={data} setData={setData} /> },
         { title: '質問票②', element: <ThirdStep createInfo={createHealthInfo} /> },
     ];
 
@@ -97,7 +114,6 @@ const HealthInfo = () => {
     )
 }
 
-
 const FirstStep = ({ data, setData }) => {
     const changeData = (value, key) => {
         setData((prev) => {
@@ -110,80 +126,101 @@ const FirstStep = ({ data, setData }) => {
 
     return (
         <div className="flex flex-col gap-6">
-            <CustomInput
-                onChange={(e) => changeData(e.target.value, 'checked_date')}
-                value={data?.checked_date || ''}
-                label="健診日"
-                ph={"2023-08-17"}
-            />
+            <div className='border-b border-[#0000006B] pb-2'>
+                <p className='text-[#757575] text-[12px] mb-2 relative'>
+                    <span className="text-error absolute -top-1 left-[36px]">*</span>
+                    健診日
+                </p>
+                <DatePicker
+                    style={{ width: '100%', borderBottom: '1px solid  !important', padding: '0 !important' }}
+                    bordered={false}
+                    placeholder='2023-12-23'
+                    value={data?.checked_date ? dayjs(data?.checked_date) : ''}
+                    onChange={(_, dateString) => {
+                        changeData(dateString, 'checked_date')
+                    }} />
+            </div>
             <div className="flex gap-6">
                 <CustomInput
                     onChange={(e) => changeData(e.target.value, 'height')}
-                    value={data?.身長 || ''}
+                    value={data?.height || ''}
                     label="height"
-                    unit="cm" />
+                    type="number"
+                    unit="cm"
+                />
                 <CustomInput
                     onChange={(e) => changeData(e.target.value, 'weight')}
-                    value={data?.体重 || ''}
+                    value={data?.weight || ''}
                     label="体重"
-                    unit="kg" />
+                    type="number"
+                    unit="kg"
+                />
             </div>
-            <CustomTest question='喫煙' answer1='はい' answer2='いいえ' />
-            <CustomTest question='飲酒' answer1='はい' answer2='いいえ' />
+            <CustomRadio question='喫煙' answer1='はい' answer2='いいえ' />
+            <CustomRadio question='飲酒' answer1='はい' answer2='いいえ' />
             <div className="flex gap-6">
                 <CustomInput
                     onChange={(e) => changeData(e.target.value, 'systolic_blood_pressure')}
-                    value={data.収縮期血圧 || ''}
+                    value={data.systolic_blood_pressure || ''}
                     label="収縮期血圧"
                     unit="mmHg" />
                 <CustomInput
                     onChange={(e) => changeData(e.target.value, 'diastolic_blood_pressure')}
-                    value={data.拡張期血圧 || ''}
+                    value={data.diastolic_blood_pressure || ''}
                     label="拡張期血圧"
                     unit="mmHg" />
             </div>
             <div className="flex gap-6">
                 <CustomInput
                     onChange={(e) => changeData(e.target.value, 'hdl_cholesterol')}
-                    value={data.HDLコレステロール || ''}
+                    value={data.hdl_cholesterol || ''}
                     label="HDLコレステロール"
                     unit="mg/dl" />
                 <CustomInput
                     onChange={(e) => changeData(e.target.value, 'ldl_cholesterol')}
-                    value={data.LDLコレステロール || ''}
+                    value={data.ldl_cholesterol || ''}
                     label="LDLコレステロール"
                     unit="mg/dl" />
             </div>
             <div className="flex gap-6">
                 <CustomInput
                     onChange={(e) => changeData(e.target.value, 'blood_glucose')}
-                    value={data.血糖 || ''}
+                    value={data.blood_glucose || ''}
                     label="血糖"
                     unit="mg/dl" />
                 <CustomInput
                     onChange={(e) => changeData(e.target.value, 'hba1c')}
-                    value={data.HbA1c || ''}
+                    value={data.hba1c || ''}
+                    type='number'
                     label="HbA1c"
                     unit="%" />
             </div>
             <div className="flex gap-6">
                 <CustomInput
                     onChange={(e) => changeData(e.target.value, 'medication_blood_pressure')}
-                    value={data.服薬1 || ''}
+                    value={data.medication_blood_pressure || ''}
                     label="服薬1"
                     unit="血圧" />
                 <CustomInput
                     onChange={(e) => changeData(e.target.value, 'medication_blood_sugar')}
-                    value={data.服薬2 || ''}
+                    value={data.medication_blood_sugar || ''}
                     label="服薬2"
                     unit="血糖" />
             </div>
-            <CustomInput
-                onChange={(e) => changeData(e.target.value, 'walking_time')}
-                value={data.日の歩く時間 || ''}
+            <CustomSelect options={[
+                {
+                    value: '1',
+                    label: 'Not Identified',
+                },
+                {
+                    value: '2',
+                    label: 'Closed',
+                },
+            ]}
                 label="日の歩く時間"
-                unit="hr" />
-
+                onChange={(value) => changeData(value, 'hihi')}
+                value={data.hihi || ''}
+            />
             <div className="flex gap-6">
                 <CustomInput
                     onChange={(e) => changeData(e.target.value, '腹囲')}
@@ -230,27 +267,53 @@ const FirstStep = ({ data, setData }) => {
     )
 }
 
-const SecondStep = () => {
+const SecondStep = ({ data, setData }) => {
+    const changeData = (value, key) => {
+        setData((prev) => {
+            return {
+                ...prev,
+                [key]: value
+            }
+        })
+    }
+
     return (
         <div className="flex flex-col gap-6">
-            <CustomTest question='血圧を下げる薬' answer1='はい' answer2='いいえ' />
-            <CustomTest question='インスリン注射又は血糖を下げる薬' answer1='はい' answer2='いいえ' />
-            <CustomTest question='コレステロール・中性脂肪を下げる薬' answer1='はい' answer2='いいえ' />
-            <CustomTest question='血圧を下げる薬' answer1='はい' answer2='いいえ' />
-            <CustomTest question='インスリン注射又は血糖を下げる薬' answer1='はい' answer2='いいえ' />
-            <CustomTest question='コレステロール・中性脂肪を下げる薬' answer1='はい' answer2='いいえ' />
+            <CustomRadio
+                onChanged={(e) => { changeData(e, 'test') }}
+                value={data?.test || ''}
+                question='血圧を下げる薬'
+                ansver2Value='test2'
+                ansver1Value='test'
+                answer1='はい'
+                answer2='いいえ'
+            />
+            <CustomRadio question='インスリン注射又は血糖を下げる薬' answer1='はい' answer2='いいえ' />
+            <CustomRadio question='コレステロール・中性脂肪を下げる薬' answer1='はい' answer2='いいえ' />
+            <CustomRadio question='血圧を下げる薬' answer1='はい' answer2='いいえ' />
+            <CustomRadio question='インスリン注射又は血糖を下げる薬' answer1='はい' answer2='いいえ' />
+            <CustomRadio question='コレステロール・中性脂肪を下げる薬' answer1='はい' answer2='いいえ' />
         </div>
     )
 }
 
-const ThirdStep = ({ createInfo }) => {
+const ThirdStep = ({ createInfo, data, setData }) => {
+    const changeData = (value, key) => {
+        setData((prev) => {
+            return {
+                ...prev,
+                [key]: value
+            }
+        })
+    }
+
     return (
         <div className="flex flex-col gap-6">
-            <CustomTest question='20 歳の時の体重から10kg 以上増加している' answer1='はい' answer2='いいえ' />
-            <CustomTest question='1 回30 分以上の軽く汗をかく運動を週2 日以上、1 年以上実施している。' answer1='はい' answer2='いいえ' />
-            <CustomTest question='日常生活において歩行又は同等の身体活動を1 日1 時間以上実施している。' answer1='はい' answer2='いいえ' />
-            <CustomTest question='ほぼ同じ年齢の同性と比較して歩く速度が速い' answer1='はい' answer2='いいえ' />
-            <CustomTest question='この1 年間で体重の増減が±3 ㎏以上あった。' answer1='はい' answer2='いいえ' />
+            <CustomRadio question='20 歳の時の体重から10kg 以上増加している' answer1='はい' answer2='いいえ' />
+            <CustomRadio question='1 回30 分以上の軽く汗をかく運動を週2 日以上、1 年以上実施している。' answer1='はい' answer2='いいえ' />
+            <CustomRadio question='日常生活において歩行又は同等の身体活動を1 日1 時間以上実施している。' answer1='はい' answer2='いいえ' />
+            <CustomRadio question='ほぼ同じ年齢の同性と比較して歩く速度が速い' answer1='はい' answer2='いいえ' />
+            <CustomRadio question='この1 年間で体重の増減が±3 ㎏以上あった。' answer1='はい' answer2='いいえ' />
             <CustomButton onClick={createInfo} text='予測を行う' />
         </div>
     )

@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import Button from '../../components/common/Button';
 import Header from '../../components/layouts/Header';
-import { Modal } from 'antd';
+import { DatePicker, Modal } from 'antd';
 import BorderLabelInput from '../../components/common/BorderLabelInput';
 import axios from 'axios';
+import dayjs from 'dayjs'
 import message from '../../components/common/Message';
+import { useNavigate } from 'react-router-dom';
 
 const CustomInput = ({ label = '', value = '', onChange = () => { }, placeholder = 'input' }) => {
     return (
@@ -37,6 +39,8 @@ const CustomModal = ({ isModalOpen, children, setIsModalOpen }) => {
 }
 
 const UserInfo = () => {
+    const navigate = useNavigate()
+
     const [isEmailOpen, setIsEmailOpen] = useState(false);
     const [isPasswordOpen, setIsPasswordOpen] = useState(false);
     const [isDeleteOpen, setIsDeleteOpen] = useState(false);
@@ -58,9 +62,10 @@ const UserInfo = () => {
     }
 
     const saveData = async () => {
+        if (!checkSendValidation()) return;
         const { data } = await axios.patch(`/api/user/`, userInfo);
         setUserInfo(data)
-        fetchData()
+        navigate('/')
     }
 
     const changeUserInfo = (value, key) => {
@@ -100,6 +105,18 @@ const UserInfo = () => {
         return !(check && checkNewPass)
     }
 
+
+    const checkSendValidation = () => {
+        return Object.entries(userInfo)?.every(([key, value]) => {
+            if (key === 'username') return true
+            if (!value) {
+                return false
+            } else {
+                return true
+            }
+        })
+    }
+
     return (
         <>
             <Header title='健康増進アプリ' />
@@ -121,12 +138,17 @@ const UserInfo = () => {
                         placeholder='大田須太郎'
                     />
 
-                    <CustomInput
-                        value={userInfo.birth_date}
-                        onChange={(e) => changeUserInfo(e.target.value, 'birth_date')}
-                        label='生年月日'
-                        placeholder='1993-08-17'
-                    />
+                    <div className='border-b border-[#0000006B] pb-2'>
+                        <p className='text-[#757575] text-[12px] mb-2'> 生年月日 </p>
+                        <DatePicker
+                            style={{ width: '100%', borderBottom: '1px solid  !important', padding: '0 !important' }}
+                            bordered={false}
+                            placeholder='2023-12-23'
+                            value={userInfo.birth_date ? dayjs(userInfo.birth_date) : ''}
+                            onChange={(_, dateString) => {
+                                changeUserInfo(dateString, 'birth_date')
+                            }} />
+                    </div>
 
                     <div>
                         <div className='text-[#00000099]'>性別</div>
@@ -137,13 +159,13 @@ const UserInfo = () => {
                             </div>
 
                             <div className='flex items-center gap-2 '>
-                                <input onChange={() => { changeUserInfo(1 ,  'gender') }} checked={userInfo.gender === 1} type={'radio'} />
+                                <input onChange={() => { changeUserInfo(1, 'gender') }} checked={userInfo.gender === 1} type={'radio'} />
                                 <div>男</div>
                             </div>
                         </div>
                     </div>
 
-                    <Button onClick={saveData} text='保存' />
+                    <Button disabled={!checkSendValidation()} onClick={saveData} text='保存' />
 
                     <p
                         onClick={() => setIsEmailOpen(true)}
