@@ -17,7 +17,7 @@ const Result = () => {
     }
 
 
-    return <div className='w-full h-screen'>
+    return <div className='w-full h-screen relative'>
         <Header title='健康増進アプリ' setIsDrawerOpen={setIsDrawerOpen} />
         <div className='w-full flex-col justify-center content-center pt-1 bg-white'>
             <p className='text-black text-xl mt-4 mx-6'>予測結果一覧</p>

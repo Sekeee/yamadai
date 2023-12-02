@@ -119,7 +119,7 @@ const UserInfo = () => {
     }
 
     return (
-        <>
+        <div className='relative h-full'>
             <Header title='健康増進アプリ' setIsDrawerOpen={setIsDrawerOpen} />
             <div className='p-2 px-4'>
                 <p>ユーザー設定</p>
@@ -253,7 +253,7 @@ const UserInfo = () => {
             </CustomModal>
 
             <CustomDrawer setIsDrawerOpen={setIsDrawerOpen} isDrawerOpen={isDrawerOpen} />
-        </>
+        </div>
     );
 };
 

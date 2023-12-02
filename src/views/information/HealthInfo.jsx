@@ -1,5 +1,4 @@
 import { BiChevronRight, BiChevronLeft } from 'react-icons/bi'
-import CustomButton from "../../components/common/Button";
 import Header from "../../components/layouts/Header"
 import message from '../../components/common/Message';
 import { useNavigate } from "react-router-dom";
@@ -31,13 +30,12 @@ const CustomInput = ({ label = '', type = 'text', value = '', onChange = () => {
 
 const CustomRadio = ({ question = '', value = '', answer1Value = '1', answer2Value = '2', answer1 = '', answer2 = '', onChanged = () => { } }) => {
     const onChange = (e) => {
-        console.log('value : ' , e.target.value);
         onChanged(Number(e.target.value));
     };
 
     return <div className='flex flex-col justify-center content-center  text-base'>
         <p className='text-[#757575] text-[12px] mb-2' >{question}</p>
-        <Radio.Group onChange={onChange} value={`${value}`}>
+        <Radio.Group onChange={onChange} value={value}>
             <Radio value={answer1Value}>{answer1}</Radio>
             <Radio value={answer2Value}>{answer2}</Radio>
         </Radio.Group>
@@ -85,9 +83,9 @@ const HealthInfo = () => {
     ];
 
     return (
-        <>
+        <div className='relative !h-screen flex flex-col overflow-y-scroll'>
             <Header title='健康増進アプリ' setIsDrawerOpen={setIsDrawerOpen} />
-            <div className="flex flex-col gap-8 p-4 ">
+            <div className="flex flex-col flex-1 overflow-auto gap-8 p-4 ">
                 <p>健診情報入力</p>
                 <Steps current={current} onChange={(e) => setCurrent(e)} labelPlacement="vertical" items={items} />
 
@@ -117,7 +115,7 @@ const HealthInfo = () => {
             </div>
 
             <CustomDrawer setIsDrawerOpen={setIsDrawerOpen} isDrawerOpen={isDrawerOpen} />
-        </>
+        </div>
     )
 }
 
@@ -132,7 +130,7 @@ const FirstStep = ({ data, setData }) => {
     }
 
     return (
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-6 ">
             <div className='border-b border-[#0000006B] pb-2'>
                 <p className='text-[#757575] text-[12px] mb-2 relative'>
                     <span className="text-error absolute -top-1 left-[36px]">*</span>
@@ -164,7 +162,10 @@ const FirstStep = ({ data, setData }) => {
                 />
             </div>
             <CustomRadio
-                onChanged={(e) => { changeData(e, 'smoking') }}
+                onChanged={(e) => {
+                    changeData(e, 'smoking')
+                    console.log(e, 'matarjingooo');
+                }}
                 value={data?.smoking || ''}
                 question='喫煙'
                 answer1Value={1}
@@ -187,9 +188,9 @@ const FirstStep = ({ data, setData }) => {
                     label: 'ほとんど飲まない（飲めない）',
                 },
             ]}
-                          label="飲酒"
-                          onChange={(value) => changeData(value, 'drinking')}
-                          value={data.drinking || ''}
+                label="飲酒"
+                onChange={(value) => changeData(value, 'drinking')}
+                value={data.drinking || ''}
             />
 
 
@@ -316,8 +317,8 @@ const SecondStep = ({ data, setData }) => {
                     label="既往歴" />
 
                 <CustomInput
-                    onChange={(e) => changeData(e.target.value , 'triglycerides')}
-                    value = {data?.triglycerides || ''}
+                    onChange={(e) => changeData(e.target.value, 'triglycerides')}
+                    value={data?.triglycerides || ''}
                     label="中性脂肪(トリグリセリド)"
                     type="number"
                     unit="mg/dl" />
@@ -325,22 +326,22 @@ const SecondStep = ({ data, setData }) => {
             </div>
             <div className="flex gap-6">
                 <CustomInput
-                    onChange={(e) => changeData(e.target.value , 'got_ast')}
-                    value = {data?.got_ast || ''}
+                    onChange={(e) => changeData(e.target.value, 'got_ast')}
+                    value={data?.got_ast || ''}
                     type='number'
                     label="GOT（AST）"
                     unit="U/I" />
                 <CustomInput
-                    onChange={(e) => changeData(e.target.value , 'got_alt')}
-                    value = {data?.gpt_alt || ''}
+                    onChange={(e) => changeData(e.target.value, 'got_alt')}
+                    value={data?.gpt_alt || ''}
                     type='number'
                     label="GPT（ALT）"
                     unit="U/I" />
             </div>
             <div className="flex gap-6">
                 <CustomInput
-                    onChange={(e) => changeData(e.target.value , 'gamma_gt')}
-                    value = {data?.gamma_gt || ''}
+                    onChange={(e) => changeData(e.target.value, 'gamma_gt')}
+                    value={data?.gamma_gt || ''}
                     type='number'
                     label="γ-GT(γ-GTP)"
                     unit="U/I" />
@@ -402,22 +403,22 @@ const SecondStep = ({ data, setData }) => {
             />
             <div className="flex gap-6">
                 <CustomInput
-                    onChange={(e) => changeData(e.target.value , 'hematocrit_value')}
-                    value = {data?.hematocrit_value || ''}
+                    onChange={(e) => changeData(e.target.value, 'hematocrit_value')}
+                    value={data?.hematocrit_value || ''}
                     type='number'
                     label="ヘマトクリット値"
                     unit="%" />
                 <CustomInput
-                    onChange={(e) => changeData(e.target.value , 'hemoglobin_level')}
-                    value = {data?.hemoglobin_level || ''}
+                    onChange={(e) => changeData(e.target.value, 'hemoglobin_level')}
+                    value={data?.hemoglobin_level || ''}
                     type='number'
                     label="血色素量"
                     unit="%" />
             </div>
             <div className="flex gap-6">
                 <CustomInput
-                    onChange={(e) => changeData(e.target.value , 'red_blood_cell_count')}
-                    value = {data?.red_blood_cell_count || ''}
+                    onChange={(e) => changeData(e.target.value, 'red_blood_cell_count')}
+                    value={data?.red_blood_cell_count || ''}
                     type='number'
                     label="赤血球数"
                     unit="万/mm3" />
@@ -580,7 +581,7 @@ const ThirdStep = ({ createInfo, data, setData }) => {
                 ]}
                 label="食べ方1（早食い等）"
                 onChange={(value) => changeData(value, 'eating_habit_speed')}
-                value={data?.eating_habit_speed  || ''}
+                value={data?.eating_habit_speed || ''}
             />
             <CustomRadio
                 onChanged={(e) => { changeData(e, 'eating_habit_before_sleep') }}
@@ -630,7 +631,7 @@ const ThirdStep = ({ createInfo, data, setData }) => {
                 ]}
                 label="飲酒量"
                 onChange={(value) => changeData(value, 'alcohol_consumption')}
-                value={data?.alcohol_consumption  || ''}
+                value={data?.alcohol_consumption || ''}
             />
             <CustomRadio
                 onChanged={(e) => { changeData(e, 'sufficient_rest_through_sleep') }}
@@ -666,7 +667,7 @@ const ThirdStep = ({ createInfo, data, setData }) => {
                 ]}
                 label="生活習慣の改善"
                 onChange={(value) => changeData(value, 'lifestyle_improvement')}
-                value={data?.lifestyle_improvement  || ''}
+                value={data?.lifestyle_improvement || ''}
             />
             <CustomRadio
                 onChanged={(e) => { changeData(e, 'health_guidance_preference') }}
