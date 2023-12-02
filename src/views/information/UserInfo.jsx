@@ -7,6 +7,7 @@ import axios from 'axios';
 import dayjs from 'dayjs'
 import message from '../../components/common/Message';
 import { useNavigate } from 'react-router-dom';
+import CustomDrawer from '../../components/common/Drawer';
 
 const CustomInput = ({ label = '', value = '', onChange = () => { }, placeholder = 'input' }) => {
     return (
@@ -44,6 +45,7 @@ const UserInfo = () => {
     const [isEmailOpen, setIsEmailOpen] = useState(false);
     const [isPasswordOpen, setIsPasswordOpen] = useState(false);
     const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+    const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
     const [userInfo, setUserInfo] = useState({})
     const [password, setPassword] = useState({
@@ -105,7 +107,6 @@ const UserInfo = () => {
         return !(check && checkNewPass)
     }
 
-
     const checkSendValidation = () => {
         return Object.entries(userInfo)?.every(([key, value]) => {
             if (key === 'username') return true
@@ -119,7 +120,7 @@ const UserInfo = () => {
 
     return (
         <>
-            <Header title='健康増進アプリ' />
+            <Header title='健康増進アプリ' setIsDrawerOpen={setIsDrawerOpen} />
             <div className='p-2 px-4'>
                 <p>ユーザー設定</p>
                 <div className='p-3 flex flex-col gap-5'>
@@ -250,6 +251,8 @@ const UserInfo = () => {
                     <Button color='#D32F2F' onClick={() => setIsDeleteOpen(false)} text='削除する' />
                 </div>
             </CustomModal>
+
+            <CustomDrawer setIsDrawerOpen={setIsDrawerOpen} isDrawerOpen={isDrawerOpen} />
         </>
     );
 };

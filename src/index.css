@@ -96,3 +96,7 @@ input[type=number] {
 :where(.css-dev-only-do-not-override-gevqub).ant-picker-dropdown .ant-picker-today-btn {
   color: #11a9a4;
 }
+
+.ant-drawer-body {
+  padding: 0px !important;
+}

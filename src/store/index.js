@@ -15,7 +15,6 @@ const useStore = create()(
 		}),
 		{
 			name: 'yamadai-project',
-			getStorage: () => localStorage,
 			merge: (persistedState, currentState) => mergeDeepLeft(persistedState, currentState),
 		}
 	)
