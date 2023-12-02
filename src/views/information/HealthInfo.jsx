@@ -10,7 +10,7 @@ import dayjs from 'dayjs'
 import CustomDrawer from '../../components/common/Drawer';
 
 const CustomInput = ({ label = '', type = 'text', value = '', onChange = () => { }, ph = '', unit = '', isLong = false }) => {
-    console.log('hi');
+
 
     return (
         <div className='flex flex-col gap-2'>
