@@ -82,7 +82,7 @@ const HealthEdit = () => {
     }
 
     const editHealthInfo = async () => {
-        console.log('matarjingooo');
+
         if (!data?.checked_date) { message('健診日を入力してください', false) }
         const { data: resultData } = await axios.patch(`/api/healthcheckinfo/${resultId}/`, data);
         if (resultData?.id) { navigate('/result') }
@@ -690,7 +690,7 @@ const ThirdStep = ({ editHealthInfo, data, setData }) => {
                 answer1='はい'
                 answer2='いいえ'
             />
-            <CustomButton onClick={editHealthInfo} text='edit' />
+            <CustomButton onClick={editHealthInfo} text='情報更新' />
         </div>
     )
 }

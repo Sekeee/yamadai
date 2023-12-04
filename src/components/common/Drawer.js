@@ -83,7 +83,7 @@ const CustomDrawer = ({ setIsDrawerOpen, isDrawerOpen }) => {
 						} gap-3 items-center px-4 py-3 cursor-pointer font-semibold rounded-[10px] `}
 					>
 						<FaListCheck />
-						<p>health check</p>
+						<p>健康予測</p>　
 					</div>
 				</div>
 

@@ -40,7 +40,7 @@ const Home = () => {
           </div>
           <div onClick={() => navigate('/health-info')} className='flex bg-primary gap-3 items-center px-6 py-3 cursor-pointer font-semibold rounded-[10px] text-white'>
             <FaListCheck />
-            <p>health check</p>
+            <p>健康予測</p>
           </div>
         </div>
       </div>
