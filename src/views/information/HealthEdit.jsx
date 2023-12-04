@@ -1,14 +1,14 @@
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { BiChevronRight, BiChevronLeft } from 'react-icons/bi'
-import Header from "../../components/layouts/Header"
-import message from '../../components/common/Message';
-import { useNavigate } from "react-router-dom";
-import { FaCaretDown } from "react-icons/fa";
+import CustomButton from "../../components/common/Button";
+import CustomDrawer from '../../components/common/Drawer'
 import { DatePicker, Radio, Select, Steps } from 'antd';
-import { useState } from "react";
+import message from '../../components/common/Message';
+import Header from "../../components/layouts/Header"
+import { FaCaretDown } from "react-icons/fa";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import dayjs from 'dayjs'
-import CustomButton from "../../components/common/Button";
-import CustomDrawer from '../../components/common/Drawer';
 
 const CustomInput = ({ label = '', type = 'text', value = '', onChange = () => { }, ph = '', unit = '', isLong = false }) => {
     return (
@@ -64,23 +64,34 @@ const CustomSelect = ({ options = [], label = '', value = '', onChange = () => {
     )
 }
 
-const HealthInfo = () => {
+const HealthEdit = () => {
+    const [searchParams] = useSearchParams();
+    const resultId = searchParams.get('resultId');
     const [isDrawerOpen, setIsDrawerOpen] = useState(false)
     const [current, setCurrent] = useState(0);
     const [data, setData] = useState({})
     const navigate = useNavigate();
 
+    useEffect(() => { fetchData() }, [])
 
-    const createHealthInfo = async () => {
+    const fetchData = async () => {
+        const { data: resultData } = await axios.get(`/api/healthcheckinfo/${resultId}/`);
+        if (resultData?.id) {
+            setData(resultData)
+        }
+    }
+
+    const editHealthInfo = async () => {
+        console.log('matarjingooo');
         if (!data?.checked_date) { message('健診日を入力してください', false) }
-        const { data: resultData } = await axios.post('/api/healthcheckinfo/create/', data);
+        const { data: resultData } = await axios.patch(`/api/healthcheckinfo/${resultId}/`, data);
         if (resultData?.id) { navigate('/result') }
     }
 
     const items = [
         { title: '健診情報', element: <FirstStep data={data} setData={setData} /> },
         { title: '質問票①', element: <SecondStep data={data} setData={setData} /> },
-        { title: '質問票②', element: <ThirdStep createInfo={createHealthInfo} data={data} setData={setData} /> },
+        { title: '質問票②', element: <ThirdStep editHealthInfo={editHealthInfo} data={data} setData={setData} /> },
     ];
 
     return (
@@ -429,7 +440,7 @@ const SecondStep = ({ data, setData }) => {
     )
 }
 
-const ThirdStep = ({ createInfo, data, setData }) => {
+const ThirdStep = ({ editHealthInfo, data, setData }) => {
     const changeData = (value, key) => {
         setData((prev) => {
             return {
@@ -679,12 +690,11 @@ const ThirdStep = ({ createInfo, data, setData }) => {
                 answer1='はい'
                 answer2='いいえ'
             />
-
-            <CustomButton onClick={createInfo} text='予測を行う' />
+            <CustomButton onClick={editHealthInfo} text='edit' />
         </div>
     )
 }
 
 
 
-export default HealthInfo
+export default HealthEdit

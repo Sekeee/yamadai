@@ -1,9 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import Header from "../../components/layouts/Header"
 
 const PredictResult = () => {
+    const navigate = useNavigate()
     const [commentList, setCommentList] = useState([]);
     const [searchParams] = useSearchParams();
     const [result, setResult] = useState({});
@@ -94,7 +95,7 @@ const PredictResult = () => {
                     })
                 }
 
-                <p className='cursor-pointer underline mt-[40px] decoration-primary underline-offset-4 text-primary' >
+                <p onClick={() => navigate(`/health-edit?resultId=${resultId}`)} className='cursor-pointer underline mt-[40px] decoration-primary underline-offset-4 text-primary' >
                     健診情報を確認する
                 </p>
             </div>
