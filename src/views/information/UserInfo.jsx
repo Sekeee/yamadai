@@ -67,6 +67,7 @@ const UserInfo = () => {
         if (!checkSendValidation()) return;
         const { data } = await axios.patch(`/api/user/`, userInfo);
         setUserInfo(data)
+        message('基本情報を更新しました', true)
         navigate('/')
     }
 
@@ -123,8 +124,7 @@ const UserInfo = () => {
             <Header title='健康増進アプリ' setIsDrawerOpen={setIsDrawerOpen} />
             <div className='p-2 px-4'>
                 <p>ユーザー設定</p>
-                <div className='p-3 flex flex-col gap-5'>
-                    <p className='text-primary'>基本情報を更新しました</p>
+                <div className='p-3 py-8 flex flex-col gap-5'>
                     <CustomInput
                         value={userInfo.email}
                         onChange={(e) => changeUserInfo(e.target.value, 'email')}

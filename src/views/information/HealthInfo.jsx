@@ -106,6 +106,10 @@ const HealthInfo = () => {
                     <div>{current + 1}/{items.length}</div>
                     <div
                         onClick={() => {
+                            if (!data?.checked_date) {
+                                return message('健診日を入力してください', false);
+                            }
+
                             if (current + 1 >= items.length) return
                             setCurrent(current + 1)
                         }}
@@ -151,8 +155,7 @@ const FirstStep = ({ data, setData }) => {
     return (
         <div className="flex flex-col gap-6 ">
             <div className='border-b border-[#0000006B] pb-2'>
-                <p className='text-[#757575] text-[12px] mb-2 relative'>
-                    <span className="text-error absolute -top-1 left-[36px]">*</span>
+                <p className='text-[#757575] text-[12px] mb-2'>
                     健診日
                 </p>
                 <DatePicker
