@@ -89,7 +89,7 @@ const HealthEdit = () => {
     }
 
     const items = [
-        { title: '健診情報', element: <FirstStep data={data} setData={setData} /> }, 
+        { title: '健診情報', element: <FirstStep data={data} setData={setData} /> },
         { title: '質問票①', element: <SecondStep data={data} setData={setData} /> },
         { title: '質問票②', element: <ThirdStep editHealthInfo={editHealthInfo} data={data} setData={setData} /> },
     ];
@@ -150,6 +150,7 @@ const FirstStep = ({ data, setData }) => {
                     健診日
                 </p>
                 <DatePicker
+                    inputReadOnly
                     style={{ width: '100%', borderBottom: '1px solid  !important', padding: '0 !important' }}
                     bordered={false}
                     placeholder='2023-12-23'
@@ -179,7 +180,7 @@ const FirstStep = ({ data, setData }) => {
                     changeData(e, 'smoking')
                 }}
                 value={data?.smoking || ''}
-                question='喫煙'
+                question='今、吸いますか?'
                 answer1Value={1}
                 answer2Value={2}
                 answer1='吸う'
@@ -238,13 +239,13 @@ const FirstStep = ({ data, setData }) => {
                 <CustomInput
                     onChange={(e) => changeData(e.target.value, 'blood_glucose')}
                     value={data.blood_glucose || ''}
-                    label="血糖"
+                    label="空腹時血糖"
                     unit="mg/dl" />
                 <CustomInput
                     onChange={(e) => changeData(e.target.value, 'hba1c')}
                     value={data.hba1c || ''}
                     type='number'
-                    label="HbA1c"
+                    label="ヘモグロビンA1c"
                     unit="%" />
             </div>
             <div className="flex gap-6">
@@ -275,7 +276,7 @@ const FirstStep = ({ data, setData }) => {
                     label: '60分以上-59分',
                 },
             ]}
-                label="日の歩く時間"
+                label="1日の歩く時間"
                 onChange={(value) => changeData(value, 'walking_time')}
                 value={data.walking_time || ''}
             />
@@ -425,7 +426,7 @@ const SecondStep = ({ data, setData }) => {
                     value={data?.hemoglobin_level || ''}
                     type='number'
                     label="血色素量"
-                    unit="%" />
+                    unit="g/dL" />
             </div>
             <div className="flex gap-6">
                 <CustomInput
@@ -489,11 +490,11 @@ const ThirdStep = ({ editHealthInfo, data, setData }) => {
             <CustomRadio
                 onChanged={(e) => { changeData(e, 'medication_lipids') }}
                 value={data?.medication_lipids || ''}
-                question='服薬３（脂質）'
+                question='血圧を下げる薬'
                 answer1Value={1}
                 answer2Value={2}
-                answer1='はい'
-                answer2='いいえ'
+                answer1='飲んでいる'
+                answer2='飲んでいない'
             />
             <CustomRadio
                 onChanged={(e) => { changeData(e, 'medical_history_cerebrovascular') }}
@@ -525,7 +526,7 @@ const ThirdStep = ({ editHealthInfo, data, setData }) => {
             <CustomRadio
                 onChanged={(e) => { changeData(e, 'anemia') }}
                 value={data?.anemia || ''}
-                question='貧血'
+                question='既往歴4（貧血）'
                 answer1Value={1}
                 answer2Value={2}
                 answer1='はい'

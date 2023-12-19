@@ -65,7 +65,7 @@ const PredictResult = () => {
                     </div>
 
                     <div className="flex gap-4 text-[#000000DE] items-center">
-                        <p className="w-[48%]">生存率</p>
+                        <p className="w-[48%]">死亡率</p>
                         <p className="w-[10%] ">{result?.death_rate}</p>
                         <div className="w-[32%] flex items-center">
                             <ResultData number={Number(result?.death_rate || 0)} />

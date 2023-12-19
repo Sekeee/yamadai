@@ -54,7 +54,7 @@ const CustomDrawer = ({ setIsDrawerOpen, isDrawerOpen }) => {
 						} gap-3 items-center px-4 py-3 cursor-pointer font-semibold rounded-[10px] `}
 					>
 						<FaHome />
-						<p>ホームページ</p>
+						<p>ホーム</p>
 					</div>
 					<div
 						onClick={() => {
