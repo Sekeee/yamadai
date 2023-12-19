@@ -18,7 +18,7 @@ const CustomInput = ({ label = '', type = 'text', value = '', onChange = () => {
                 <input
                     type={type}
                     onChange={(e) => {
-                        if (type === "number" && e.target.value?.length > 4) { return }
+                        if (type === "number" && e.target.value?.length > 5) { return }
                         onChange(e)
                     }}
                     value={value}
@@ -49,7 +49,7 @@ const CustomSelect = ({ options = [], label = '', value = '', onChange = () => {
             <p className='text-[#757575] text-[12px] mb-2' >{label}</p>
             <Select
                 style={{ width: '100%', borderBottom: '1px solid #0000006B', padding: '0 !important' }}
-                showSearch
+                showSearch={false}
                 placeholder=''
                 bordered={false}
                 onChange={onChange}
@@ -86,6 +86,7 @@ const HealthInfo = () => {
 
     return (
         <div className='relative !h-screen flex flex-col overflow-y-scroll'>
+            <CustomDrawer setIsDrawerOpen={setIsDrawerOpen} isDrawerOpen={isDrawerOpen} />
             <Header title='健康増進アプリ' setIsDrawerOpen={setIsDrawerOpen} />
             <div className="flex flex-col flex-1 overflow-auto gap-8 p-4 ">
                 <p>健診情報入力</p>
@@ -116,7 +117,7 @@ const HealthInfo = () => {
                 </div>
             </div>
 
-            <CustomDrawer setIsDrawerOpen={setIsDrawerOpen} isDrawerOpen={isDrawerOpen} />
+
 
             <Modal
                 width={360}
@@ -156,6 +157,7 @@ const FirstStep = ({ data, setData }) => {
                     健診日
                 </p>
                 <DatePicker
+                    inputReadOnly
                     style={{ width: '100%', borderBottom: '1px solid  !important', padding: '0 !important' }}
                     bordered={false}
                     placeholder='2023-12-23'
@@ -183,14 +185,13 @@ const FirstStep = ({ data, setData }) => {
             <CustomRadio
                 onChanged={(e) => {
                     changeData(e, 'smoking')
-                    console.log(e, 'matarjingooo');
                 }}
                 value={data?.smoking || ''}
                 question='喫煙'
                 answer1Value={1}
                 answer2Value={2}
-                answer1='はい'
-                answer2='いいえ'
+                answer1='吸う'
+                answer2='吸わない'　
             />
 
             <CustomSelect options={[

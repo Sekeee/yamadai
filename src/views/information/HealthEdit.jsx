@@ -18,7 +18,7 @@ const CustomInput = ({ label = '', type = 'text', value = '', onChange = () => {
                 <input
                     type={type}
                     onChange={(e) => {
-                        if (type === "number" && e.target.value?.length > 4) { return }
+                        if (type === "number" && e.target.value?.length > 5) { return }
                         onChange(e)
                     }}
                     value={value}
@@ -89,7 +89,7 @@ const HealthEdit = () => {
     }
 
     const items = [
-        { title: '健診情報', element: <FirstStep data={data} setData={setData} /> },
+        { title: '健診情報', element: <FirstStep data={data} setData={setData} /> }, 
         { title: '質問票①', element: <SecondStep data={data} setData={setData} /> },
         { title: '質問票②', element: <ThirdStep editHealthInfo={editHealthInfo} data={data} setData={setData} /> },
     ];
@@ -177,14 +177,13 @@ const FirstStep = ({ data, setData }) => {
             <CustomRadio
                 onChanged={(e) => {
                     changeData(e, 'smoking')
-                    console.log(e, 'matarjingooo');
                 }}
                 value={data?.smoking || ''}
                 question='喫煙'
                 answer1Value={1}
                 answer2Value={2}
-                answer1='はい'
-                answer2='いいえ'
+                answer1='吸う'
+                answer2='吸わない'
             />
 
             <CustomSelect options={[
