@@ -29,7 +29,11 @@ const Login = () => {
 
 	return (
 		<div className='w-full h-screen'>
-			<Header title='健康増進アプリ' />
+			<Header
+				title='健康増進アプリ'
+				withDrawer={false}
+				withBackButton={false}
+			/>
 			<div className='w-full flex-col justify-center content-center pt-1 bg-white'>
 				<p className='text-black text-xl mt-4 mx-6'>ログイン</p>
 				<div className='flex=col justify-around content-center mx-10'>

@@ -43,7 +43,12 @@ const CustomDrawer = ({ setIsDrawerOpen, isDrawerOpen }) => {
 
 				<div className='border-b px-5 border-[rgba(0,0,0,0.20)] py-6 flex flex-col gap-4'>
 					<div
-						onClick={() => navigate('/')}
+						onClick={() => {
+							if (pathname === '/') {
+								setIsDrawerOpen(false);
+							}
+							navigate('/');
+						}}
 						className={`flex text-black ${
 							pathname === '/' && '!bg-primary/20 !text-primary'
 						} gap-3 items-center px-4 py-3 cursor-pointer font-semibold rounded-[10px] `}
@@ -52,7 +57,12 @@ const CustomDrawer = ({ setIsDrawerOpen, isDrawerOpen }) => {
 						<p>ホームページ</p>
 					</div>
 					<div
-						onClick={() => navigate('/user-info')}
+						onClick={() => {
+							if (pathname === '/user-info') {
+								setIsDrawerOpen(false);
+							}
+							navigate('/user-info');
+						}}
 						className={`flex text-black ${
 							pathname === '/user-info' && '!bg-primary/20 !text-primary'
 						} gap-3 items-center px-4 py-3 cursor-pointer font-semibold rounded-[10px] `}
@@ -61,7 +71,12 @@ const CustomDrawer = ({ setIsDrawerOpen, isDrawerOpen }) => {
 						<p>ユーザ設定</p>
 					</div>
 					<div
-						onClick={() => navigate('/result')}
+						onClick={() => {
+							if (pathname === '/result') {
+								setIsDrawerOpen(false);
+							}
+							navigate('/result');
+						}}
 						className={`flex text-black ${
 							pathname === '/result' && '!bg-primary/20 !text-primary'
 						} gap-3 items-center px-4 py-3 cursor-pointer font-semibold rounded-[10px] `}
@@ -78,7 +93,12 @@ const CustomDrawer = ({ setIsDrawerOpen, isDrawerOpen }) => {
 						<p>フィードバックサマリ</p>
 					</div>
 					<div
-						onClick={() => navigate('/health-info')}
+						onClick={() => {
+							if (pathname === '/health-info') {
+								setIsDrawerOpen(false);
+							}
+							navigate('/health-info');
+						}}
 						className={`flex text-black ${
 							pathname === '/health-info' && '!bg-primary/20 !text-primary'
 						} gap-3 items-center px-4 py-3 cursor-pointer font-semibold rounded-[10px] `}
