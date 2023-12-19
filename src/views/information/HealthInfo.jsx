@@ -18,7 +18,7 @@ const CustomInput = ({ label = '', type = 'text', value = '', onChange = () => {
                 <input
                     type={type}
                     onChange={(e) => {
-                        if (type === "number" && e.target.value?.length > 5) { return }
+                        if (type === "number" && e.target.value?.length > 4) { return }
                         onChange(e)
                     }}
                     value={value}
@@ -49,7 +49,7 @@ const CustomSelect = ({ options = [], label = '', value = '', onChange = () => {
             <p className='text-[#757575] text-[12px] mb-2' >{label}</p>
             <Select
                 style={{ width: '100%', borderBottom: '1px solid #0000006B', padding: '0 !important' }}
-                showSearch={false}
+                showSearch
                 placeholder=''
                 bordered={false}
                 onChange={onChange}
@@ -86,7 +86,6 @@ const HealthInfo = () => {
 
     return (
         <div className='relative !h-screen flex flex-col overflow-y-scroll'>
-            <CustomDrawer setIsDrawerOpen={setIsDrawerOpen} isDrawerOpen={isDrawerOpen} />
             <Header title='健康増進アプリ' setIsDrawerOpen={setIsDrawerOpen} />
             <div className="flex flex-col flex-1 overflow-auto gap-8 p-4 ">
                 <p>健診情報入力</p>
@@ -121,7 +120,7 @@ const HealthInfo = () => {
                 </div>
             </div>
 
-
+            <CustomDrawer setIsDrawerOpen={setIsDrawerOpen} isDrawerOpen={isDrawerOpen} />
 
             <Modal
                 width={360}
@@ -160,7 +159,6 @@ const FirstStep = ({ data, setData }) => {
                     健診日
                 </p>
                 <DatePicker
-                    inputReadOnly
                     style={{ width: '100%', borderBottom: '1px solid  !important', padding: '0 !important' }}
                     bordered={false}
                     placeholder='2023-12-23'
@@ -186,15 +184,13 @@ const FirstStep = ({ data, setData }) => {
                 />
             </div>
             <CustomRadio
-                onChanged={(e) => {
-                    changeData(e, 'smoking')
-                }}
+                onChanged={(e) => { changeData(e, 'smoking') }}
                 value={data?.smoking || ''}
-                question='今、吸いますか?'
+                question='喫煙'
                 answer1Value={1}
                 answer2Value={2}
-                answer1='吸う'
-                answer2='吸わない'　
+                answer1='はい'
+                answer2='いいえ'
             />
 
             <CustomSelect options={[
@@ -249,13 +245,13 @@ const FirstStep = ({ data, setData }) => {
                 <CustomInput
                     onChange={(e) => changeData(e.target.value, 'blood_glucose')}
                     value={data.blood_glucose || ''}
-                    label="空腹時血糖"
+                    label="血糖"
                     unit="mg/dl" />
                 <CustomInput
                     onChange={(e) => changeData(e.target.value, 'hba1c')}
                     value={data.hba1c || ''}
                     type='number'
-                    label="ヘモグロビンA1c"
+                    label="HbA1c"
                     unit="%" />
             </div>
             <div className="flex gap-6">
@@ -271,17 +267,7 @@ const FirstStep = ({ data, setData }) => {
                     type='number'
                     label="服薬2"
                     unit="血糖" />
-
             </div>
-            <CustomRadio
-                onChanged={(e) => { changeData(e, 'medication_lipids') }}
-                value={data?.medication_lipids || ''}
-                question='服薬３（脂質）'
-                answer1Value={1}
-                answer2Value={2}
-                answer1='飲んでいる'
-                answer2='飲んでいない'
-            />
             <CustomSelect options={[
                 {
                     value: 1,
@@ -296,7 +282,7 @@ const FirstStep = ({ data, setData }) => {
                     label: '60分以上-59分',
                 },
             ]}
-                label="1日の歩く時間"
+                label="日の歩く時間"
                 onChange={(value) => changeData(value, 'walking_time')}
                 value={data.walking_time || ''}
             />
@@ -365,7 +351,7 @@ const SecondStep = ({ data, setData }) => {
                     label="GOT（AST）"
                     unit="U/I" />
                 <CustomInput
-                    onChange={(e) => changeData(e.target.value, 'gpt_alt')}
+                    onChange={(e) => changeData(e.target.value, 'got_alt')}
                     value={data?.gpt_alt || ''}
                     type='number'
                     label="GPT（ALT）"
@@ -446,7 +432,7 @@ const SecondStep = ({ data, setData }) => {
                     value={data?.hemoglobin_level || ''}
                     type='number'
                     label="血色素量"
-                    unit="g/dL" />
+                    unit="%" />
             </div>
             <div className="flex gap-6">
                 <CustomInput
@@ -473,6 +459,49 @@ const ThirdStep = ({ createInfo, data, setData }) => {
 
     return (
         <div className="flex flex-col gap-6">
+            <CustomSelect
+                options={[
+                    {
+                        value: 1,
+                        label: 'なし',
+                    },
+                    {
+                        value: 2,
+                        label: '動機付け支援',
+                    },
+                    {
+                        value: 3,
+                        label: '積極的支援',
+                    },
+                ]}
+                label="メタボリックシンドローム判定"
+                onChange={(value) => changeData(value, 'metabolic_syndrome_assessment')}
+                value={data?.metabolic_syndrome_assessment || ''}
+            />
+            <CustomSelect
+                options={[
+                    {
+                        value: 1,
+                        label: '該当',
+                    },
+                    {
+                        value: 2,
+                        label: '非該当',
+                    },
+                ]}
+                label="保健指導レベル"
+                onChange={(value) => changeData(value, 'health_guidance_level')}
+                value={data?.health_guidance_level || ''}
+            />
+            <CustomRadio
+                onChanged={(e) => { changeData(e, 'medication_lipids') }}
+                value={data?.medication_lipids || ''}
+                question='服薬３（脂質）'
+                answer1Value={1}
+                answer2Value={2}
+                answer1='はい'
+                answer2='いいえ'
+            />
             <CustomRadio
                 onChanged={(e) => { changeData(e, 'medical_history_cerebrovascular') }}
                 value={data?.medical_history_cerebrovascular || ''}
@@ -503,7 +532,7 @@ const ThirdStep = ({ createInfo, data, setData }) => {
             <CustomRadio
                 onChanged={(e) => { changeData(e, 'anemia') }}
                 value={data?.anemia || ''}
-                question='既往歴4（貧血）'
+                question='貧血'
                 answer1Value={1}
                 answer2Value={2}
                 answer1='はい'
@@ -631,40 +660,6 @@ const ThirdStep = ({ createInfo, data, setData }) => {
                 answer2Value={2}
                 answer1='はい'
                 answer2='いいえ'
-            />
-            <CustomSelect
-                options={[
-                    {
-                        value: 1,
-                        label: 'なし',
-                    },
-                    {
-                        value: 2,
-                        label: '動機付け支援',
-                    },
-                    {
-                        value: 3,
-                        label: '積極的支援',
-                    },
-                ]}
-                label="メタボリックシンドローム判定"
-                onChange={(value) => changeData(value, 'metabolic_syndrome_assessment')}
-                value={data?.metabolic_syndrome_assessment || ''}
-            />
-            <CustomSelect
-                options={[
-                    {
-                        value: 1,
-                        label: '該当',
-                    },
-                    {
-                        value: 2,
-                        label: '非該当',
-                    },
-                ]}
-                label="保健指導レベル"
-                onChange={(value) => changeData(value, 'health_guidance_level')}
-                value={data?.health_guidance_level || ''}
             />
             <CustomSelect
                 options={[
