@@ -96,6 +96,7 @@ const HealthEdit = () => {
 
     return (
         <div className='relative !h-screen flex flex-col overflow-y-scroll'>
+            <CustomDrawer setIsDrawerOpen={setIsDrawerOpen} isDrawerOpen={isDrawerOpen} />
             <Header title='健康増進アプリ' setIsDrawerOpen={setIsDrawerOpen} />
             <div className="flex flex-col flex-1 overflow-auto gap-8 p-4 ">
                 <p>健診情報入力</p>
@@ -126,7 +127,7 @@ const HealthEdit = () => {
                 </div>
             </div>
 
-            <CustomDrawer setIsDrawerOpen={setIsDrawerOpen} isDrawerOpen={isDrawerOpen} />
+
         </div>
     )
 }
