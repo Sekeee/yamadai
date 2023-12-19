@@ -24,6 +24,7 @@ const CustomDrawer = ({ setIsDrawerOpen, isDrawerOpen }) => {
 			placement='right'
 			closable={false}
 			width={360}
+			zIndex={2000}
 			onClose={() => {
 				setIsDrawerOpen(false);
 			}}

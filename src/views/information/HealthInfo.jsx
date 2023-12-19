@@ -3,7 +3,7 @@ import Header from "../../components/layouts/Header"
 import message from '../../components/common/Message';
 import { useNavigate } from "react-router-dom";
 import { FaCaretDown } from "react-icons/fa";
-import { DatePicker, Radio, Select, Steps } from 'antd';
+import { DatePicker, Modal, Radio, Select, Steps } from 'antd';
 import { useState } from "react";
 import axios from "axios";
 import dayjs from 'dayjs'
@@ -66,6 +66,7 @@ const CustomSelect = ({ options = [], label = '', value = '', onChange = () => {
 
 const HealthInfo = () => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false)
+    const [isModalOpen, setIsModalOpen] = useState(false)
     const [current, setCurrent] = useState(0);
     const [data, setData] = useState({})
     const navigate = useNavigate();
@@ -80,7 +81,7 @@ const HealthInfo = () => {
     const items = [
         { title: '健診情報', element: <FirstStep data={data} setData={setData} /> },
         { title: '質問票①', element: <SecondStep data={data} setData={setData} /> },
-        { title: '質問票②', element: <ThirdStep createInfo={createHealthInfo} data={data} setData={setData} /> },
+        { title: '質問票②', element: <ThirdStep createInfo={() => setIsModalOpen(true)} data={data} setData={setData} /> },
     ];
 
     return (
@@ -116,6 +117,23 @@ const HealthInfo = () => {
             </div>
 
             <CustomDrawer setIsDrawerOpen={setIsDrawerOpen} isDrawerOpen={isDrawerOpen} />
+
+            <Modal
+                width={360}
+                centered={true}
+                closable={false}
+                open={isModalOpen}
+                footer={false}
+                styles={{ footer: { margin: 0, }, }}
+                onCancel={() => setIsModalOpen(false)}
+            >
+                <p>個人情報が送信されます。よろしいですか？</p>
+
+                <div className='flex gap-2 mt-6 items-end justify-end'>
+                    <CustomButton onClick={() => setIsModalOpen(false)} variant='outline' text='戻る' />
+                    <CustomButton onClick={() => createHealthInfo()} text='送信' />
+                </div>
+            </Modal>
         </div>
     )
 }

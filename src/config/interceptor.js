@@ -6,9 +6,9 @@ import { APP_BASE_URL } from './index';
 const TOASTER_DURATION = 10;
 
 const logout = () => {
-	// useStore.setState({ auth: { token: null } });
-	// localStorage.clear();
-	// window.location.href = '/';
+	useStore.setState({ auth: { token: null } });
+	localStorage.clear();
+	window.location.href = '/';
 };
 
 axios.interceptors.request.use(config => {
@@ -52,7 +52,7 @@ axios.interceptors.response.use(
 	},
 	error => {
 		if (error?.response?.status === 401) {
-			// logout();
+			logout();
 		} else if (error?.response?.data?.message_mn) {
 			message(error?.response?.data?.message_mn, false, { duration: TOASTER_DURATION });
 		} else if (error?.response?.data?.message_en) {
