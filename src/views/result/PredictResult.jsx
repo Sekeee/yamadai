@@ -25,6 +25,10 @@ const PredictResult = () => {
         setCommentList(comments)
     }
 
+    const formatNumber = (number) => {
+        return Math.floor(number * 10) / 10;
+    }
+
     return (
         <>
             <Header title='健康増進アプリ' />
@@ -42,7 +46,7 @@ const PredictResult = () => {
 
                     <div className="flex gap-4 text-[#000000DE] items-center">
                         <p className="w-[48%]">がん発症率</p>
-                        <p className="w-[10%] ">{result?.cancer_rate}</p>
+                        <p className="w-[10%] ">{formatNumber(Number(result?.cancer_rate || 0))}%</p>
                         <div className="w-[32%] flex items-center">
                             <ResultData number={Number(result?.cancer_rate || 0)} />
                         </div>
@@ -50,7 +54,7 @@ const PredictResult = () => {
 
                     <div className="flex gap-4 text-[#000000DE] items-center">
                         <p className="w-[48%]">脳卒中発症率</p>
-                        <p className="w-[10%] ">{result?.stroke_myocardial_infarction_rate}</p>
+                        <p className="w-[10%] ">{formatNumber(Number(result?.stroke_myocardial_infarction_rate || 0))}%</p>
                         <div className="w-[32%] flex items-center">
                             <ResultData number={Number(result?.cancer_rate || 0)} />
                         </div>
@@ -58,7 +62,7 @@ const PredictResult = () => {
 
                     <div className="flex gap-4 text-[#000000DE] ">
                         <p className="w-[48%]">狭心症・心筋梗塞 発症率</p>
-                        <p className="w-[10%] ">{result?.care_need_rate}</p>
+                        <p className="w-[10%] ">{formatNumber(Number(result?.care_need_rate || 0))}%</p>
                         <div className="w-[32%] flex items-center">
                             <ResultData number={Number(result?.care_need_rate || 0)} />
                         </div>
@@ -66,7 +70,7 @@ const PredictResult = () => {
 
                     <div className="flex gap-4 text-[#000000DE] items-center">
                         <p className="w-[48%]">生存率</p>
-                        <p className="w-[10%] ">{result?.death_rate}</p>
+                        <p className="w-[10%] ">{formatNumber(Number(result?.death_rate || 0))}%</p>
                         <div className="w-[32%] flex items-center">
                             <ResultData number={Number(result?.death_rate || 0)} />
                         </div>
@@ -74,7 +78,7 @@ const PredictResult = () => {
 
                     <div className="flex gap-4 text-[#000000DE] items-center">
                         <p className="w-[48%]">要介護率</p>
-                        <p className="w-[10%] ">{result?.care_need_rate}</p>
+                        <p className="w-[10%] ">{formatNumber(Number(result?.care_need_rate || 0))}%</p>
                         <div className="w-[32%] flex items-center">
                             <ResultData number={Number(result?.care_need_rate || 0)} />
                         </div>

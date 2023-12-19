@@ -9,6 +9,7 @@ import axios from "axios";
 import dayjs from 'dayjs'
 import CustomButton from "../../components/common/Button";
 import CustomDrawer from '../../components/common/Drawer';
+import { useEffect } from 'react';
 
 const CustomInput = ({ label = '', type = 'text', value = '', onChange = () => { }, ph = '', unit = '', isLong = false }) => {
     return (
@@ -34,11 +35,17 @@ const CustomRadio = ({ question = '', value = '', answer1Value = '1', answer2Val
         onChanged(Number(e.target.value));
     };
 
+    const checkClicked = (val) => {
+        if (val === value) {
+            onChanged(null);
+        }
+    }
+
     return <div className='flex flex-col justify-center content-center  text-base'>
         <p className='text-[#757575] text-[12px] mb-2' >{question}</p>
         <Radio.Group onChange={onChange} value={value}>
-            <Radio value={answer1Value}>{answer1}</Radio>
-            <Radio value={answer2Value}>{answer2}</Radio>
+            <Radio onClick={() => checkClicked(answer1Value)} value={answer1Value}>{answer1}</Radio>
+            <Radio onClick={() => checkClicked(answer2Value)} value={answer2Value}>{answer2}</Radio>
         </Radio.Group>
     </div>
 }
@@ -78,6 +85,11 @@ const HealthInfo = () => {
         if (resultData?.id) { navigate('/result') }
     }
 
+    useEffect(() => {
+        const scrollableDiv = document.getElementById('scrollableDiv');
+        if (scrollableDiv) { scrollableDiv.scrollTop = 0 }
+    }, [current])
+
     const items = [
         { title: '健診情報', element: <FirstStep data={data} setData={setData} /> },
         { title: '質問票①', element: <SecondStep data={data} setData={setData} /> },
@@ -87,7 +99,7 @@ const HealthInfo = () => {
     return (
         <div className='relative !h-screen flex flex-col overflow-y-scroll'>
             <Header title='健康増進アプリ' setIsDrawerOpen={setIsDrawerOpen} />
-            <div className="flex flex-col flex-1 overflow-auto gap-8 p-4 ">
+            <div id='scrollableDiv' className="flex flex-col flex-1 overflow-auto gap-8 p-4 ">
                 <p>健診情報入力</p>
                 <Steps current={current} onChange={(e) => setCurrent(e)} labelPlacement="vertical" items={items} />
 
@@ -184,10 +196,7 @@ const FirstStep = ({ data, setData }) => {
                 />
             </div>
             <CustomRadio
-                onChanged={(e) => {
-                    changeData(e, 'smoking')
-                    console.log(e, 'matarjingooo');
-                }}
+                onChanged={(e) => { changeData(e, 'smoking') }}
                 value={data?.smoking || ''}
                 question='喫煙'
                 answer1Value={1}
