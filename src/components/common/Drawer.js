@@ -34,19 +34,20 @@ const CustomDrawer = ({ setIsDrawerOpen, isDrawerOpen }) => {
 			getContainer={false}
 		>
 			<div className='flex flex-col h-full'>
-				<a
-					target={'_blank'}
-					href={'https://www.yamagata-u.ac.jp/jp/'}
-					className='flex px-5 flex-col items-start gap-5 border-b border-[rgba(0,0,0,0.20)] py-5'
-					rel='noreferrer'
-				>
-					<img
-						src={'/images/logo.png'}
-						className='h-[40px]'
-						alt='logo'
-					/>
+				<div className='flex px-5 flex-col items-start gap-5 border-b border-[rgba(0,0,0,0.20)] py-5'>
+					<a
+						target={'_blank'}
+						rel='noreferrer'
+						href={'https://www.yamagata-u.ac.jp/jp/'}
+					>
+						<img
+							src={'/images/logo.png'}
+							className='h-[40px]'
+							alt='logo'
+						/>
+					</a>
 					<div className='text-[rgba(52,52,52,0.70)] font-medium text-[14px]'>{email}</div>
-				</a>
+				</div>
 
 				<div className='border-b px-5 border-[rgba(0,0,0,0.20)] py-6 flex flex-col gap-4'>
 					<div
