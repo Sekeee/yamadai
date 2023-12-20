@@ -3,12 +3,13 @@ import Header from "../../components/layouts/Header"
 import message from '../../components/common/Message';
 import { useNavigate } from "react-router-dom";
 import { FaCaretDown } from "react-icons/fa";
-import { DatePicker, Modal, Radio, Select, Steps } from 'antd';
+import { DatePicker, Modal, Radio, Select, Steps, Tooltip } from 'antd';
 import { useState } from "react";
 import axios from "axios";
 import dayjs from 'dayjs'
 import CustomButton from "../../components/common/Button";
 import CustomDrawer from '../../components/common/Drawer';
+import { useEffect } from 'react';
 
 const CustomInput = ({ label = '', type = 'text', value = '', onChange = () => { }, ph = '', unit = '', isLong = false }) => {
     return (
@@ -34,16 +35,23 @@ const CustomRadio = ({ question = '', value = '', answer1Value = '1', answer2Val
         onChanged(Number(e.target.value));
     };
 
+    const checkClicked = (val) => {
+        if (val === value) {
+            onChanged(null);
+        }
+    }
+
     return <div className='flex flex-col justify-center content-center  text-base'>
         <p className='text-[#757575] text-[12px] mb-2' >{question}</p>
         <Radio.Group onChange={onChange} value={value}>
-            <Radio value={answer1Value}>{answer1}</Radio>
-            <Radio value={answer2Value}>{answer2}</Radio>
+            <Radio onClick={() => checkClicked(answer1Value)} value={answer1Value}>{answer1}</Radio>
+            <Radio onClick={() => checkClicked(answer2Value)} value={answer2Value}>{answer2}</Radio>
         </Radio.Group>
     </div>
 }
 
 const CustomSelect = ({ options = [], label = '', value = '', onChange = () => { } }) => {
+    console.log(options, 'mmm');
     return (
         <div>
             <p className='text-[#757575] text-[12px] mb-2' >{label}</p>
@@ -55,8 +63,6 @@ const CustomSelect = ({ options = [], label = '', value = '', onChange = () => {
                 onChange={onChange}
                 optionFilterProp="children"
                 suffixIcon={<FaCaretDown />}
-                filterOption={(input, option) => (option?.label ?? '').includes(input)}
-                filterSort={(optionA, optionB) => (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())}
                 options={options}
                 value={value}
             />
@@ -78,6 +84,11 @@ const HealthInfo = () => {
         if (resultData?.id) { navigate('/result') }
     }
 
+    useEffect(() => {
+        const scrollableDiv = document.getElementById('scrollableDiv');
+        if (scrollableDiv) { scrollableDiv.scrollTop = 0 }
+    }, [current])
+
     const items = [
         { title: '健診情報', element: <FirstStep data={data} setData={setData} /> },
         { title: '質問票①', element: <SecondStep data={data} setData={setData} /> },
@@ -87,7 +98,7 @@ const HealthInfo = () => {
     return (
         <div className='relative !h-screen flex flex-col overflow-y-scroll'>
             <Header title='健康増進アプリ' setIsDrawerOpen={setIsDrawerOpen} />
-            <div className="flex flex-col flex-1 overflow-auto gap-8 p-4 ">
+            <div id='scrollableDiv' className="flex flex-col z-30 flex-1 overflow-auto gap-8 p-4 ">
                 <p>健診情報入力</p>
                 <Steps current={current} onChange={(e) => setCurrent(e)} labelPlacement="vertical" items={items} />
 
@@ -155,8 +166,13 @@ const FirstStep = ({ data, setData }) => {
     return (
         <div className="flex flex-col gap-6 ">
             <div className='border-b border-[#0000006B] pb-2'>
-                <p className='text-[#757575] text-[12px] mb-2'>
+                <p className='text-[#757575] flex gap-2 text-[12px] mb-2'>
                     健診日
+                    <div className='relative'>
+                        <Tooltip title="prompt text">
+                            <div className='absolute text-error cursor-pointer -top-1 left-0'>*</div>
+                        </Tooltip>
+                    </div>
                 </p>
                 <DatePicker
                     style={{ width: '100%', borderBottom: '1px solid  !important', padding: '0 !important' }}
@@ -271,13 +287,16 @@ const FirstStep = ({ data, setData }) => {
             <CustomSelect options={[
                 {
                     value: 1,
+                    index: 1,
                     label: '30分未満',
                 },
                 {
                     value: 2,
+                    index: 2,
                     label: '30-59分',
                 },
                 {
+                    index: 3,
                     value: 3,
                     label: '60分以上-59分',
                 },

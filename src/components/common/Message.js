@@ -38,8 +38,8 @@ const message = (messageText, success = false, config = {}) => {
 		className,
 		key,
 		duration: success ? 6 : 0,
-		message: messageText,
-		description: <div>{success ? 'Successful' : 'Unsuccessful'}</div>,
+		message: <div>{success ? '成功しました' : '失敗しました'}</div>,
+		description: messageText,
 		icon: success ? <CheckCircleOutlined style={{ color: '#3C9871' }} /> : <ExclamationCircleOutlined style={{ color: '#FF4949' }} />,
 		onClick() {
 			notification.destroy(key);
