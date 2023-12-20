@@ -3,7 +3,7 @@ import Header from "../../components/layouts/Header"
 import message from '../../components/common/Message';
 import { useNavigate } from "react-router-dom";
 import { FaCaretDown } from "react-icons/fa";
-import { DatePicker, Modal, Radio, Select, Steps } from 'antd';
+import { DatePicker, Modal, Radio, Select, Steps, Tooltip } from 'antd';
 import { useState } from "react";
 import axios from "axios";
 import dayjs from 'dayjs'
@@ -51,6 +51,7 @@ const CustomRadio = ({ question = '', value = '', answer1Value = '1', answer2Val
 }
 
 const CustomSelect = ({ options = [], label = '', value = '', onChange = () => { } }) => {
+    console.log(options, 'mmm');
     return (
         <div>
             <p className='text-[#757575] text-[12px] mb-2' >{label}</p>
@@ -62,8 +63,6 @@ const CustomSelect = ({ options = [], label = '', value = '', onChange = () => {
                 onChange={onChange}
                 optionFilterProp="children"
                 suffixIcon={<FaCaretDown />}
-                filterOption={(input, option) => (option?.label ?? '').includes(input)}
-                filterSort={(optionA, optionB) => (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())}
                 options={options}
                 value={value}
             />
@@ -167,8 +166,13 @@ const FirstStep = ({ data, setData }) => {
     return (
         <div className="flex flex-col gap-6 ">
             <div className='border-b border-[#0000006B] pb-2'>
-                <p className='text-[#757575] text-[12px] mb-2'>
+                <p className='text-[#757575] flex gap-2 text-[12px] mb-2'>
                     健診日
+                    <div className='relative'>
+                        <Tooltip title="prompt text">
+                            <div className='absolute text-error cursor-pointer -top-1 left-0'>*</div>
+                        </Tooltip>
+                    </div>
                 </p>
                 <DatePicker
                     style={{ width: '100%', borderBottom: '1px solid  !important', padding: '0 !important' }}
@@ -283,13 +287,16 @@ const FirstStep = ({ data, setData }) => {
             <CustomSelect options={[
                 {
                     value: 1,
+                    index: 1,
                     label: '30分未満',
                 },
                 {
                     value: 2,
+                    index: 2,
                     label: '30-59分',
                 },
                 {
+                    index: 3,
                     value: 3,
                     label: '60分以上-59分',
                 },

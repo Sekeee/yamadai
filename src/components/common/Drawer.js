@@ -18,6 +18,8 @@ const CustomDrawer = ({ setIsDrawerOpen, isDrawerOpen }) => {
 		window.location.href = '/';
 	};
 
+	console.log(pathname, 'mmmmmmm');
+
 	return (
 		<Drawer
 			title={false}
@@ -83,7 +85,7 @@ const CustomDrawer = ({ setIsDrawerOpen, isDrawerOpen }) => {
 							navigate('/result');
 						}}
 						className={`flex text-black ${
-							pathname === '/result' && '!bg-primary/20 !text-primary'
+							(pathname === '/result' || pathname === '/predict-result') && '!bg-primary/20 !text-primary'
 						} gap-3 items-center px-4 py-3 cursor-pointer font-semibold rounded-[10px] `}
 					>
 						<TbMenu2 />
@@ -113,14 +115,12 @@ const CustomDrawer = ({ setIsDrawerOpen, isDrawerOpen }) => {
 					</div>
 				</div>
 
-				<div className='flex-1 flex items-end justify-center gap-2 '>
-					<div
-						onClick={handleLogout}
-						className='flex items-center font-semibold text-black cursor-pointer border-t px-6 border-[rgba(0,0,0,0.20)] py-[40px] gap-3 w-full'
-					>
-						<FiLogOut />
-						<div>ログアウト</div>
-					</div>
+				<div
+					onClick={handleLogout}
+					className='flex items-center font-semibold cursor-pointer text-error px-6 py-[40px] gap-3 w-full'
+				>
+					<FiLogOut />
+					<div>ログアウト</div>
 				</div>
 			</div>
 		</Drawer>

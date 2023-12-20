@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import CustomDrawer from "../../components/common/Drawer";
 import Header from "../../components/layouts/Header"
 
 const PredictResult = () => {
@@ -10,6 +11,7 @@ const PredictResult = () => {
     const [result, setResult] = useState({});
     const resultId = searchParams.get('resultId');
     const date = searchParams.get('date');
+    const [isDrawerOpen, setIsDrawerOpen] = useState(false)
 
     useEffect(() => {
         if (resultId) {
@@ -30,8 +32,8 @@ const PredictResult = () => {
     }
 
     return (
-        <>
-            <Header title='健康増進アプリ' />
+        <div className="relative w-full h-screen">
+            <Header title='健康増進アプリ' setIsDrawerOpen={setIsDrawerOpen} />
             <div className="p-4 px-6">
                 <div className="flex gap-4 items-center">
                     <p className="text-[20px]">予測結果</p>
@@ -45,40 +47,50 @@ const PredictResult = () => {
                     </div>
 
                     <div className="flex gap-4 text-[#000000DE] items-center">
-                        <p className="w-[48%]">がん発症率</p>
-                        <p className="w-[10%] ">{formatNumber(Number(result?.cancer_rate || 0))}%</p>
+                        <div className="w-[68%] flex gap-5 items-center">
+                            <div>がん発症率</div>
+                            <div>{formatNumber(Number(result?.cancer_rate || 0))}%</div>
+                        </div>
                         <div className="w-[32%] flex items-center">
                             <ResultData number={Number(result?.cancer_rate || 0)} />
                         </div>
                     </div>
 
                     <div className="flex gap-4 text-[#000000DE] items-center">
-                        <p className="w-[48%]">脳卒中発症率</p>
-                        <p className="w-[10%] ">{formatNumber(Number(result?.stroke_myocardial_infarction_rate || 0))}%</p>
+                        <div className="w-[68%] flex gap-5 items-center">
+                            <div>脳卒中発症率</div>
+                            <div>{formatNumber(Number(result?.stroke_myocardial_infarction_rate || 0))}%</div>
+                        </div>
                         <div className="w-[32%] flex items-center">
                             <ResultData number={Number(result?.cancer_rate || 0)} />
                         </div>
                     </div>
 
                     <div className="flex gap-4 text-[#000000DE] ">
-                        <p className="w-[48%]">狭心症・心筋梗塞 発症率</p>
-                        <p className="w-[10%] ">{formatNumber(Number(result?.care_need_rate || 0))}%</p>
+                        <div className="w-[68%] flex gap-5 items-center">
+                            <div>狭心症・心筋梗塞 発症率</div>
+                            <div>{formatNumber(Number(result?.care_need_rate || 0))}%</div>
+                        </div>
                         <div className="w-[32%] flex items-center">
                             <ResultData number={Number(result?.care_need_rate || 0)} />
                         </div>
                     </div>
 
                     <div className="flex gap-4 text-[#000000DE] items-center">
-                        <p className="w-[48%]">生存率</p>
-                        <p className="w-[10%] ">{formatNumber(Number(result?.death_rate || 0))}%</p>
+                        <div className="w-[68%] flex gap-5 items-center">
+                            <div>生存率</div>
+                            <div>{formatNumber(Number(result?.death_rate || 0))}%</div>
+                        </div>
                         <div className="w-[32%] flex items-center">
                             <ResultData number={Number(result?.death_rate || 0)} />
                         </div>
                     </div>
 
                     <div className="flex gap-4 text-[#000000DE] items-center">
-                        <p className="w-[48%]">要介護率</p>
-                        <p className="w-[10%] ">{formatNumber(Number(result?.care_need_rate || 0))}%</p>
+                        <div className="w-[68%] flex gap-5 items-center">
+                            <div>要介護率</div>
+                            <div>{formatNumber(Number(result?.care_need_rate || 0))}%</div>
+                        </div>
                         <div className="w-[32%] flex items-center">
                             <ResultData number={Number(result?.care_need_rate || 0)} />
                         </div>
@@ -103,7 +115,8 @@ const PredictResult = () => {
                     健診情報を確認する
                 </p>
             </div>
-        </>
+            <CustomDrawer setIsDrawerOpen={setIsDrawerOpen} isDrawerOpen={isDrawerOpen} />
+        </div>
     )
 }
 

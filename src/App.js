@@ -5,6 +5,7 @@ import AuthRouter from './routes/AuthRouter';
 import { ConfigProvider } from 'antd';
 import useStore from './store';
 import './config/interceptor';
+import jp from 'antd/locale/ja_JP';
 
 const authRoutes = createBrowserRouter(
 	createRoutesFromElements(
@@ -29,7 +30,10 @@ export default function App() {
 	const loading = useStore(state => state.loading);
 
 	return (
-		<ConfigProvider theme={{ token: { colorPrimary: '#11a9a4' } }}>
+		<ConfigProvider
+			locale={jp}
+			theme={{ token: { colorPrimary: '#11a9a4' } }}
+		>
 			{loading && <Loading />}
 			<div className='w-full bg-white overflow-hidden pb-4 sm:w-[400px]'>
 				<RouterProvider router={token ? protectedRoutes : authRoutes} />
