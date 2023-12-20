@@ -19,7 +19,7 @@ const CustomInput = ({ label = '', type = 'text', value = '', onChange = () => {
                 <input
                     type={type}
                     onChange={(e) => {
-                        if (type === "number" && e.target.value?.length > 4) { return }
+                        if (type === "number" && e.target.value?.length > 5) { return }
                         onChange(e)
                     }}
                     value={value}
@@ -57,7 +57,7 @@ const CustomSelect = ({ options = [], label = '', value = '', onChange = () => {
             <p className='text-[#757575] text-[12px] mb-2' >{label}</p>
             <Select
                 style={{ width: '100%', borderBottom: '1px solid #0000006B', padding: '0 !important' }}
-                showSearch
+                showSearch={false}
                 placeholder=''
                 bordered={false}
                 onChange={onChange}
@@ -169,12 +169,13 @@ const FirstStep = ({ data, setData }) => {
                 <p className='text-[#757575] flex gap-2 text-[12px] mb-2'>
                     健診日
                     <div className='relative'>
-                        <Tooltip title="prompt text">
+                        <Tooltip title="この項目で予後予測します">
                             <div className='absolute text-error cursor-pointer -top-1 left-0'>*</div>
                         </Tooltip>
                     </div>
                 </p>
                 <DatePicker
+                    inputReadOnly
                     style={{ width: '100%', borderBottom: '1px solid  !important', padding: '0 !important' }}
                     bordered={false}
                     placeholder='2023-12-23'
@@ -184,6 +185,7 @@ const FirstStep = ({ data, setData }) => {
                     }} />
             </div>
             <div className="flex gap-6">
+
                 <CustomInput
                     onChange={(e) => changeData(e.target.value, 'height')}
                     value={data?.height || ''}
@@ -202,11 +204,11 @@ const FirstStep = ({ data, setData }) => {
             <CustomRadio
                 onChanged={(e) => { changeData(e, 'smoking') }}
                 value={data?.smoking || ''}
-                question='喫煙'
+                question='今、吸いますか？'
                 answer1Value={1}
                 answer2Value={2}
-                answer1='はい'
-                answer2='いいえ'
+                answer1='吸う'
+                answer2='吸わない'
             />
 
             <CustomSelect options={[
@@ -227,20 +229,43 @@ const FirstStep = ({ data, setData }) => {
                 onChange={(value) => changeData(value, 'drinking')}
                 value={data.drinking || ''}
             />
+            <CustomSelect
+                options={[
+                    {
+                        value: 1,
+                        label: '1合未満',
+                    },
+                    {
+                        value: 2,
+                        label: '1～2合未満',
+                    },
+                    {
+                        value: 3,
+                        label: '2～3合未満',
+                    },
+                    {
+                        value: 4,
+                        label: '3合以上',
+                    },
+                ]}
+                label="飲酒量"
+                onChange={(value) => changeData(value, 'alcohol_consumption')}
+                value={data?.alcohol_consumption || ''}
+            />
 
 
             <div className="flex gap-6">
                 <CustomInput
                     onChange={(e) => changeData(e.target.value, 'systolic_blood_pressure')}
                     value={data.systolic_blood_pressure || ''}
-                    label="収縮期血圧"
+                    label="血圧（上)"
                     type='number'
                     unit="mmHg" />
                 <CustomInput
                     onChange={(e) => changeData(e.target.value, 'diastolic_blood_pressure')}
                     value={data.diastolic_blood_pressure || ''}
                     type='number'
-                    label="拡張期血圧"
+                    label="血圧（下）"
                     unit="mmHg" />
             </div>
             <div className="flex gap-6">
@@ -249,20 +274,20 @@ const FirstStep = ({ data, setData }) => {
                     value={data.hdl_cholesterol || ''}
                     type='number'
                     label="HDLコレステロール"
-                    unit="mg/dl" />
+                    unit="mg/dL" />
                 <CustomInput
                     onChange={(e) => changeData(e.target.value, 'ldl_cholesterol')}
                     value={data.ldl_cholesterol || ''}
                     type='number'
                     label="LDLコレステロール"
-                    unit="mg/dl" />
+                    unit="mg/dL" />
             </div>
             <div className="flex gap-6">
                 <CustomInput
                     onChange={(e) => changeData(e.target.value, 'blood_glucose')}
                     value={data.blood_glucose || ''}
                     label="血糖"
-                    unit="mg/dl" />
+                    unit="mg/dL" />
                 <CustomInput
                     onChange={(e) => changeData(e.target.value, 'hba1c')}
                     value={data.hba1c || ''}
@@ -359,7 +384,7 @@ const SecondStep = ({ data, setData }) => {
                     value={data?.triglycerides || ''}
                     label="中性脂肪(トリグリセリド)"
                     type="number"
-                    unit="mg/dl" />
+                    unit="mg/dL" />
 
             </div>
             <div className="flex gap-6">
@@ -407,6 +432,10 @@ const SecondStep = ({ data, setData }) => {
                         value: 5,
                         label: '3+',
                     },
+                    {
+                        value: 6,
+                        label: '4+',
+                    },
                 ]}
                 label="尿糖"
                 onChange={(value) => changeData(value, 'urinary_glucose')}
@@ -434,6 +463,10 @@ const SecondStep = ({ data, setData }) => {
                         value: 5,
                         label: '3+',
                     },
+                    {
+                        value: 6,
+                        label: '4+',
+                    },
                 ]}
                 label="尿蛋白"
                 onChange={(value) => changeData(value, 'urinary_protein')}
@@ -459,7 +492,7 @@ const SecondStep = ({ data, setData }) => {
                     value={data?.red_blood_cell_count || ''}
                     type='number'
                     label="赤血球数"
-                    unit="万/mm3" />
+                    unit="万/mm3 = 10^4/μL" />
                 <div className="w-1/2"></div>
             </div>
         </div>
@@ -478,40 +511,6 @@ const ThirdStep = ({ createInfo, data, setData }) => {
 
     return (
         <div className="flex flex-col gap-6">
-            <CustomSelect
-                options={[
-                    {
-                        value: 1,
-                        label: 'なし',
-                    },
-                    {
-                        value: 2,
-                        label: '動機付け支援',
-                    },
-                    {
-                        value: 3,
-                        label: '積極的支援',
-                    },
-                ]}
-                label="メタボリックシンドローム判定"
-                onChange={(value) => changeData(value, 'metabolic_syndrome_assessment')}
-                value={data?.metabolic_syndrome_assessment || ''}
-            />
-            <CustomSelect
-                options={[
-                    {
-                        value: 1,
-                        label: '該当',
-                    },
-                    {
-                        value: 2,
-                        label: '非該当',
-                    },
-                ]}
-                label="保健指導レベル"
-                onChange={(value) => changeData(value, 'health_guidance_level')}
-                value={data?.health_guidance_level || ''}
-            />
             <CustomRadio
                 onChanged={(e) => { changeData(e, 'medication_lipids') }}
                 value={data?.medication_lipids || ''}
@@ -551,7 +550,7 @@ const ThirdStep = ({ createInfo, data, setData }) => {
             <CustomRadio
                 onChanged={(e) => { changeData(e, 'anemia') }}
                 value={data?.anemia || ''}
-                question='貧血'
+                question='既往歴4（貧血）'
                 answer1Value={1}
                 answer2Value={2}
                 answer1='はい'
@@ -560,47 +559,57 @@ const ThirdStep = ({ createInfo, data, setData }) => {
             <CustomRadio
                 onChanged={(e) => { changeData(e, 'weight_change_since_20') }}
                 value={data?.weight_change_since_20 || ''}
-                question='２０歳からの体重変化'
+                question='20歳の頃から体重が10ｷﾛ以上増加'
                 answer1Value={1}
                 answer2Value={2}
-                answer1='はい'
-                answer2='いいえ'
+                answer1='あり'
+                answer2='なし'
             />
             <CustomRadio
                 onChanged={(e) => { changeData(e, 'exercise_habit_30min_plus') }}
                 value={data?.exercise_habit_30min_plus || ''}
-                question='３０分以上の運動習慣'
+                question='30分以上の運動習慣'
                 answer1Value={1}
                 answer2Value={2}
-                answer1='はい'
-                answer2='いいえ'
+                answer1='している'
+                answer2='していない'
             />
             <CustomRadio
-                onChanged={(e) => { changeData(e, 'walking_or_physical_activity') }}
+                onChanged={(e) => { changeData(e, 'medical_history_cardiovascular') }}
                 value={data?.medical_history_cardiovascular || ''}
-                question='歩行又は身体活動'
+                question='歩行を1日1時間以上'
                 answer1Value={1}
                 answer2Value={2}
-                answer1='はい'
-                answer2='いいえ'
+                answer1='している'
+                answer2='していない'
             />
             <CustomRadio
                 onChanged={(e) => { changeData(e, 'walking_speed') }}
                 value={data?.walking_speed || ''}
-                question='歩行速度'
+                question='歩行速度が同じ年代・性別の人より速い'
                 answer1Value={1}
                 answer2Value={2}
                 answer1='はい'
                 answer2='いいえ'
             />
-            <CustomRadio
-                onChanged={(e) => { changeData(e, 'annual_weight_change') }}
+            <CustomSelect
+                options={[
+                    {
+                        value: 1,
+                        label: '3㎏以上増えた',
+                    },
+                    {
+                        value: 2,
+                        label: '3㎏以上減った',
+                    },
+                    {
+                        value: 3,
+                        label: '±3㎏以内の変化',
+                    },
+                ]}
+                label="1年間の体重変化"
+                onChange={(value) => changeData(value, 'annual_weight_change')}
                 value={data?.annual_weight_change || ''}
-                question='1年間の体重変化'
-                answer1Value={1}
-                answer2Value={2}
-                answer1='はい'
-                answer2='いいえ'
             />
             <CustomSelect
                 options={[
@@ -617,7 +626,7 @@ const ThirdStep = ({ createInfo, data, setData }) => {
                         label: '遅い',
                     },
                 ]}
-                label="食べ方1（早食い等）"
+                label="食べ方1（食べる速さ）"
                 onChange={(value) => changeData(value, 'eating_habit_speed')}
                 value={data?.eating_habit_speed || ''}
             />
@@ -642,7 +651,32 @@ const ThirdStep = ({ createInfo, data, setData }) => {
             <CustomRadio
                 onChanged={(e) => { changeData(e, 'eating_habit_skipping_breakfast') }}
                 value={data?.eating_habit_skipping_breakfast || ''}
-                question='食習慣（朝食抜き)'
+                question='食習慣（朝食抜き週3回以上)'
+                answer1Value={1}
+                answer2Value={2}
+                answer1='はい'
+                answer2='いいえ'
+            />
+
+            <CustomSelect
+                options={[
+                    {
+                        value: 1,
+                        label: '該当',
+                    },
+                    {
+                        value: 2,
+                        label: '非該当',
+                    },
+                ]}
+                label="保健指導レベル"
+                onChange={(value) => changeData(value, 'health_guidance_level')}
+                value={data?.health_guidance_level || ''}
+            />
+            <CustomRadio
+                onChanged={(e) => { changeData(e, 'sufficient_rest_through_sleep') }}
+                value={data?.sufficient_rest_through_sleep || ''}
+                question='睡眠で休養が十分とれている'
                 answer1Value={1}
                 answer2Value={2}
                 answer1='はい'
@@ -652,33 +686,20 @@ const ThirdStep = ({ createInfo, data, setData }) => {
                 options={[
                     {
                         value: 1,
-                        label: '1合未満',
+                        label: 'なし',
                     },
                     {
                         value: 2,
-                        label: '1～2合未満',
+                        label: '動機付け支援',
                     },
                     {
                         value: 3,
-                        label: '2～3合未満',
-                    },
-                    {
-                        value: 4,
-                        label: '3合以上',
+                        label: '積極的支援',
                     },
                 ]}
-                label="飲酒量"
-                onChange={(value) => changeData(value, 'alcohol_consumption')}
-                value={data?.alcohol_consumption || ''}
-            />
-            <CustomRadio
-                onChanged={(e) => { changeData(e, 'sufficient_rest_through_sleep') }}
-                value={data?.sufficient_rest_through_sleep || ''}
-                question='睡眠で休養が十分'
-                answer1Value={1}
-                answer2Value={2}
-                answer1='はい'
-                answer2='いいえ'
+                label="メタボリックシンドローム判定"
+                onChange={(value) => changeData(value, 'metabolic_syndrome_assessment')}
+                value={data?.metabolic_syndrome_assessment || ''}
             />
             <CustomSelect
                 options={[
@@ -688,19 +709,19 @@ const ThirdStep = ({ createInfo, data, setData }) => {
                     },
                     {
                         value: 2,
-                        label: '近いうちに（概ね１か月以内）改善するつもりである',
+                        label: '改善するつもりである（概ね6か月以内）',
                     },
                     {
                         value: 3,
-                        label: '改善するつもりである（概ね６か月以内）',
+                        label: '近いうちに（概ね1か月以内）改善するつもりである',
                     },
                     {
                         value: 4,
-                        label: '既に改善に取り組んでいる（６か月未満）',
+                        label: '既に改善に取り組んでいる（6か月未満）',
                     },
                     {
                         value: 5,
-                        label: '既に改善に取り組んでいる（６か月以上）',
+                        label: '既に改善に取り組んでいる（6か月以上）',
                     },
                 ]}
                 label="生活習慣の改善"

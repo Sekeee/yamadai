@@ -18,7 +18,6 @@ const CustomDrawer = ({ setIsDrawerOpen, isDrawerOpen }) => {
 		window.location.href = '/';
 	};
 
-	console.log(pathname, 'mmmmmmm');
 
 	return (
 		<Drawer
@@ -46,7 +45,7 @@ const CustomDrawer = ({ setIsDrawerOpen, isDrawerOpen }) => {
 							alt='logo'
 						/>
 					</a>
-					<div className='text-[rgba(52,52,52,0.70)] font-medium text-[14px]'>{email}</div>
+					<div className='text-[rgba(52,52,52,0.70)] font-medium text-[14px]'>ログインID: {email}</div>
 				</div>
 
 				<div className='border-b px-5 border-[rgba(0,0,0,0.20)] py-6 flex flex-col gap-4'>
@@ -90,7 +89,7 @@ const CustomDrawer = ({ setIsDrawerOpen, isDrawerOpen }) => {
 						} gap-3 items-center px-4 py-3 cursor-pointer font-semibold rounded-[10px] `}
 					>
 						<TbMenu2 />
-						<p>予測結果サマリ</p>
+						<p>予測結果</p>
 					</div>
 					<div
 						className={`flex text-black ${

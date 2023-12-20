@@ -42,13 +42,13 @@ const PredictResult = () => {
 
                 <div className="flex gap-4 mt-[30px] mb-[50px] flex-col">
                     <div className="flex gap-6">
-                        <p className="w-[80%] text-[#000000DE]">今後○年間の予測結果</p>
-                        <p className="text-[#00000099]">同年代と比べた リスクの程度</p>
+                        <p className="w-[55%] text-[#000000DE]">今後○年間の予測結果</p>
+                        <p className="text-[#000000DE]">同年代平均との比較</p>
                     </div>
 
                     <div className="flex gap-4 text-[#000000DE] items-center">
                         <div className="w-[68%] flex gap-5 items-center">
-                            <div>がん発症率</div>
+                            <div>がん発症リスク</div>
                             <div>{formatNumber(Number(result?.cancer_rate || 0))}%</div>
                         </div>
                         <div className="w-[32%] flex items-center">
@@ -88,7 +88,7 @@ const PredictResult = () => {
 
                     <div className="flex gap-4 text-[#000000DE] items-center">
                         <div className="w-[68%] flex gap-5 items-center">
-                            <div>要介護率</div>
+                            <div>要介護発生率</div>
                             <div>{formatNumber(Number(result?.care_need_rate || 0))}%</div>
                         </div>
                         <div className="w-[32%] flex items-center">

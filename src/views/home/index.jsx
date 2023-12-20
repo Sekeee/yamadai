@@ -32,7 +32,7 @@ const Home = () => {
         <div className='flex-col justify-around content-center mx-6 gap-4 flex mt-6'>
           <div onClick={() => navigate('/result')} className='flex bg-primary gap-3 items-center px-6 py-3 cursor-pointer font-semibold rounded-[10px] text-white'>
             <TbMenu2 />
-            <p>予測結果サマリ</p>
+            <p>予測結果</p>
           </div>
           <div className='flex bg-primary gap-3 items-center px-6 py-3 cursor-pointer font-semibold rounded-[10px] text-white'>
             <IoDocumentTextOutline />

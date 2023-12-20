@@ -28,7 +28,7 @@ const Result = () => {
                         return (
                             <div key={index} onClick={() => navigate(`/predict-result?resultId=${id}&date=${checked_date}`)} className='flex bg-primary gap-3 items-center px-6 py-3 cursor-pointer font-semibold rounded-[10px] text-white'>
                                 <FiCalendar />
-                                <div>予測結果サマリ{index + 1}</div>
+                                <div>予測結果{index + 1}</div>
                                 <div className="flex-1 text-end text-[#FFFFFFCC]">{checked_date}</div>
                             </div>
                         )
