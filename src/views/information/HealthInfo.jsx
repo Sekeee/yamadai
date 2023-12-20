@@ -99,7 +99,7 @@ const HealthInfo = () => {
     return (
         <div className='relative !h-screen flex flex-col overflow-y-scroll'>
             <Header title='健康増進アプリ' setIsDrawerOpen={setIsDrawerOpen} />
-            <div id='scrollableDiv' className="flex flex-col flex-1 overflow-auto gap-8 p-4 ">
+            <div id='scrollableDiv' className="flex flex-col z-30 flex-1 overflow-auto gap-8 p-4 ">
                 <p>健診情報入力</p>
                 <Steps current={current} onChange={(e) => setCurrent(e)} labelPlacement="vertical" items={items} />
 
