@@ -1,14 +1,14 @@
 import { BiChevronRight, BiChevronLeft } from 'react-icons/bi'
 import Header from "../../components/layouts/Header"
-import message from '../../components/common/Message';
 import { useNavigate } from "react-router-dom";
 import { FaCaretDown } from "react-icons/fa";
-import { DatePicker, Modal, Radio, Select, Steps, Tooltip } from 'antd';
+import { DatePicker, Modal, Radio, Select, Steps, } from 'antd';
 import { useState } from "react";
 import axios from "axios";
 import dayjs from 'dayjs'
 import CustomButton from "../../components/common/Button";
 import CustomDrawer from '../../components/common/Drawer';
+import message from '../../components/common/Message';
 import { useEffect } from 'react';
 
 const CustomInput = ({ label = '', type = 'text', value = '', onChange = () => { }, ph = '', unit = '', isLong = false }) => {
@@ -51,7 +51,6 @@ const CustomRadio = ({ question = '', value = '', answer1Value = '1', answer2Val
 }
 
 const CustomSelect = ({ options = [], label = '', value = '', onChange = () => { } }) => {
-    console.log(options, 'mmm');
     return (
         <div>
             <p className='text-[#757575] text-[12px] mb-2' >{label}</p>
@@ -75,13 +74,38 @@ const HealthInfo = () => {
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [current, setCurrent] = useState(0);
     const [data, setData] = useState({})
+    const [resultDataId, setResultDataId] = useState('')
+
     const navigate = useNavigate();
 
 
-    const createHealthInfo = async () => {
-        if (!data?.checked_date) { message('健診日を入力してください', false) }
-        const { data: resultData } = await axios.post('/api/healthcheckinfo/create/', data);
-        if (resultData?.id) { navigate('/result') }
+    const createHealthInfo = async (isNavigate) => {
+        try {
+            const { data: resultData } = await axios.post('/api/healthcheckinfo/create/', data);
+            if (resultData?.id) {
+                setResultDataId(resultData?.id)
+                setIsModalOpen(false)
+                if (isNavigate) {
+                    setData({})
+                    setResultDataId('')
+                    navigate('/result')
+                }
+            }
+        } catch (e) {
+            message('Create Error', false)
+        }
+    }
+
+    const updateAndNavigate = async () => {
+        if (!resultDataId) { return }
+
+        try {
+            const { data: resultData } = await axios.patch(`/api/healthcheckinfo/${resultDataId}/`, data);
+            if (resultData?.id) { navigate('/result') }
+        } catch (error) {
+            message('Edit Error', false)
+        }
+
     }
 
     useEffect(() => {
@@ -90,9 +114,9 @@ const HealthInfo = () => {
     }, [current])
 
     const items = [
-        { title: '健診情報', element: <FirstStep data={data} setData={setData} /> },
+        { title: '健診情報', element: <FirstStep createInfo={() => setIsModalOpen(true)} data={data} setData={setData} /> },
         { title: '質問票①', element: <SecondStep data={data} setData={setData} /> },
-        { title: '質問票②', element: <ThirdStep createInfo={() => setIsModalOpen(true)} data={data} setData={setData} /> },
+        { title: '質問票②', element: <ThirdStep data={data} setData={setData} /> },
     ];
 
     return (
@@ -117,14 +141,19 @@ const HealthInfo = () => {
                     <div>{current + 1}/{items.length}</div>
                     <div
                         onClick={() => {
-                            if (!data?.checked_date) {
-                                return message('健診日を入力してください', false);
+                            if (current + 1 >= items.length) {
+                                if (resultDataId) {
+                                    updateAndNavigate()
+                                } else {
+                                    createHealthInfo(true)
+                                }
+
+                                return
                             }
 
-                            if (current + 1 >= items.length) return
                             setCurrent(current + 1)
                         }}
-                        className={`flex text-primary ${current === 2 && '!text-[#00000061]'} gap-2 items-center text-[14px] cursor-pointer`}>
+                        className={`flex text-primary gap-2 items-center text-[14px] cursor-pointer`}>
                         <p>次へ</p>
                         <BiChevronRight size={18} />
                     </div>
@@ -153,7 +182,7 @@ const HealthInfo = () => {
     )
 }
 
-const FirstStep = ({ data, setData }) => {
+const FirstStep = ({ data, createInfo, setData }) => {
     const changeData = (value, key) => {
         setData((prev) => {
             return {
@@ -168,11 +197,6 @@ const FirstStep = ({ data, setData }) => {
             <div className='border-b border-[#0000006B] pb-2'>
                 <p className='text-[#757575] flex gap-2 text-[12px] mb-2'>
                     健診日
-                    <div className='relative'>
-                        <Tooltip title="prompt text">
-                            <div className='absolute text-error cursor-pointer -top-1 left-0'>*</div>
-                        </Tooltip>
-                    </div>
                 </p>
                 <DatePicker
                     style={{ width: '100%', borderBottom: '1px solid  !important', padding: '0 !important' }}
@@ -305,6 +329,7 @@ const FirstStep = ({ data, setData }) => {
                 onChange={(value) => changeData(value, 'walking_time')}
                 value={data.walking_time || ''}
             />
+            <CustomButton onClick={createInfo} text='予測を行う' />
         </div>
     )
 }
@@ -466,7 +491,7 @@ const SecondStep = ({ data, setData }) => {
     )
 }
 
-const ThirdStep = ({ createInfo, data, setData }) => {
+const ThirdStep = ({ data, setData }) => {
     const changeData = (value, key) => {
         setData((prev) => {
             return {
@@ -716,8 +741,6 @@ const ThirdStep = ({ createInfo, data, setData }) => {
                 answer1='はい'
                 answer2='いいえ'
             />
-
-            <CustomButton onClick={createInfo} text='予測を行う' />
         </div>
     )
 }

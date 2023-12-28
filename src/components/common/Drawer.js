@@ -18,8 +18,6 @@ const CustomDrawer = ({ setIsDrawerOpen, isDrawerOpen }) => {
 		window.location.href = '/';
 	};
 
-	console.log(pathname, 'mmmmmmm');
-
 	return (
 		<Drawer
 			title={false}

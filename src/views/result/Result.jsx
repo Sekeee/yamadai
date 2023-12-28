@@ -1,20 +1,35 @@
 import CustomDrawer from "../../components/common/Drawer";
 import Header from "../../components/layouts/Header";
 import { useNavigate } from "react-router-dom";
-import { FiCalendar } from "react-icons/fi";
+import { FiTrash2, FiCalendar } from "react-icons/fi";
 import { useEffect, useState } from "react";
 import axios from "axios";
-
+import { Modal } from "antd";
+import CustomButton from "../../components/common/Button";
 const Result = () => {
     const navigate = useNavigate();
     const [resultList, setResultList] = useState([])
     const [isDrawerOpen, setIsDrawerOpen] = useState(false)
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
 
     useEffect(() => { fetchData() }, [])
 
     const fetchData = async () => {
         const { data } = await axios.get(`/api/healthcheckinfo/`,);
         setResultList(data)
+    }
+
+    const deleteResult = async (resultId) => {
+        if (!resultId) return
+        try {
+            const { status } = await axios.delete(`/api/healthcheckinfo/${resultId}/`);
+            if (status === 204) {
+                setIsDeleteModalOpen(false);
+                fetchData()
+            }
+        } catch (error) {
+            console.log(error);
+        }
     }
 
 
@@ -30,12 +45,38 @@ const Result = () => {
                                 <FiCalendar />
                                 <div>予測結果サマリ{index + 1}</div>
                                 <div className="flex-1 text-end text-[#FFFFFFCC]">{checked_date}</div>
+                                <div
+                                    onClick={(e) => {
+                                        e.stopPropagation()
+                                        setIsDeleteModalOpen({ id: id })
+                                    }}
+
+                                    className="text-end hover:text-[#FFFFFFCC]/50 text-[#FFFFFFCC]">
+                                    <FiTrash2 />
+                                </div>
                             </div>
                         )
                     })
                 }
             </div>
         </div>
+
+        <Modal
+            width={360}
+            centered={true}
+            closable={false}
+            open={isDeleteModalOpen}
+            footer={false}
+            styles={{ footer: { margin: 0, }, }}
+            onCancel={() => setIsDeleteModalOpen(false)}
+        >
+            <p>健康予測結果が削除されます。よろしいですか？</p>
+
+            <div className='flex gap-2 mt-6 items-end justify-end'>
+                <CustomButton onClick={() => setIsDeleteModalOpen(false)} variant='outline' text='戻る' />
+                <CustomButton onClick={() => deleteResult(isDeleteModalOpen?.id)} text='送信' />
+            </div>
+        </Modal>
         <CustomDrawer setIsDrawerOpen={setIsDrawerOpen} isDrawerOpen={isDrawerOpen} />
     </div>
 }
