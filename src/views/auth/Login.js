@@ -22,7 +22,7 @@ const Login = () => {
 	};
 
 	const handleKeyDown = e => {
-		if (e.key === 'Enter') {
+		if (e.key === 'Enter') { 
 			onFinishLogin();
 		}
 	};

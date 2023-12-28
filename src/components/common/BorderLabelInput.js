@@ -10,7 +10,7 @@ const BorderLabelInput = ({ label = '', type = 'text', onChange = () => {}, onKe
 			<label
 				className='border-label'
 				htmlFor='first'
-			>
+			> 
 				{label}
 			</label>
 			{isPasswordInput ? (

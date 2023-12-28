@@ -39,5 +39,5 @@ const Result = () => {
         <CustomDrawer setIsDrawerOpen={setIsDrawerOpen} isDrawerOpen={isDrawerOpen} />
     </div>
 }
-
+ 
 export default Result;

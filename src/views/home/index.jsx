@@ -24,29 +24,41 @@ const Home = () => {
   }
 
   return (
-    <div className='w-full h-screen relative'>
-      <Header title='健康増進アプリ' withBackButton={false} setIsDrawerOpen={setIsDrawerOpen} />
+      <div className='w-full h-screen relative'>
+        <Header title='健康増進アプリ' withBackButton={false} setIsDrawerOpen={setIsDrawerOpen} />
 
-      <div className='w-full flex-col justify-center content-center pt-1 bg-white'>
-        <p className='text-black text-xl mt-4 mx-6'>ホーム（仮案）</p>
-        <div className='flex-col justify-around content-center mx-6 gap-4 flex mt-6'>
-          <div onClick={() => navigate('/result')} className='flex bg-primary gap-3 items-center px-6 py-3 cursor-pointer font-semibold rounded-[10px] text-white'>
-            <TbMenu2 />
-            <p>予測結果</p>
-          </div>
-          <div className='flex bg-primary gap-3 items-center px-6 py-3 cursor-pointer font-semibold rounded-[10px] text-white'>
-            <IoDocumentTextOutline />
-            <p>フィードバックサマリ</p>
-          </div>
-          <div onClick={() => navigate('/health-info')} className='flex bg-primary gap-3 items-center px-6 py-3 cursor-pointer font-semibold rounded-[10px] text-white'>
-            <FaListCheck />
-            <p>健康予測</p>
+        <div className='w-full flex-col justify-center content-center pt-1 bg-white'>
+          <p className='text-black text-xl mt-4 mx-6'>ホーム</p>
+          <div className='flex-col justify-around content-center mx-6 gap-4 flex mt-6'>
+            <div onClick={() => navigate('/health-info')} className='flex bg-primary gap-3 items-center px-6 py-3 cursor-pointer font-semibold rounded-[10px] text-white'>
+              <FaListCheck />
+              <p>健康予測</p>
+            </div>
+            <div onClick={() => navigate('/result')} className='flex bg-primary gap-3 items-center px-6 py-3 cursor-pointer font-semibold rounded-[10px] text-white'>
+              <TbMenu2 />
+              <p>予測結果</p>
+            </div>
+            {/* <div className='flex bg-primary gap-3 items-center px-6 py-3 cursor-pointer font-semibold rounded-[10px] text-white'>
+                        <IoDocumentTextOutline />
+                        <p>行動記録の入力</p>
+                    </div>
+                    <div className='flex bg-primary gap-3 items-center px-6 py-3 cursor-pointer font-semibold rounded-[10px] text-white'>
+                        <IoDocumentTextOutline />
+                        <p>あなたへのアドバイス</p>
+                    </div>
+                    <div className='flex bg-primary gap-3 items-center px-6 py-3 cursor-pointer font-semibold rounded-[10px] text-white'>
+                        <IoDocumentTextOutline />
+                        <p>アンケートのお願い</p>
+                    </div>
+                    <div className='flex bg-primary gap-3 items-center px-6 py-3 cursor-pointer font-semibold rounded-[10px] text-white'>
+                        <IoDocumentTextOutline />
+                        <p>問い合わせ</p>
+                    </div> */}
           </div>
         </div>
-      </div>
 
-      <CustomDrawer setIsDrawerOpen={setIsDrawerOpen} isDrawerOpen={isDrawerOpen} />
-    </div>
+        <CustomDrawer setIsDrawerOpen={setIsDrawerOpen} isDrawerOpen={isDrawerOpen} />
+      </div>
   );
 };
 
