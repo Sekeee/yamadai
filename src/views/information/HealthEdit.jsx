@@ -2,7 +2,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { BiChevronRight, BiChevronLeft } from 'react-icons/bi'
 import CustomButton from "../../components/common/Button";
 import CustomDrawer from '../../components/common/Drawer'
-import { DatePicker, Radio, Select, Steps } from 'antd';
+import {DatePicker, Radio, Select, Steps, Tooltip} from 'antd';
 import message from '../../components/common/Message';
 import Header from "../../components/layouts/Header"
 import { FaCaretDown } from "react-icons/fa";
@@ -175,17 +175,22 @@ const FirstStep = ({ data, setData }) => {
                     unit="kg"
                 />
             </div>
-            <CustomRadio
-                onChanged={(e) => {
-                    changeData(e, 'smoking')
-                }}
-                value={data?.smoking || ''}
-                question='現在、たばこを習慣的に吸っている。'
-                answer1Value={1}
-                answer2Value={2}
-                answer1='吸う'
-                answer2='吸わない'
-            />
+            <div className='flex gap-1'>
+                <CustomRadio
+                    onChanged={(e) => { changeData(e, 'smoking') }}
+                    value={data?.smoking || ''}
+                    question='現在、たばこを習慣的に吸っている。'
+                    answer1Value={1}
+                    answer2Value={2}
+                    answer1='吸う'
+                    answer2='吸わない'
+                />
+                <div className='relative'>
+                    <Tooltip color="black" title="「現在、習慣的に喫煙している者」とは、「合計100 本以上、又は６ヶ月以上吸っている者」であり、最近1 ヶ月間も吸っている者">
+                        <div className='absolute text-error cursor-pointer -top-1 left-0'>*</div>
+                    </Tooltip>
+                </div>
+            </div>
 
             <CustomSelect options={[
                 {
@@ -205,29 +210,36 @@ const FirstStep = ({ data, setData }) => {
                           onChange={(value) => changeData(value, 'drinking')}
                           value={data.drinking || ''}
             />
-            <CustomSelect
-                options={[
-                    {
-                        value: 1,
-                        label: '1合未満',
-                    },
-                    {
-                        value: 2,
-                        label: '1～2合未満',
-                    },
-                    {
-                        value: 3,
-                        label: '2～3合未満',
-                    },
-                    {
-                        value: 4,
-                        label: '3合以上',
-                    },
-                ]}
-                label="飲酒日の1日当たりの飲酒量"
-                onChange={(value) => changeData(value, 'alcohol_consumption')}
-                value={data?.alcohol_consumption || ''}
-            />
+            <div className='flex gap-2'>
+                <CustomSelect
+                    options={[
+                        {
+                            value: 1,
+                            label: '1合未満',
+                        },
+                        {
+                            value: 2,
+                            label: '1～2合未満',
+                        },
+                        {
+                            value: 3,
+                            label: '2～3合未満',
+                        },
+                        {
+                            value: 4,
+                            label: '3合以上',
+                        },
+                    ]}
+                    label="飲酒日の1日当たりの飲酒量"
+                    onChange={(value) => changeData(value, 'alcohol_consumption')}
+                    value={data?.alcohol_consumption || ''}
+                />
+                <div className='relative'>
+                    <Tooltip color="black" title="清酒１合（１８０ｍｌ）の目安：ビール中瓶１本（約５００ｍｌ）、焼酎３５度（８０ｍｌ）、ウイスキーダブル一杯（６０ｍｌ）、ワイン２杯（２４０ｍｌ">
+                        <div className='absolute text-error cursor-pointer -top-1 left-0'>*</div>
+                    </Tooltip>
+                </div>
+            </div>
 
             <div className="flex gap-6">
                 <CustomInput
