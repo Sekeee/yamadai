@@ -166,6 +166,7 @@ const FirstStep = ({ data, setData }) => {
     return (
         <div className="flex flex-col gap-6 ">
             <div className='border-b border-[#0000006B] pb-2'>
+                <div className='text-black text-[14px] mb-4'>このページの項目で予測を行います。</div>
                 <p className='text-[#757575] flex gap-2 text-[12px] mb-2'>
                     健診日
                     <div className='relative'>
@@ -174,6 +175,7 @@ const FirstStep = ({ data, setData }) => {
                         </Tooltip>
                     </div>
                 </p>
+
                 <DatePicker
                     inputReadOnly
                     style={{ width: '100%', borderBottom: '1px solid  !important', padding: '0 !important' }}
@@ -350,6 +352,7 @@ const SecondStep = ({ data, setData }) => {
 
     return (
         <div className="flex flex-col gap-6">
+            <div className='text-black text-[14px] mb-4'>可能な範囲でご記入ください。</div>
             <div className="flex gap-6">
                 <CustomInput
                     onChange={(e) => changeData(e.target.value, 'waist_circumference')}
@@ -513,6 +516,7 @@ const ThirdStep = ({ createInfo, data, setData }) => {
 
     return (
         <div className="flex flex-col gap-6">
+            <div className='text-black text-[14px] mb-4'>可能な範囲でご記入ください。</div>
             <CustomRadio
                 onChanged={(e) => { changeData(e, 'medication_lipids') }}
                 value={data?.medication_lipids || ''}
