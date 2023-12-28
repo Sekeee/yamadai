@@ -28,7 +28,19 @@ const PredictResult = () => {
     }
 
     const formatNumber = (number) => {
-        return Math.floor(number * 10) / 10;
+        return Math.round(number * 10) / 10;
+    }
+
+    const checkNumber = (number) => {
+        const formatedNumber = formatNumber(number)
+        const roundedNumber = Math.round(number * 100) / 100;
+
+        if (formatedNumber > roundedNumber) {
+            return true
+        } else {
+            return false
+        }
+
     }
 
     return (
@@ -48,8 +60,11 @@ const PredictResult = () => {
 
                     <div className="flex gap-4 text-[#000000DE] items-center">
                         <div className="w-[68%] flex gap-5 items-center">
-                            <div>がん発症リスク</div>
-                            <div>{formatNumber(Number(result?.cancer_rate || 0))}%</div>
+                            <div>がん発症率</div>
+                            <div className="flex gap-1">
+                                <div>{formatNumber(Number(result?.cancer_rate || 0))}%</div>
+                                <div>{checkNumber(Number(result?.cancer_rate || 0)) ? '未満' : ''}</div>
+                            </div>
                         </div>
                         <div className="w-[32%] flex items-center">
                             <ResultData number={Number(result?.cancer_risk || 0)} />
@@ -59,7 +74,10 @@ const PredictResult = () => {
                     <div className="flex gap-4 text-[#000000DE] items-center">
                         <div className="w-[68%] flex gap-5 items-center">
                             <div>脳卒中発症率</div>
-                            <div>{formatNumber(Number(result?.stroke_myocardial_infarction_rate || 0))}%</div>
+                            <div className="flex gap-1">
+                                <div>{formatNumber(Number(result?.stroke_myocardial_infarction_rate || 0))}%</div>
+                                <div>{checkNumber(Number(result?.stroke_myocardial_infarction_rate || 0)) ? '未満' : ''}</div>
+                            </div>
                         </div>
                         <div className="w-[32%] flex items-center">
                             <ResultData number={Number(result?.stroke_myocardial_infarction_risk || 0)} />
@@ -70,7 +88,10 @@ const PredictResult = () => {
                     <div className="flex gap-4 text-[#000000DE] ">
                         <div className="w-[68%] flex gap-5 items-center">
                             <div>狭心症・心筋梗塞 発症率</div>
-                            <div>{formatNumber(Number(result?.care_need_rate || 0))}%</div>
+                            <div className="flex gap-1">
+                                <div>{formatNumber(Number(result?.care_need_rate || 0))}%</div>
+                                <div>{checkNumber(Number(result?.care_need_rate || 0)) ? '未満' : ''}</div>
+                            </div>
                         </div>
                         <div className="w-[32%] flex items-center">
                             <ResultData number={Number(result?.care_need_risk || 0)} />
@@ -81,7 +102,10 @@ const PredictResult = () => {
                     <div className="flex gap-4 text-[#000000DE] items-center">
                         <div className="w-[68%] flex gap-5 items-center">
                             <div>生存率</div>
-                            <div>{formatNumber(Number(result?.death_rate || 0))}%</div>
+                            <div className="flex gap-1">
+                                <div>{formatNumber(Number(result?.death_rate || 0))}%</div>
+                                <div>{checkNumber(Number(result?.death_rate || 0)) ? '未満' : ''}</div>
+                            </div>
                         </div>
                         <div className="w-[32%] flex items-center">
                             <ResultData number={Number(result?.death_risk || 0)} />
@@ -90,8 +114,11 @@ const PredictResult = () => {
 
                     <div className="flex gap-4 text-[#000000DE] items-center">
                         <div className="w-[68%] flex gap-5 items-center">
-                            <div>要介護発生率</div>
-                            <div>{formatNumber(Number(result?.care_need_rate || 0))}%</div>
+                            <div>要介護率</div>
+                            <div className="flex gap-1">
+                                <div>{formatNumber(Number(result?.care_need_rate || 0))}%</div>
+                                <div>{checkNumber(Number(result?.care_need_rate || 0)) ? '未満' : ''}</div>
+                            </div>
                         </div>
                         <div className="w-[32%] flex items-center">
                             <ResultData number={Number(result?.care_need_risk || 0)} />

@@ -76,13 +76,13 @@ const HealthEdit = () => {
 
     const fetchData = async () => {
         const { data: resultData } = await axios.get(`/api/healthcheckinfo/${resultId}/`);
+
         if (resultData?.id) {
             setData(resultData)
         }
     }
 
     const editHealthInfo = async () => {
-
         if (!data?.checked_date) { message('健診日を入力してください', false) }
         const { data: resultData } = await axios.patch(`/api/healthcheckinfo/${resultId}/`, data);
         if (resultData?.id) { navigate('/result') }
