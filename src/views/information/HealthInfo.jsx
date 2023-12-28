@@ -169,11 +169,11 @@ const FirstStep = ({ data, setData }) => {
                 <div className='text-black text-[14px] mb-4'>このページの項目で予測を行います。</div>
                 <p className='text-[#757575] flex gap-2 text-[12px] mb-2'>
                     健診日
-                    <div className='relative'>
-                        <Tooltip title="この項目で予後予測します">
-                            <div className='absolute text-error cursor-pointer -top-1 left-0'>*</div>
-                        </Tooltip>
-                    </div>
+                    {/*<div className='relative'>*/}
+                    {/*    <Tooltip title="この項目で予後予測します">*/}
+                    {/*        <div className='absolute text-error cursor-pointer -top-1 left-0'>*</div>*/}
+                    {/*    </Tooltip>*/}
+                    {/*</div>*/}
                 </p>
 
                 <DatePicker
@@ -203,57 +203,77 @@ const FirstStep = ({ data, setData }) => {
                     unit="kg"
                 />
             </div>
-            <CustomRadio
-                onChanged={(e) => { changeData(e, 'smoking') }}
-                value={data?.smoking || ''}
-                question='現在、たばこを習慣的に吸っている。'
-                answer1Value={1}
-                answer2Value={2}
-                answer1='吸う'
-                answer2='吸わない'
-            />
+            <div className='flex gap-1'>
+                <CustomRadio
+                    onChanged={(e) => { changeData(e, 'smoking') }}
+                    value={data?.smoking || ''}
+                    question='現在、たばこを習慣的に吸っている。'
+                    answer1Value={1}
+                    answer2Value={2}
+                    answer1='吸う'
+                    answer2='吸わない'
+                />
+                <div className='relative'>
+                    <Tooltip color="black" title="「現在、習慣的に喫煙している者」とは、「合計100 本以上、又は６ヶ月以上吸っている者」であり、最近1 ヶ月間も吸っている者">
+                        <div className='absolute text-error cursor-pointer -top-1 left-0'>*</div>
+                    </Tooltip>
+                </div>
+            </div>
 
-            <CustomSelect options={[
-                {
-                    value: 1,
-                    label: '毎日',
-                },
-                {
-                    value: 2,
-                    label: '時々',
-                },
-                {
-                    value: 3,
-                    label: 'ほとんど飲まない（飲めない）',
-                },
-            ]}
-                          label="お酒（清酒、焼酎、ビール、洋酒など）を飲む頻度"
-                          onChange={(value) => changeData(value, 'drinking')}
-                          value={data.drinking || ''}
-            />
-            <CustomSelect
-                options={[
+
+
+                <CustomSelect options={[
                     {
                         value: 1,
-                        label: '1合未満',
+                        label: '毎日',
                     },
                     {
                         value: 2,
-                        label: '1～2合未満',
+                        label: '時々',
                     },
                     {
                         value: 3,
-                        label: '2～3合未満',
-                    },
-                    {
-                        value: 4,
-                        label: '3合以上',
+                        label: 'ほとんど飲まない（飲めない）',
                     },
                 ]}
-                label="飲酒日の1日当たりの飲酒量"
-                onChange={(value) => changeData(value, 'alcohol_consumption')}
-                value={data?.alcohol_consumption || ''}
-            />
+                              label="お酒（清酒、焼酎、ビール、洋酒など）を飲む頻度"
+                              onChange={(value) => changeData(value, 'drinking')}
+                              value={data.drinking || ''}
+                />
+
+
+
+            <div className='flex gap-2'>
+                <CustomSelect
+                    options={[
+                        {
+                            value: 1,
+                            label: '1合未満',
+                        },
+                        {
+                            value: 2,
+                            label: '1～2合未満',
+                        },
+                        {
+                            value: 3,
+                            label: '2～3合未満',
+                        },
+                        {
+                            value: 4,
+                            label: '3合以上',
+                        },
+                    ]}
+                    label="飲酒日の1日当たりの飲酒量"
+                    onChange={(value) => changeData(value, 'alcohol_consumption')}
+                    value={data?.alcohol_consumption || ''}
+                />
+                <div className='relative'>
+                    <Tooltip color="black" title="清酒１合（１８０ｍｌ）の目安：ビール中瓶１本（約５００ｍｌ）、焼酎３５度（８０ｍｌ）、ウイスキーダブル一杯（６０ｍｌ）、ワイン２杯（２４０ｍｌ">
+                        <div className='absolute text-error cursor-pointer -top-1 left-0'>*</div>
+                    </Tooltip>
+                </div>
+            </div>
+
 
 
             <div className="flex gap-6">
