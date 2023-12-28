@@ -15,7 +15,7 @@ const message = (messageText, success = false, config = {}) => {
 			if (!isNaN(messageId)) {
 				return Number(messageId);
 			}
-			return 0;
+			return 0; 
 		});
 		ids.sort(function (a, b) {
 			return a - b;

@@ -15,7 +15,7 @@ const CustomDrawer = ({ setIsDrawerOpen, isDrawerOpen }) => {
 	const handleLogout = () => {
 		useStore.setState({ auth: { token: null } });
 		localStorage.clear();
-		window.location.href = '/';
+		window.location.href = '/'; 
 	};
 
 	return (
@@ -44,7 +44,7 @@ const CustomDrawer = ({ setIsDrawerOpen, isDrawerOpen }) => {
 							alt='logo'
 						/>
 					</a>
-					<div className='text-[rgba(52,52,52,0.70)] font-medium text-[14px]'>{email}</div>
+					<div className='text-[rgba(52,52,52,0.70)] font-medium text-[14px]'>ログインID: {email}</div>
 				</div>
 
 				<div className='border-b px-5 border-[rgba(0,0,0,0.20)] py-6 flex flex-col gap-4'>
@@ -60,7 +60,7 @@ const CustomDrawer = ({ setIsDrawerOpen, isDrawerOpen }) => {
 						} gap-3 items-center px-4 py-3 cursor-pointer font-semibold rounded-[10px] `}
 					>
 						<FaHome />
-						<p>ホームページ</p>
+						<p>ホーム</p>
 					</div>
 					<div
 						onClick={() => {
@@ -77,43 +77,56 @@ const CustomDrawer = ({ setIsDrawerOpen, isDrawerOpen }) => {
 						<p>ユーザ設定</p>
 					</div>
 					<div
-						onClick={() => {
-							if (pathname === '/result') {
-								setIsDrawerOpen(false);
-							}
-							navigate('/result');
-						}}
-						className={`flex text-black ${
-							(pathname === '/result' || pathname === '/predict-result') && '!bg-primary/20 !text-primary'
-						} gap-3 items-center px-4 py-3 cursor-pointer font-semibold rounded-[10px] `}
-					>
-						<TbMenu2 />
-						<p>予測結果サマリ</p>
-					</div>
-					<div
-						className={`flex text-black ${
-							pathname === '/feedback' && '!bg-primary/20 !text-primary'
-						} gap-3 items-center px-4 py-3 cursor-pointer font-semibold rounded-[10px] `}
-					>
-						<IoDocumentTextOutline />
-						<p>フィードバックサマリ</p>
-					</div>
-					<div
-						onClick={() => {
-							if (pathname === '/health-info') {
-								setIsDrawerOpen(false);
-							}
-							navigate('/health-info');
-						}}
+						onClick={() => navigate('/health-info')}
 						className={`flex text-black ${
 							pathname === '/health-info' && '!bg-primary/20 !text-primary'
 						} gap-3 items-center px-4 py-3 cursor-pointer font-semibold rounded-[10px] `}
 					>
 						<FaListCheck />
-						<p>健康予測</p>　
+						<p>健康予測</p>
 					</div>
+					<div
+						onClick={() => navigate('/result')}
+						className={`flex text-black ${
+							(pathname === '/result' || pathname === '/predict-result') && '!bg-primary/20 !text-primary'
+						} gap-3 items-center px-4 py-3 cursor-pointer font-semibold rounded-[10px] `}
+					>
+						<TbMenu2 />
+						<p>予測結果</p>
+					</div>
+					{/* <div
+                        className={`flex text-black ${
+                            pathname === '/feedback' && '!bg-primary/20 !text-primary'
+                        } gap-3 items-center px-4 py-3 cursor-pointer font-semibold rounded-[10px] `}
+                    >
+                        <IoDocumentTextOutline />
+                        <p>行動記録の入力</p>
+                    </div>
+                    <div
+                        className={`flex text-black ${
+                            pathname === '/feedback' && '!bg-primary/20 !text-primary'
+                        } gap-3 items-center px-4 py-3 cursor-pointer font-semibold rounded-[10px] `}
+                    >
+                        <IoDocumentTextOutline />
+                        <p>あなたへのアドバイス</p>
+                    </div>
+                    <div
+                        className={`flex text-black ${
+                            pathname === '/feedback' && '!bg-primary/20 !text-primary'
+                        } gap-3 items-center px-4 py-3 cursor-pointer font-semibold rounded-[10px] `}
+                    >
+                        <IoDocumentTextOutline />
+                        <p>アンケートのお願い</p>
+                    </div>
+                    <div
+                        className={`flex text-black ${
+                            pathname === '/feedback' && '!bg-primary/20 !text-primary'
+                        } gap-3 items-center px-4 py-3 cursor-pointer font-semibold rounded-[10px] `}
+                    >
+                        <IoDocumentTextOutline />
+                        <p>問い合わせ</p>
+                    </div> */}
 				</div>
-
 				<div
 					onClick={handleLogout}
 					className='flex items-center font-semibold cursor-pointer text-error px-6 py-[40px] gap-3 w-full'

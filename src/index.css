@@ -78,6 +78,10 @@ input[type=number] {
 
 }
 
+.ant-drawer-content-wrapper {
+  z-index: 100000;
+}
+
 .custom-toaster-container-success {
   cursor: pointer;
   border-radius: 6px;

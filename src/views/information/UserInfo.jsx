@@ -128,7 +128,7 @@ const UserInfo = () => {
                     <CustomInput
                         value={userInfo.email}
                         onChange={(e) => changeUserInfo(e.target.value, 'email')}
-                        label='メールアドレス'
+                        label='メールアドレス（ログインID)'
                         placeholder='kenkou_app@sample.com'
                     />
 
@@ -152,17 +152,19 @@ const UserInfo = () => {
                     </div>
 
                     <div>
-                        <div className='text-[#00000099]'>性別</div>
+                        <div className='text-[#00000099] text-[12px]'>性別</div>
                         <div className='flex px-4 py-2 gap-8'>
+                            <div className='flex items-center gap-2 '>
+                                <input onChange={() => { changeUserInfo(1, 'gender') }} checked={userInfo.gender === 1} type={'radio'} />
+                                <div>男</div>
+                            </div>
+
                             <div className='flex items-center gap-2 '>
                                 <input onChange={() => { changeUserInfo(2, 'gender') }} checked={userInfo.gender === 2} type={'radio'} />
                                 <div>女</div>
                             </div>
 
-                            <div className='flex items-center gap-2 '>
-                                <input onChange={() => { changeUserInfo(1, 'gender') }} checked={userInfo.gender === 1} type={'radio'} />
-                                <div>男</div>
-                            </div>
+
                         </div>
                     </div>
 

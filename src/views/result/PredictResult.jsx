@@ -54,8 +54,8 @@ const PredictResult = () => {
 
                 <div className="flex gap-4 mt-[30px] mb-[50px] flex-col">
                     <div className="flex gap-6">
-                        <p className="w-[80%] text-[#000000DE]">今後○年間の予測結果</p>
-                        <p className="text-[#00000099]">同年代と比べた リスクの程度</p>
+                        <p className="w-[55%] text-[#000000DE]">今後5年間の予測結果</p>
+                        <p className="text-[#000000DE]">同年代平均との比較</p>
                     </div>
 
                     <div className="flex gap-4 text-[#000000DE] items-center">
@@ -67,7 +67,7 @@ const PredictResult = () => {
                             </div>
                         </div>
                         <div className="w-[32%] flex items-center">
-                            <ResultData number={Number(result?.cancer_rate || 0)} />
+                            <ResultData number={Number(result?.cancer_risk || 0)} />
                         </div>
                     </div>
 
@@ -80,10 +80,11 @@ const PredictResult = () => {
                             </div>
                         </div>
                         <div className="w-[32%] flex items-center">
-                            <ResultData number={Number(result?.cancer_rate || 0)} />
+                            <ResultData number={Number(result?.stroke_myocardial_infarction_risk || 0)} />
                         </div>
                     </div>
 
+                    {/*
                     <div className="flex gap-4 text-[#000000DE] ">
                         <div className="w-[68%] flex gap-5 items-center">
                             <div>狭心症・心筋梗塞 発症率</div>
@@ -93,9 +94,10 @@ const PredictResult = () => {
                             </div>
                         </div>
                         <div className="w-[32%] flex items-center">
-                            <ResultData number={Number(result?.care_need_rate || 0)} />
+                            <ResultData number={Number(result?.care_need_risk || 0)} />
                         </div>
                     </div>
+                    */}
 
                     <div className="flex gap-4 text-[#000000DE] items-center">
                         <div className="w-[68%] flex gap-5 items-center">
@@ -106,7 +108,7 @@ const PredictResult = () => {
                             </div>
                         </div>
                         <div className="w-[32%] flex items-center">
-                            <ResultData number={Number(result?.death_rate || 0)} />
+                            <ResultData number={Number(result?.death_risk || 0)} />
                         </div>
                     </div>
 
@@ -119,7 +121,7 @@ const PredictResult = () => {
                             </div>
                         </div>
                         <div className="w-[32%] flex items-center">
-                            <ResultData number={Number(result?.care_need_rate || 0)} />
+                            <ResultData number={Number(result?.care_need_risk || 0)} />
                         </div>
                     </div>
                 </div>
@@ -151,15 +153,15 @@ export default PredictResult
 
 
 const ResultData = ({ number }) => {
-    if (number >= 0 && number <= 20) {
+    if (number === 1) {
         return <div className="bg-success rounded-[50px] text-white p-3 py-[5px]">とても低い</div>;
-    } else if (number > 20 && number <= 40) {
+    } else if (number === 2) {
         return <div className="bg-primary rounded-[50px] text-white p-3 py-[5px]">低い</div>;
-    } else if (number > 40 && number <= 60) {
+    } else if (number === 3) {
         return <div className="bg-grey rounded-[50px] text-black p-3 py-[5px]">ふつう</div>;
-    } else if (number > 60 && number <= 80) {
+    } else if (number === 4) {
         return <div className="bg-warning rounded-[50px] text-white p-3 py-[5px]">高い</div>;
-    } else if (number > 80 && number <= 100) {
+    } else if (number === 5) {
         return <div className="bg-error rounded-[50px] text-white p-3 py-[5px]">とても高い</div>;
     } else {
         return ''
