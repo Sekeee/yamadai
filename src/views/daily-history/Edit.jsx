@@ -3,18 +3,37 @@ import CustomDrawer from "../../components/common/Drawer";
 import CustomButton from "../../components/common/Button";
 import Header from '../../components/layouts/Header';
 import { DatePicker, Tooltip, } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import dayjs from 'dayjs'
 import axios from 'axios';
+import { useSearchParams } from 'react-router-dom';
 
-
-const DailyHabit = () => {
+const HistoryEdit = () => {
+    const [searchParams] = useSearchParams();
+    const historyId = searchParams.get('historyId');
     const [isDrawerOpen, setIsDrawerOpen] = useState(false)
     const [data, setData] = useState({})
 
-    const createDailyHabit = async () => {
+    useEffect(() => {
+        fetchData()
+    }, [])
+
+
+    const fetchData = async () => {
+        if (!historyId) return
+
         try {
-            const { data: res } = await axios.post('/api/dailyhabit/create/', data);
+            const { data: res } = await axios.get(`/api/dailyhabit/${historyId}/`);
+            setData(res)
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const editDailyHabit = async () => {
+        try {
+            // const { data: res } = await axios.post('/api/dailyhabit/create/', data);
+            // todo edit
 
         } catch (error) {
             console.log(error);
@@ -219,7 +238,7 @@ const DailyHabit = () => {
                             onChange={(value) => changeData(value, 'walking_time')}
                             value={data.walking_time || ''}
                         />
-                        <CustomButton onClick={createDailyHabit} text='予測を行う' />
+                        <CustomButton onClick={editDailyHabit} text='Edit' />
                     </div>
                 </div>
             </div>
@@ -229,4 +248,4 @@ const DailyHabit = () => {
     );
 };
 
-export default DailyHabit;
+export default HistoryEdit;

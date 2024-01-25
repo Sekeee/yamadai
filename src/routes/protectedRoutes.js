@@ -7,7 +7,9 @@ import HealthEdit from '../views/information/HealthEdit';
 
 import DailyHabit from '../views/daily-habit';
 import DailyHistory from '../views/daily-history';
+import HistoryEdit from '../views/daily-history/Edit';
 import Advice from '../views/advice';
+import AdviceDetail from '../views/advice/Detail';
 import Notification from '../views/notification';
 
 const routes = [
@@ -20,7 +22,9 @@ const routes = [
 
 	{ key: 'daily-habit', path: '/daily-habit', element: DailyHabit },
 	{ key: 'daily-history', path: '/daily-history', element: DailyHistory },
+	{ key: 'history-edit', path: '/history-edit', element: HistoryEdit },
 	{ key: 'advice', path: '/advice', element: Advice },
+	{ key: 'advice-detail', path: '/advice-detail', element: AdviceDetail },
 	{ key: 'notification', path: '/notification', element: Notification },
 ];
 

@@ -1,68 +1,15 @@
+import { CustomInput, CustomRadio, CustomSelect } from '../../components/common/CustomInputs'
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { BiChevronRight, BiChevronLeft } from 'react-icons/bi'
 import CustomButton from "../../components/common/Button";
 import CustomDrawer from '../../components/common/Drawer'
-import {DatePicker, Radio, Select, Steps, Tooltip} from 'antd';
+import { DatePicker, Steps, Tooltip } from 'antd';
 import message from '../../components/common/Message';
 import Header from "../../components/layouts/Header"
-import { FaCaretDown } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import dayjs from 'dayjs'
 
-const CustomInput = ({ label = '', type = 'text', value = '', onChange = () => { }, ph = '', unit = '', isLong = false }) => {
-    return (
-        <div className='flex flex-col gap-2'>
-            <p className='text-[#757575] text-[12px]' >{label}</p>
-            <div className="border-b border-[#0000006B] flex pb-1">
-                <input
-                    type={type}
-                    onChange={(e) => {
-                        if (type === "number" && e.target.value?.length > 5) { return }
-                        onChange(e)
-                    }}
-                    value={value}
-                    className='w-full outline-none' placeholder={ph} />
-                <p className={`text-[#757575] text-[14px] ${isLong && 'w-[60px]'}`}>{unit}</p>
-            </div>
-        </div>
-    );
-};
-
-const CustomRadio = ({ question = '', value = '', answer1Value = '1', answer2Value = '2', answer1 = '', answer2 = '', onChanged = () => { } }) => {
-    const onChange = (e) => {
-        onChanged(Number(e.target.value));
-    };
-
-    return <div className='flex flex-col justify-center content-center  text-base'>
-        <p className='text-[#757575] text-[12px] mb-2' >{question}</p>
-        <Radio.Group onChange={onChange} value={value}>
-            <Radio value={answer1Value}>{answer1}</Radio>
-            <Radio value={answer2Value}>{answer2}</Radio>
-        </Radio.Group>
-    </div>
-}
-
-const CustomSelect = ({ options = [], label = '', value = '', onChange = () => { } }) => {
-    return (
-        <div>
-            <p className='text-[#757575] text-[12px] mb-2' >{label}</p>
-            <Select
-                style={{ width: '100%', borderBottom: '1px solid #0000006B', padding: '0 !important' }}
-                showSearch
-                placeholder=''
-                bordered={false}
-                onChange={onChange}
-                optionFilterProp="children"
-                suffixIcon={<FaCaretDown />}
-                filterOption={(input, option) => (option?.label ?? '').includes(input)}
-                filterSort={(optionA, optionB) => (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())}
-                options={options}
-                value={value}
-            />
-        </div>
-    )
-}
 
 const HealthEdit = () => {
     const [searchParams] = useSearchParams();
@@ -206,9 +153,9 @@ const FirstStep = ({ data, setData }) => {
                     label: 'ほとんど飲まない（飲めない）',
                 },
             ]}
-                          label="お酒（清酒、焼酎、ビール、洋酒など）を飲む頻度"
-                          onChange={(value) => changeData(value, 'drinking')}
-                          value={data.drinking || ''}
+                label="お酒（清酒、焼酎、ビール、洋酒など）を飲む頻度"
+                onChange={(value) => changeData(value, 'drinking')}
+                value={data.drinking || ''}
             />
             <div className='flex gap-2'>
                 <CustomSelect
@@ -314,9 +261,9 @@ const FirstStep = ({ data, setData }) => {
                     label: '60分以上',
                 },
             ]}
-                          label="1日の歩く時間"
-                          onChange={(value) => changeData(value, 'walking_time')}
-                          value={data.walking_time || ''}
+                label="1日の歩く時間"
+                onChange={(value) => changeData(value, 'walking_time')}
+                value={data.walking_time || ''}
             />
         </div>
     )

@@ -108,7 +108,7 @@ const CustomDrawer = ({ setIsDrawerOpen, isDrawerOpen }) => {
 					<div
 						onClick={() => navigate('/daily-history')}
 						className={`flex text-black ${
-							pathname === '/daily-history' && '!bg-primary/20 !text-primary'
+							(pathname === '/daily-history' || pathname === '/history-edit') && '!bg-primary/20 !text-primary'
 						} gap-3 items-center px-4 py-3 cursor-pointer font-semibold rounded-[10px] `}
 					>
 						<MdManageHistory />
