@@ -33,11 +33,9 @@ const DailyHabit = () => {
         <div className='relative !h-screen flex flex-col overflow-y-scroll'>
             <Header title='健康増進アプリ' setIsDrawerOpen={setIsDrawerOpen} />
             <div className='w-full overflow-auto h-full pb-6'>
-                <p className='text-black text-xl mt-4 mx-6'>sekeboy</p>
                 <div className='flex-col justify-around content-center mx-6 gap-4 flex mt-6'>
                     <div className="flex flex-col gap-6">
                         <div className='border-b border-[#0000006B] pb-2'>
-                            <div className='text-black text-[14px] mb-4'>このページの項目で予測を行います。</div>
                             <p className='text-[#757575] flex gap-2 text-[12px] mb-2'>
                                 健診日
                             </p>
@@ -47,177 +45,212 @@ const DailyHabit = () => {
                                 style={{ width: '100%', borderBottom: '1px solid  !important', padding: '0 !important' }}
                                 bordered={false}
                                 placeholder='2023-12-23'
-                                value={data?.checked_date ? dayjs(data?.checked_date) : ''}
+                                value={data?.date ? dayjs(data?.date) : ''}
                                 onChange={(_, dateString) => {
-                                    changeData(dateString, 'checked_date')
+                                    changeData(dateString, 'date')
                                 }} />
-                        </div>
-                        <div className="flex gap-6">
-
-                            <CustomInput
-                                onChange={(e) => changeData(e.target.value, 'height')}
-                                value={data?.height || ''}
-                                label="身長"
-                                type="number"
-                                unit="cm"
-                            />
-                            <CustomInput
-                                onChange={(e) => changeData(e.target.value, 'weight')}
-                                value={data?.weight || ''}
-                                label="体重"
-                                type="number"
-                                unit="kg"
-                            />
                         </div>
                         <div className='flex '>
                             <CustomRadio
-                                onChanged={(e) => { changeData(e, 'smoking') }}
-                                value={data?.smoking || ''}
-                                question='現在、たばこを習慣的に吸っている。'
+                                onChanged={(e) => { changeData(e, 'salt_reduction_effort') }}
+                                value={data?.salt_reduction_effort || ''}
+                                question='減塩に取り組む'
                                 answer1Value={1}
                                 answer2Value={2}
-                                answer1='吸う'
-                                answer2='吸わない'
+                                answer1='達成'
+                                answer2='未達成'
                             />
-                            <div className='relative'>
-                                <Tooltip color="black" title="「現在、習慣的に喫煙している者」とは、「合計100 本以上、又は６ヶ月以上吸っている者」であり、最近1 ヶ月間も吸っている者">
-                                    <div className='absolute text-warning cursor-pointer -top-1 left-0'>*</div>
-                                </Tooltip>
-                            </div>
+                            {/*Tool tip*/}
+                            {/*<div className='relative'>*/}
+                            {/*    <Tooltip color="black" title="「現在、習慣的に喫煙している者」とは、「合計100 本以上、又は６ヶ月以上吸っている者」であり、最近1 ヶ月間も吸っている者">*/}
+                            {/*        <div className='absolute text-warning cursor-pointer -top-1 left-0'>*</div>*/}
+                            {/*    </Tooltip>*/}
+                            {/*</div>*/}
                         </div>
+
+                        <CustomRadio
+                            onChanged={(e) => { changeData(e, 'vegetable_consumption') }}
+                            value={data?.vegetable_consumption || ''}
+                            question='野菜をたべる'
+                            answer1Value={1}
+                            answer2Value={2}
+                            answer1='達成'
+                            answer2='未達成'
+                        />
+
+                        <CustomRadio
+                            onChanged={(e) => { changeData(e, 'regular_meal_timing') }}
+                            value={data?.regular_meal_timing || ''}
+                            question='1日3食決まった時間に食事をとる'
+                            answer1Value={1}
+                            answer2Value={2}
+                            answer1='達成'
+                            answer2='未達成'
+                        />
+
+                        <CustomRadio
+                            onChanged={(e) => { changeData(e, 'smoking_cessation_attempt') }}
+                            value={data?.smoking_cessation_attempt || ''}
+                            question='禁煙にチャレンジする、または吸わない'
+                            answer1Value={1}
+                            answer2Value={2}
+                            answer1='達成'
+                            answer2='未達成'
+                        />
+
+                        <CustomRadio
+                            onChanged={(e) => { changeData(e, 'positive_thinking') }}
+                            value={data?.positive_thinking || ''}
+                            question='前向きに考える'
+                            answer1Value={1}
+                            answer2Value={2}
+                            answer1='達成'
+                            answer2='未達成'
+                        />
+
+                        <CustomRadio
+                            onChanged={(e) => { changeData(e, 'greeting_others') }}
+                            value={data?.greeting_others || ''}
+                            question='人にあいさつする'
+                            answer1Value={1}
+                            answer2Value={2}
+                            answer1='達成'
+                            answer2='未達成'
+                        />
+
+                        <CustomRadio
+                            onChanged={(e) => { changeData(e, 'personal_grooming') }}
+                            value={data?.personal_grooming || ''}
+                            question='身だしなみに気を付ける'
+                            answer1Value={1}
+                            answer2Value={2}
+                            answer1='達成'
+                            answer2='未達成'
+                        />
+
+                        <CustomRadio
+                            onChanged={(e) => { changeData(e, 'laughter') }}
+                            value={data?.laughter  || ''}
+                            question='笑う'
+                            answer1Value={1}
+                            answer2Value={2}
+                            answer1='達成'
+                            answer2='未達成'
+                        />
+
+                        <CustomRadio
+                            onChanged={(e) => { changeData(e, 'exercise_or_walking') }}
+                            value={data?.exercise_or_walking  || ''}
+                            question='体操または15分以上歩く'
+                            answer1Value={1}
+                            answer2Value={2}
+                            answer1='達成'
+                            answer2='未達成'
+                        />
+
+                        <CustomSelect options={[
+                            {
+                                value: 5,
+                                label: 'よい',
+                            },
+                            {
+                                value: 4,
+                                label: 'まあよい',
+                            },
+                            {
+                                value: 3,
+                                label: 'ふつう',
+                            },
+                            {
+                                value: 2,
+                                label: 'あまりよくない',
+                            },
+                            {
+                                value: 1,
+                                label: 'よくない',
+                            },
+                        ]}
+                            label="体の調子は"
+                            onChange={(value) => changeData(value, 'physical_condition')}
+                            value={data.physical_condition || ''}
+                        />
+
+                        <CustomSelect options={[
+                            {
+                                value: 5,
+                                label: 'よい',
+                            },
+                            {
+                                value: 4,
+                                label: 'まあよい',
+                            },
+                            {
+                                value: 3,
+                                label: 'ふつう',
+                            },
+                            {
+                                value: 2,
+                                label: 'あまりよくない',
+                            },
+                            {
+                                value: 1,
+                                label: 'よくない',
+                            },
+                        ]}
+                             label="こころの調子は"
+                             onChange={(value) => changeData(value, 'mental_condition')}
+                             value={data.mental_condition  || ''}
+                        />
+
+                        <CustomSelect options={[
+                            {
+                                value: 2,
+                                label: 'たくさん話した',
+                            },
+                            {
+                                value: 1,
+                                label: '少し話した',
+                            },
+                            {
+                                value: 0,
+                                label: 'まったく話さない',
+                            },
+                        ]}
+                             label="人との会話"
+                             onChange={(value) => changeData(value, 'talk_with_people')}
+                             value={data.talk_with_people  || ''}
+                        />
+
+                        <CustomInput
+                            onChange={(e) => changeData(e.target.value, 'user_message')}
+                            value={data.user_message || ''}
+                            label="一言コメント"
+                        />
 
                         <CustomSelect options={[
                             {
                                 value: 1,
-                                label: '毎日',
+                                label: 'さわやかイケメン風',
                             },
                             {
                                 value: 2,
-                                label: '時々',
+                                label: 'ぶりっこ',
                             },
                             {
                                 value: 3,
-                                label: 'ほとんど飲まない（飲めない）',
+                                label: '熱血部活顧問',
+                            },
+                            {
+                                value: 4,
+                                label: '陰キャラ',
                             },
                         ]}
-                            label="お酒（清酒、焼酎、ビール、洋酒など）を飲む頻度"
-                            onChange={(value) => changeData(value, 'drinking')}
-                            value={data.drinking || ''}
+                             label="コメントキャラ"
+                             onChange={(value) => changeData(value, 'comment_character')}
+                             value={data.comment_character  || ''}
                         />
-                        <div className='flex gap-2'>
-                            <CustomSelect
-                                options={[
-                                    {
-                                        value: 1,
-                                        label: '1合未満',
-                                    },
-                                    {
-                                        value: 2,
-                                        label: '1～2合未満',
-                                    },
-                                    {
-                                        value: 3,
-                                        label: '2～3合未満',
-                                    },
-                                    {
-                                        value: 4,
-                                        label: '3合以上',
-                                    },
-                                ]}
-                                label="飲酒日の1日当たりの飲酒量"
-                                onChange={(value) => changeData(value, 'alcohol_consumption')}
-                                value={data?.alcohol_consumption || ''}
-                            />
-                            <div className='relative'>
-                                <Tooltip color="black" title="「現在、習慣的に喫煙している者」とは、「合計100 本以上、又は６ヶ月以上吸っている者」であり、最近1 ヶ月間も吸っている者">
-                                    <div className='absolute text-warning cursor-pointer -top-1 left-0'>*</div>
-                                </Tooltip>
-                            </div>
-
-                        </div>
 
 
-
-                        <div className="flex gap-6">
-                            <CustomInput
-                                onChange={(e) => changeData(e.target.value, 'systolic_blood_pressure')}
-                                value={data.systolic_blood_pressure || ''}
-                                label="血圧(上)"
-                                type='number'
-                                unit="mmHg" />
-                            <CustomInput
-                                onChange={(e) => changeData(e.target.value, 'diastolic_blood_pressure')}
-                                value={data.diastolic_blood_pressure || ''}
-                                type='number'
-                                label="血圧(下)"
-                                unit="mmHg" />
-                        </div>
-                        <div className="flex gap-6">
-                            <CustomInput
-                                onChange={(e) => changeData(e.target.value, 'hdl_cholesterol')}
-                                value={data.hdl_cholesterol || ''}
-                                type='number'
-                                label="HDLコレステロール"
-                                unit="mg/dL" />
-                            <CustomInput
-                                onChange={(e) => changeData(e.target.value, 'ldl_cholesterol')}
-                                value={data.ldl_cholesterol || ''}
-                                type='number'
-                                label="LDLコレステロール"
-                                unit="mg/dL" />
-                        </div>
-                        <div className="flex gap-6">
-                            <CustomInput
-                                onChange={(e) => changeData(e.target.value, 'blood_glucose')}
-                                value={data.blood_glucose || ''}
-                                label="空腹時血糖"
-                                unit="mg/dL" />
-                            <CustomInput
-                                onChange={(e) => changeData(e.target.value, 'hba1c')}
-                                value={data.hba1c || ''}
-                                type='number'
-                                label="HbA1c（ヘモグロビンA1c）"
-                                unit="%" />
-                        </div>
-                        <CustomRadio
-                            onChanged={(e) => { changeData(e, 'medication_blood_pressure') }}
-                            value={data?.medication_blood_pressure || ''}
-                            question='血圧を下げる薬'
-                            answer1Value={1}
-                            answer2Value={2}
-                            answer1='飲んでいる'
-                            answer2='飲んでいない'
-                        />
-                        <CustomRadio
-                            onChanged={(e) => { changeData(e, 'medication_blood_sugar') }}
-                            value={data?.medication_blood_sugar || ''}
-                            question='インスリン注射又は血糖を下げる薬'
-                            answer1Value={1}
-                            answer2Value={2}
-                            answer1='飲んでいる'
-                            answer2='飲んでいない'
-                        />
-                        <CustomSelect options={[
-                            {
-                                value: 1,
-                                index: 1,
-                                label: '30分未満',
-                            },
-                            {
-                                value: 2,
-                                index: 2,
-                                label: '30-59分',
-                            },
-                            {
-                                index: 3,
-                                value: 3,
-                                label: '60分以上',
-                            },
-                        ]}
-                            label="1日の歩く時間"
-                            onChange={(value) => changeData(value, 'walking_time')}
-                            value={data.walking_time || ''}
-                        />
                         <CustomButton onClick={createDailyHabit} text='予測を行う' />
                     </div>
                 </div>
