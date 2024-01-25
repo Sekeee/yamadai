@@ -1,9 +1,10 @@
 import { Drawer } from 'antd';
 import { TbMenu2 } from 'react-icons/tb';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { IoDocumentTextOutline } from 'react-icons/io5';
-import { FaHome, FaRegUser } from 'react-icons/fa';
-import { FaListCheck } from 'react-icons/fa6';
+import { FaHome, FaRegPaperPlane, FaRegUser } from 'react-icons/fa';
+import { FaListCheck, FaRepeat } from 'react-icons/fa6';
+import { MdManageHistory } from 'react-icons/md';
+import { LuNewspaper } from 'react-icons/lu';
 import { FiLogOut } from 'react-icons/fi';
 import useStore from '../../store';
 
@@ -15,7 +16,7 @@ const CustomDrawer = ({ setIsDrawerOpen, isDrawerOpen }) => {
 	const handleLogout = () => {
 		useStore.setState({ auth: { token: null } });
 		localStorage.clear();
-		window.location.href = '/'; 
+		window.location.href = '/';
 	};
 
 	return (
@@ -93,6 +94,43 @@ const CustomDrawer = ({ setIsDrawerOpen, isDrawerOpen }) => {
 					>
 						<TbMenu2 />
 						<p>予測結果</p>
+					</div>
+
+					<div
+						onClick={() => navigate('/daily-habit')}
+						className={`flex text-black ${
+							pathname === '/daily-habit' && '!bg-primary/20 !text-primary'
+						} gap-3 items-center px-4 py-3 cursor-pointer font-semibold rounded-[10px] `}
+					>
+						<FaRepeat />
+						<p>生活習慣入力</p>
+					</div>
+					<div
+						onClick={() => navigate('/daily-history')}
+						className={`flex text-black ${
+							pathname === '/daily-history' && '!bg-primary/20 !text-primary'
+						} gap-3 items-center px-4 py-3 cursor-pointer font-semibold rounded-[10px] `}
+					>
+						<MdManageHistory />
+						<p>過去の生活習慣</p>
+					</div>
+					<div
+						onClick={() => navigate('/advice')}
+						className={`flex text-black ${
+							pathname === '/advice' && '!bg-primary/20 !text-primary'
+						} gap-3 items-center px-4 py-3 cursor-pointer font-semibold rounded-[10px] `}
+					>
+						<LuNewspaper />
+						<p>あなたへのアドバイス</p>
+					</div>
+					<div
+						onClick={() => navigate('/notification')}
+						className={`flex text-black ${
+							pathname === '/notification' && '!bg-primary/20 !text-primary'
+						} gap-3 items-center px-4 py-3 cursor-pointer font-semibold rounded-[10px] `}
+					>
+						<FaRegPaperPlane />
+						<p>お知らせ</p>
 					</div>
 					{/* <div
                         className={`flex text-black ${

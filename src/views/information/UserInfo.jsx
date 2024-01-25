@@ -18,7 +18,6 @@ const CustomInput = ({ label = '', value = '', onChange = () => { }, placeholder
     );
 };
 
-
 const CustomModal = ({ isModalOpen, children, setIsModalOpen }) => {
     return (
         <Modal
@@ -59,16 +58,33 @@ const UserInfo = () => {
     }, [])
 
     const fetchData = async () => {
-        const { data } = await axios.get(`/api/user/`);
-        setUserInfo(data)
+        try {
+            const { data } = await axios.get(`/api/user/`);
+
+            const { birth_date, email, gender, handle_name } = data
+
+            setUserInfo({
+                birth_date: birth_date,
+                email: email,
+                gender: gender,
+                handle_name: handle_name
+            })
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     const saveData = async () => {
         if (!checkSendValidation()) return;
-        const { data } = await axios.patch(`/api/user/`, userInfo);
-        setUserInfo(data)
-        message('基本情報を更新しました', true)
-        navigate('/')
+
+        try {
+            const { data } = await axios.patch(`/api/user/`, userInfo);
+            setUserInfo(data)
+            message('基本情報を更新しました', true)
+            navigate('/')
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     const changeUserInfo = (value, key) => {
@@ -82,14 +98,19 @@ const UserInfo = () => {
 
     const changePassword = async () => {
         if (passwordValidation()) return;
-        const { data } = await axios.post(`/dj-rest-auth/password/change/`, password);
-        message(data.detail, true)
-        setIsPasswordOpen(false)
-        setPassword({
-            new_password1: '',
-            new_password2: '',
-            old_password: ''
-        })
+
+        try {
+            const { data } = await axios.post(`/dj-rest-auth/password/change/`, password);
+            message(data.detail, true)
+            setIsPasswordOpen(false)
+            setPassword({
+                new_password1: '',
+                new_password2: '',
+                old_password: ''
+            })
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     const onChangePassword = (value, key) => {
@@ -110,7 +131,6 @@ const UserInfo = () => {
 
     const checkSendValidation = () => {
         return Object.entries(userInfo)?.every(([key, value]) => {
-            if (key === 'username') return true
             if (!value) {
                 return false
             } else {
