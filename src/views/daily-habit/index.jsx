@@ -30,7 +30,7 @@ const DailyHabit = () => {
     }
 
     return (
-        <div className='!h-screen flex flex-col overflow-y-scroll'>
+        <div className='relative !h-screen flex flex-col overflow-y-scroll'>
             <Header title='健康増進アプリ' setIsDrawerOpen={setIsDrawerOpen} />
             <div className='w-full overflow-auto h-full pb-6'>
                 <p className='text-black text-xl mt-4 mx-6'>sekeboy</p>
