@@ -48,7 +48,7 @@ const AdviceDetail = () => {
         <div className='relative !h-screen flex flex-col overflow-y-scroll'>
             <Header title='健康増進アプリ' setIsDrawerOpen={setIsDrawerOpen} />
             <div className='w-full overflow-auto h-full pb-6'>
-                <p className='text-black text-xl mt-4 mx-6'>sekeboy</p>
+
 
                 <div className='flex mx-6 flex-col mt-6 gap-2'>
                     <div className='text-lg font-semibold'>{data.title}</div>
