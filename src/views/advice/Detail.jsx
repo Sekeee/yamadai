@@ -23,25 +23,14 @@ const AdviceDetail = () => {
         if (!adviceId) return
 
         try {
-            // const { data: res } = await axios.get(`/api/personaladvice/${adviceId}/`);
-            // setData(res)
+            const { data: res } = await axios.get(`/api/personaladvice/${adviceId}/`);
 
-            const a = {
-                "id": 2,
-                "another_field": "おりｇ",
-                "title": "ABC",
-                "message": "abcabcabcabcabcabc",
-                "sent_at": "2024-01-12T14:07:39.003096+09:00",
-                "is_read": false,
-                "from_doctor": 2,
-                "user": 382
-            }
+            setData(res)
 
-            if (!a.is_read) {
+
+            if (!res.is_read) {
                 editDailyHabit()
             }
-
-            setData(a)
         } catch (error) {
             console.log(error);
         }
@@ -60,6 +49,11 @@ const AdviceDetail = () => {
             <Header title='健康増進アプリ' setIsDrawerOpen={setIsDrawerOpen} />
             <div className='w-full overflow-auto h-full pb-6'>
                 <p className='text-black text-xl mt-4 mx-6'>sekeboy</p>
+
+                <div className='flex mx-6 flex-col mt-6 gap-2'>
+                    <div className='text-lg font-semibold'>{data.title}</div>
+                    <div className=''>{data.message}</div>
+                </div>
 
             </div>
 
