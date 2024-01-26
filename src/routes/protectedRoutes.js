@@ -11,6 +11,7 @@ import HistoryEdit from '../views/daily-history/Edit';
 import Advice from '../views/advice';
 import AdviceDetail from '../views/advice/Detail';
 import Notification from '../views/notification';
+import DailyResult from '../views/daily-history/Result';
 
 const routes = [
 	{ key: 'home', path: '/', element: Home },
@@ -22,6 +23,7 @@ const routes = [
 
 	{ key: 'daily-habit', path: '/daily-habit', element: DailyHabit },
 	{ key: 'daily-history', path: '/daily-history', element: DailyHistory },
+	{ key: 'daily-result', path: '/daily-result', element: DailyResult },
 	{ key: 'history-edit', path: '/history-edit', element: HistoryEdit },
 	{ key: 'advice', path: '/advice', element: Advice },
 	{ key: 'advice-detail', path: '/advice-detail', element: AdviceDetail },

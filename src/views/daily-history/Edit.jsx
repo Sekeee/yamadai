@@ -6,13 +6,14 @@ import { DatePicker, Tooltip, } from 'antd';
 import { useEffect, useState } from 'react';
 import dayjs from 'dayjs'
 import axios from 'axios';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const HistoryEdit = () => {
     const [searchParams] = useSearchParams();
     const historyId = searchParams.get('historyId');
     const [isDrawerOpen, setIsDrawerOpen] = useState(false)
     const [data, setData] = useState({})
+    const navigate = useNavigate()
 
     useEffect(() => {
         fetchData()
@@ -32,9 +33,8 @@ const HistoryEdit = () => {
 
     const editDailyHabit = async () => {
         try {
-            // const { data: res } = await axios.post('/api/dailyhabit/create/', data);
-            // todo edit
-
+            const { data: res } = await axios.patch(`/api/dailyhabit/${historyId}`, data);
+            navigate(-1)
         } catch (error) {
             console.log(error);
         }
@@ -150,7 +150,7 @@ const HistoryEdit = () => {
 
                         <CustomRadio
                             onChanged={(e) => { changeData(e, 'laughter') }}
-                            value={data?.laughter  || ''}
+                            value={data?.laughter || ''}
                             question='笑う'
                             answer1Value={1}
                             answer2Value={2}
@@ -160,7 +160,7 @@ const HistoryEdit = () => {
 
                         <CustomRadio
                             onChanged={(e) => { changeData(e, 'exercise_or_walking') }}
-                            value={data?.exercise_or_walking  || ''}
+                            value={data?.exercise_or_walking || ''}
                             question='体操または15分以上歩く'
                             answer1Value={1}
                             answer2Value={2}
@@ -190,9 +190,9 @@ const HistoryEdit = () => {
                                 label: 'よくない',
                             },
                         ]}
-                                      label="体の調子は"
-                                      onChange={(value) => changeData(value, 'physical_condition')}
-                                      value={data.physical_condition || ''}
+                            label="体の調子は"
+                            onChange={(value) => changeData(value, 'physical_condition')}
+                            value={data.physical_condition || ''}
                         />
 
                         <CustomSelect options={[
@@ -217,9 +217,9 @@ const HistoryEdit = () => {
                                 label: 'よくない',
                             },
                         ]}
-                                      label="こころの調子は"
-                                      onChange={(value) => changeData(value, 'mental_condition')}
-                                      value={data.mental_condition  || ''}
+                            label="こころの調子は"
+                            onChange={(value) => changeData(value, 'mental_condition')}
+                            value={data.mental_condition || ''}
                         />
 
                         <CustomSelect options={[
@@ -236,9 +236,9 @@ const HistoryEdit = () => {
                                 label: 'まったく話さない',
                             },
                         ]}
-                                      label="人との会話"
-                                      onChange={(value) => changeData(value, 'talk_with_people')}
-                                      value={data.talk_with_people  || ''}
+                            label="人との会話"
+                            onChange={(value) => changeData(value, 'talk_with_people')}
+                            value={data.talk_with_people || ''}
                         />
 
                         <CustomInput
@@ -265,9 +265,9 @@ const HistoryEdit = () => {
                                 label: '陰キャラ',
                             },
                         ]}
-                                      label="コメントキャラ"
-                                      onChange={(value) => changeData(value, 'comment_character')}
-                                      value={data.comment_character  || ''}
+                            label="コメントキャラ"
+                            onChange={(value) => changeData(value, 'comment_character')}
+                            value={data.comment_character || ''}
                         />
 
 

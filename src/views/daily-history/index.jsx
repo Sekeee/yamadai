@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import CustomButton from "../../components/common/Button";
-import { FiTrash2, FiCalendar } from "react-icons/fi";
+import { FiTrash2, FiCalendar, FiEdit } from "react-icons/fi";
 import { Modal } from "antd";
 
 const DailyHistory = () => {
@@ -13,7 +13,6 @@ const DailyHistory = () => {
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
     const navigate = useNavigate();
 
-
     useEffect(() => {
         fetchData()
     }, [])
@@ -21,7 +20,6 @@ const DailyHistory = () => {
     const fetchData = async () => {
         try {
             const { data: resultData } = await axios.get(`/api/dailyhabit/`);
-            console.log(resultData, 'mtar');
             setHistoryData(resultData);
         } catch (error) {
             console.log(error);
@@ -52,10 +50,19 @@ const DailyHistory = () => {
                     {
                         historyData?.map(({ date, id }, index) => {
                             return (
-                                <div key={index} onClick={() => navigate(`/history-edit?historyId=${id}&date=${date}`)} className='flex bg-primary gap-3 items-center px-6 py-3 cursor-pointer font-semibold rounded-[10px] text-white'>
+                                <div key={index} onClick={() => navigate(`/daily-result?historyId=${id}&date=${date}`)} className='flex bg-primary gap-3 items-center px-6 py-3 cursor-pointer font-semibold rounded-[10px] text-white'>
                                     <FiCalendar />
                                     <div>生活習慣結果{index + 1}</div>
                                     <div className="flex-1 text-end text-[#FFFFFFCC]">{date}</div>
+                                    <div
+                                        onClick={(e) => {
+                                            e.stopPropagation()
+                                            navigate(`/history-edit?historyId=${id}&date=${date}`)
+                                        }}
+                                        className="text-end hover:text-[#FFFFFFCC]/50 text-[#FFFFFFCC]">
+                                        <FiEdit />
+                                    </div>
+
                                     <div
                                         onClick={(e) => {
                                             e.stopPropagation()
